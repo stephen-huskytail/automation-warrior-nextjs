@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Redirect naked domain to www — prevents duplicate content
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "automationwarrior.ai" }],
+        destination: "https://www.automationwarrior.ai/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

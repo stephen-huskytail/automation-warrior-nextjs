@@ -4,8 +4,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.automationwarrior.ai"),
   title: "Automation Warrior",
   description: "We build Generative AI Automation Workflows & AI Agents that accelerate your business.",
+  alternates: {
+    canonical: "https://www.automationwarrior.ai",
+  },
   icons: {
     icon: "/images/favicon.ico",
     apple: "/images/webclip.png",
