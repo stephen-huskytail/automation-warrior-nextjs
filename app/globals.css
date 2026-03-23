@@ -1629,3 +1629,296 @@ ul { list-style: none; margin: 0; padding: 0; }
     display: none !important;
   }
 }
+
+/* ─── BOOK A CALL PAGE ──────────────────────────────────────────── */
+.bac-hero-section {
+  background-color: #0a0a0a;
+  padding-top: 140px;
+  padding-bottom: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bac-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Left copy column */
+.bac-copy-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: flex-start;
+  padding-top: 24px;
+}
+
+.bac-heading {
+  text-align: left !important;
+}
+
+.bac-subtext {
+  text-align: left !important;
+  font-size: 18px !important;
+}
+
+.bac-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bac-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #ccc;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5em;
+  letter-spacing: -0.01em;
+}
+
+.bac-check-item svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Right iframe column */
+.bac-iframe-col {
+  position: sticky;
+  top: 100px;
+}
+
+.bac-iframe-card {
+  background: #111;
+  border: 1px solid #ffffff14;
+  border-radius: 20px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+/* Background blobs */
+.bac-blob-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.bac-blob1 {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg at 50% 50%, #ff0000 0deg, hsl(354,100%,50%) 54.89deg, #00a6ff 106.7deg, #4797ff 162deg, #04f 252deg, #ff8000 306deg, hsl(0,100%,50%) 360deg);
+  filter: blur(120px);
+  opacity: 0.25;
+}
+
+.bac-blob2 {
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg at 50% 50%, #ffd9ad 0deg, #139ce5 180deg, #fd864d 360deg);
+  filter: blur(90px);
+  opacity: 0.18;
+}
+
+@media screen and (max-width: 991px) {
+  .bac-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .bac-iframe-col {
+    position: static;
+  }
+  .bac-heading {
+    font-size: 48px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .bac-hero-section {
+    padding-top: 110px;
+    padding-bottom: 60px;
+  }
+  .bac-heading {
+    font-size: 38px !important;
+  }
+}
+
+/* ─── BOOK A CALL FORM ──────────────────────────────────────────── */
+.bac-form-col {
+  position: sticky;
+  top: 100px;
+}
+
+.bac-form-card {
+  background: #111;
+  border: 1px solid #ffffff14;
+  border-radius: 20px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bac-form-card-heading {
+  color: #fff;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.bac-form-card-subtext {
+  color: #666;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+.bac-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bac-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bac-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bac-label {
+  color: #999;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.bac-input {
+  background: #0a0a0a;
+  border: 1px solid #ffffff1a;
+  border-radius: 10px;
+  color: #fff;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bac-input::placeholder {
+  color: #444;
+}
+
+.bac-input:focus {
+  border-color: #ffffff33;
+}
+
+.bac-textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.bac-submit-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+.bac-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bac-error-msg {
+  color: #ff4533;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+}
+
+.bac-success-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.bac-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ff453320;
+  color: #ff4533;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bac-success-heading {
+  color: #fff;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.bac-success-text {
+  color: #999;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  margin: 0;
+  max-width: 340px;
+}
+
+@media screen and (max-width: 991px) {
+  .bac-form-col {
+    position: static;
+  }
+  .bac-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .bac-form-card {
+    padding: 24px 20px;
+  }
+}

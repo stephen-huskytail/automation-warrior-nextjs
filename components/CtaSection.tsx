@@ -1,4 +1,4 @@
-const BOOK_URL = "https://automation-warrior.moxieapp.com/public/ai-intro";
+const BOOK_URL = "/book-a-call";
 
 export default function CtaSection() {
   return (

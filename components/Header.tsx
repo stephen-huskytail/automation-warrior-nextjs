@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const BOOK_URL = "https://automation-warrior.moxieapp.com/public/ai-intro";
+const BOOK_URL = "/book-a-call";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
