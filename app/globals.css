@@ -1388,7 +1388,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   width: 16px;
   background-color: rgb(255, 68, 51);
   border-radius: 50px;
-  opacity: 0; /* hidden until first mouse movement — prevents ghost dot at (0,0) */
+  /* opacity managed by cursor.hide()/cursor.show() — do NOT set here */
 }
 
 .mf-cursor:before {
