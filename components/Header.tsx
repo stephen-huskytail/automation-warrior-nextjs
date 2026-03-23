@@ -26,8 +26,15 @@ export default function Header() {
         <div className="container">
           <div className="header-inner">
             <div className="header-column">
-              {/* Logo */}
-              <Link href="/" className="header-logo-link">
+              {/* Logo — click scrolls to top */}
+              <Link
+                href="/"
+                className="header-logo-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
                 <Image
                   src="/images/bgBlack_1-removebg-preview-1.png"
                   alt="Automation Warrior"
