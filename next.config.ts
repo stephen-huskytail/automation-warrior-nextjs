@@ -9,17 +9,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      // Redirect naked domain to www — prevents duplicate content
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "automationwarrior.ai" }],
-        destination: "https://www.automationwarrior.ai/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // Note: naked domain → www redirect is handled by Vercel project domain settings
+  // (automationwarrior.ai is configured as a redirect alias → www.automationwarrior.ai)
+  // Do NOT add a Next.js redirect here — it creates a redirect loop.
 };
 
 export default nextConfig;
