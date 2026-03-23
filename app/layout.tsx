@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -31,7 +32,14 @@ export default function RootLayout({
           href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* mouse-follower CDN — GSAP bundled inside, matches live Webflow behavior exactly */}
+        <Script
+          src="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
