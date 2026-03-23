@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import "swiper/swiper.min.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const slides = [
   {
