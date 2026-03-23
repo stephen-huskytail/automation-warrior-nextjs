@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 export const metadata: Metadata = {
   title: "Automation Warrior",
@@ -23,6 +25,10 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
           rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css"
         />
       </head>
       <body>{children}</body>

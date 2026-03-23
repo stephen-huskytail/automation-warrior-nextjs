@@ -7,9 +7,12 @@ export default function CustomCursor() {
 
     const init = async () => {
       try {
+        const gsap = (await import("gsap")).default;
         const MouseFollower = (await import("mouse-follower")).default;
-        await import("mouse-follower/dist/mouse-follower.min.css");
-        
+
+        // mouse-follower requires GSAP to be registered before instantiation
+        MouseFollower.registerGSAP(gsap);
+
         const cursor = new MouseFollower({
           speed: 0.8,
           skewing: 1,
@@ -23,7 +26,7 @@ export default function CustomCursor() {
           el.addEventListener("mouseleave", () => cursor.removeText());
         });
       } catch (e) {
-        // Silently ignore cursor errors
+        // Silently ignore cursor errors — native cursor still works
       }
     };
 

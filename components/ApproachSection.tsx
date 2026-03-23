@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import "swiper/swiper.min.css";
 
 const slides = [
   {
@@ -27,15 +28,20 @@ const slides = [
 
 export default function ApproachSection() {
   const swiperRef = useRef<HTMLDivElement>(null);
+  const swiperInstance = useRef<unknown>(null);
 
   useEffect(() => {
-    // Dynamically import Swiper
     const init = async () => {
       const { Swiper } = await import("swiper");
       const { Navigation } = await import("swiper/modules");
 
+      // Destroy previous instance if any
+      if (swiperInstance.current) {
+        (swiperInstance.current as { destroy: () => void }).destroy();
+      }
+
       if (swiperRef.current) {
-        new Swiper(swiperRef.current as unknown as HTMLElement, {
+        swiperInstance.current = new Swiper(swiperRef.current as unknown as HTMLElement, {
           modules: [Navigation],
           slidesPerView: 3,
           spaceBetween: 24,
@@ -44,10 +50,21 @@ export default function ApproachSection() {
             prevEl: ".swiper-button-prev",
           },
           loop: false,
+          breakpoints: {
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            992: { slidesPerView: 3 },
+          },
         });
       }
     };
     init();
+
+    return () => {
+      if (swiperInstance.current) {
+        (swiperInstance.current as { destroy: () => void }).destroy();
+      }
+    };
   }, []);
 
   return (

@@ -42,30 +42,31 @@ export default function ResultsSection() {
                 businesses like yours.
               </p>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="results-slider-column">
-              <div className="results-slider-slide">
-                {allResults.map((item, i) => (
-                  <div
-                    key={i}
-                    className={`results-slider-item${i >= results.length ? " mobile-hide" : ""}`}
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="results-image"
-                      style={{ objectFit: "cover" }}
-                    />
-                    <div className="results-slider-content-box">
-                      <h4 className="heading-h3" style={{ textAlign: "left" }}>{item.title}</h4>
-                      <p className="results-slider-text" style={{ textAlign: "left" }}>{item.text}</p>
-                    </div>
-                  </div>
-                ))}
+      {/* Full-width slider — outside inner-container to avoid clipping */}
+      <div className="results-slider-column">
+        <div className="results-slider-slide">
+          {allResults.map((item, i) => (
+            <div
+              key={i}
+              className={`results-slider-item${i >= results.length ? " mobile-hide" : ""}`}
+            >
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="results-image"
+                style={{ objectFit: "cover" }}
+              />
+              <div className="results-slider-content-box">
+                <h4 className="heading-h3" style={{ textAlign: "left" }}>{item.title}</h4>
+                <p className="results-slider-text" style={{ textAlign: "left" }}>{item.text}</p>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
