@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -27,6 +26,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
           rel="stylesheet"
         />
+        {/* mouse-follower CSS — loaded statically in <head> */}
         <link
           rel="stylesheet"
           href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css"
@@ -34,12 +34,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        {/* mouse-follower CDN — GSAP bundled inside, matches live Webflow behavior exactly */}
-        {/* beforeInteractive ensures it loads before hydration — no gap where cursor is hidden */}
-        <Script
-          src="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"
-          strategy="beforeInteractive"
-        />
+        {/* JS is injected dynamically by CustomCursor component — no blocking */}
       </body>
     </html>
   );
