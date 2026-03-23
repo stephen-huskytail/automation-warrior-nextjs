@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import "mouse-follower/dist/mouse-follower.min.css";
 
 const MF_CDN = "https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js";
 
@@ -31,7 +32,7 @@ export default function CustomCursor() {
       return;
     }
 
-    // Inject script dynamically — async, non-blocking, but runs init() as soon as loaded
+    // Inject JS dynamically — async, non-blocking
     const script = document.createElement("script");
     script.src = MF_CDN;
     script.onload = init;
