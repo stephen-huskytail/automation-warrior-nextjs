@@ -5,7 +5,7 @@ const FROM_EMAIL = "noreply@automationwarrior.ai";
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const TO_EMAIL = process.env.CONTACT_EMAIL ?? "hello@automationwarrior.ai";
+  const TO_EMAIL = "stephen@automationwarrior.ai";
   try {
     const { name, email, company, phone, message } = await req.json();
 

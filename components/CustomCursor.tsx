@@ -2,41 +2,40 @@
 import { useEffect } from "react";
 import "mouse-follower/dist/mouse-follower.min.css";
 
-const MF_CDN = "https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js";
-
 export default function CustomCursor() {
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth <= 767) return;
 
-    const init = () => {
-      const MF = (window as any).MouseFollower;
-      if (!MF) return;
+    let cursor: any;
 
-      // CDN bundle has GSAP built-in — no registerGSAP needed
-      const cursor = new MF({ speed: 0.8, skewing: 1, skewingText: 3 });
+    (async () => {
+      try {
+        const gsap = (await import("gsap")).default;
+        const MouseFollower = (await import("mouse-follower")).default;
 
-      // Hide at (0,0) until user moves mouse, then show
-      cursor.hide();
-      document.addEventListener("mousemove", () => cursor.show(), { once: true });
+        // Must register GSAP before instantiating
+        MouseFollower.registerGSAP(gsap);
 
-      // Team card hover state
-      document.querySelectorAll(".team-slider-item").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.setText(""));
-        el.addEventListener("mouseleave", () => cursor.removeText());
-      });
+        cursor = new MouseFollower({
+          speed: 0.55,
+          ease: "expo.out",
+          skewing: 1,
+          skewingText: 3,
+        });
+
+        // Team card hover state
+        document.querySelectorAll(".team-slider-item").forEach((el) => {
+          el.addEventListener("mouseenter", () => cursor.setText(""));
+          el.addEventListener("mouseleave", () => cursor.removeText());
+        });
+      } catch (e) {
+        console.error("CustomCursor init failed:", e);
+      }
+    })();
+
+    return () => {
+      try { cursor?.destroy(); } catch (_) {}
     };
-
-    if ((window as any).MouseFollower) {
-      // Already loaded (e.g. hot reload)
-      init();
-      return;
-    }
-
-    // Inject JS dynamically — async, non-blocking
-    const script = document.createElement("script");
-    script.src = MF_CDN;
-    script.onload = init;
-    document.head.appendChild(script);
   }, []);
 
   return null;

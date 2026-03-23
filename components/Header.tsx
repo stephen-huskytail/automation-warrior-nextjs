@@ -31,8 +31,10 @@ export default function Header() {
                 href="/"
                 className="header-logo-link"
                 onClick={(e) => {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  if (window.location.pathname === "/") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
                 }}
               >
                 <Image
