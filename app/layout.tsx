@@ -35,9 +35,10 @@ export default function RootLayout({
       <body>
         {children}
         {/* mouse-follower CDN — GSAP bundled inside, matches live Webflow behavior exactly */}
+        {/* beforeInteractive ensures it loads before hydration — no gap where cursor is hidden */}
         <Script
           src="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
       </body>
     </html>
