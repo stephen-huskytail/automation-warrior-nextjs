@@ -86,7 +86,7 @@ export default function ApproachSection() {
             <div className="approach-column">
               {/* Desktop Swiper */}
               <div className="approach-slider-custom our-approach-slider">
-                <div className="swiper-container" ref={swiperRef}>
+                <div className="swiper" ref={swiperRef}>
                   <div className="swiper-wrapper">
                     {slides.map((slide, i) => (
                       <div className="swiper-slide" key={i}>

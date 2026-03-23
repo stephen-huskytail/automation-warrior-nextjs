@@ -19,6 +19,16 @@ export default function CustomCursor() {
           skewingText: 3,
         });
 
+        // Show cursor on first mouse movement — prevents ghost dot at (0,0) on load
+        document.addEventListener(
+          "mousemove",
+          () => {
+            const el = document.querySelector(".mf-cursor") as HTMLElement | null;
+            if (el) el.style.opacity = "1";
+          },
+          { once: true }
+        );
+
         // Change cursor on team card hover
         const els = document.querySelectorAll(".team-slider-item");
         els.forEach((el) => {
