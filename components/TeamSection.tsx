@@ -18,11 +18,11 @@ const teamMembers = [
     text: "Drives internal efficiency, optimizes systems, and ensures smooth execution across all AI initiatives at Automation Warrior.",
   },
   {
-    name: "Leonie Cajes",
-    job: "CRM Automation Specialist",
-    image: "/images/LC-1.jpg",
-    linkedin: "https://www.linkedin.com/in/leonie-cajes",
-    text: "Designs and implements smart CRM automated workflows that boost engagement, save time, and scale customer success with precision AI.",
+    name: "Viktor Ai",
+    job: "AI Automation Agent",
+    image: "/images/VA-1.jpg",
+    linkedin: "https://www.getviktor.com",
+    text: "Autonomous AI agent powering Automation Warrior's workflows — from lead follow-up and reporting to content and CRM, running 24/7 without missing a beat.",
   },
   {
     name: "Rhodora Villadegracia",
