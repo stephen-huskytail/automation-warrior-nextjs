@@ -139,6 +139,37 @@ For production workflows where reliability matters, both platforms have solid up
 
 For beginners looking to hit the ground running, Make's larger template library is an advantage. For developers who want community support for complex use cases, n8n's Discord is excellent.
 
+## Real-World Use Cases
+
+To make this concrete, here's how I'd approach common automation scenarios:
+
+**Social media → CRM workflow (1,000 leads/month):** A 6-step workflow runs 1,000 times. That's 6,000 Make operations (Core plan maxed out at 10,000 — fine) vs. 1,000 n8n executions (well within the $20 Starter plan). Either works here. Cost isn't the differentiator — pick based on how comfortable your team is with each platform.
+
+**High-volume e-commerce order processing (50,000 orders/month, 8-step workflow):** 50,000 × 8 = 400,000 Make operations — you're on the Enterprise plan. n8n cloud would be ~$100/month on the Business plan, or ~$10/month self-hosted on a cheap VPS. n8n wins decisively on cost at this volume.
+
+**AI customer support agent with memory:** This is where n8n is uniquely strong. Building an AI agent that reads incoming support emails, checks your knowledge base, and drafts context-aware replies requires multi-step LangChain agent logic. n8n handles this natively with its AI Agent nodes. Replicating this in Make requires more workarounds and external services.
+
+**Marketing automation for a small business (no technical team):** If the team needs to maintain and edit workflows, Make's visual builder wins. The flowchart-style editor is self-explanatory in a way that n8n's canvas isn't. Training a non-technical team on Make takes days; training them on n8n takes weeks.
+
+**Data pipeline with custom transformation logic:** If you need to reshape, filter, and transform data in complex ways — merging arrays, doing conditional logic across multiple datasets — n8n's built-in code nodes (JavaScript/Python) are far more flexible than Make's formula syntax.
+
+## Frequently Asked Questions
+
+**Can n8n and Make.com be used together?**
+Yes. Some teams use Make for broad app integrations (taking advantage of its 1,800+ connector library) and n8n for complex AI or data-heavy workflows. They're not mutually exclusive.
+
+**Is n8n really free to self-host?**
+Yes — the open-source version is free with no usage limits. You'll need a server (a $5–$10/month VPS handles most solo or small-team use cases). The cloud version starts at $20/month.
+
+**Which is better for Zapier users switching platforms?**
+Make.com is typically the easier transition from Zapier. The mental model (triggers → actions in a visual flow) is more similar, and the integration library is comparable. n8n is a bigger jump — more powerful, but more to learn.
+
+**Does Make.com have a free plan?**
+Yes — 1,000 operations/month free. That's enough to test automations but not enough for production workflows at any real volume.
+
+**Can I use n8n without knowing how to code?**
+Yes, but the learning curve is steeper than Make. n8n's documentation and template library have improved significantly, and most common workflows can be built without writing code. But the ability to write JavaScript in n8n's code nodes is where its real power unlocks.
+
 ## My Verdict
 
 Neither tool is universally better. Here's the decision framework I'd use:
