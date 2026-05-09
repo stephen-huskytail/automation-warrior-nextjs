@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,6 +7,13 @@ const BOOK_URL = "/book-a-call";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -25,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <header className="header-section">
+    <header className={`header-section${scrolled ? " scrolled" : ""}`}>
       <div className="padding-global padding-none">
         <div className="container">
           <div className="header-inner">
