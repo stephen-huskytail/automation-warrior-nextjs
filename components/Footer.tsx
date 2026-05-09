@@ -49,10 +49,16 @@ export default function Footer() {
                   <h4 className="footer-heading small-heading-footer">Information</h4>
                   <ul className="footer-menu-ul">
                     <li>
-                      <a href="#" className="footer-menu-link">Contact Us</a>
+                      <Link href="/about" className="footer-menu-link">About</Link>
                     </li>
                     <li>
-                      <a href="#about-us" className="footer-menu-link">About Us</a>
+                      <Link href="/affiliate-disclosure" className="footer-menu-link">Affiliate Disclosure</Link>
+                    </li>
+                    <li>
+                      <Link href="/privacy-policy" className="footer-menu-link">Privacy Policy</Link>
+                    </li>
+                    <li>
+                      <Link href="/terms" className="footer-menu-link">Terms</Link>
                     </li>
                   </ul>
                 </div>

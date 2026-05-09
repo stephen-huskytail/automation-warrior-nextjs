@@ -1,8 +1,9 @@
 "use client";
 import * as runtime from "react/jsx-runtime";
 import { useMemo } from "react";
+import { FAQ } from "@/components/FAQ";
+import { TakeawayBox } from "@/components/TakeawayBox";
 
-// MDX components override map — extend as needed
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className="mdx-h1" {...props} />
@@ -40,6 +41,20 @@ const components = {
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
     <pre className="mdx-pre" {...props} />
   ),
+  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+    <div className="mdx-table-wrap">
+      <table className="mdx-table" {...props} />
+    </div>
+  ),
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <th className="mdx-th" {...props} />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td className="mdx-td" {...props} />
+  ),
+  // Custom MDX components
+  FAQ,
+  TakeawayBox,
 };
 
 interface MDXContentProps {
@@ -48,7 +63,6 @@ interface MDXContentProps {
 
 export function MDXContent({ code }: MDXContentProps) {
   const Component = useMemo(() => {
-    // Velite compiles MDX to a function body string — evaluate it to get the component
     // eslint-disable-next-line no-new-func
     const fn = new Function("runtime", `${code}`);
     return fn(runtime).default;
