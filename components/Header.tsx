@@ -14,9 +14,13 @@ export default function Header() {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
+      // On the homepage — smooth scroll to section
       const offset = window.innerWidth < 768 ? 70 : 100;
       const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top, behavior: "smooth" });
+    } else {
+      // On another page (blog, etc.) — navigate to homepage with hash
+      window.location.href = `/${href}`;
     }
   };
 
