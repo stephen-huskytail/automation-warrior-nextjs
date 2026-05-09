@@ -140,6 +140,28 @@ Deploying self-hosted n8n is a real technical task — you need a server, Docker
 
 Zapier has no self-hosting option. Your workflow data and execution history live on Zapier's infrastructure, and your costs are directly tied to your usage volume.
 
+## Pricing at Scale: What It Actually Costs
+
+The pricing tables don't tell the full story. Here's a concrete example.
+
+**Scenario: You have 20 automations running daily. Each workflow has an average of 8 steps. Over a month, that's 600 workflow runs.**
+
+With **Zapier**: 600 runs × 8 steps = 4,800 tasks/month. You'd need the Team plan ($69/month, 2,000 tasks) plus overage, or a custom plan. Realistically you're looking at $100–$150/month for this usage.
+
+With **n8n cloud**: 600 runs = 600 executions. The Starter plan covers 2,500 executions for $20/month. You're done.
+
+With **self-hosted n8n**: 600 runs on a $6/month VPS from Digital Ocean or Hetzner. That's $6/month total with no artificial limits.
+
+The gap compounds as you add more automations. Zapier's per-task model makes the cost unpredictable; n8n's per-execution model makes it linear. Self-hosted n8n makes it essentially fixed.
+
+## Templates and Community
+
+**Zapier** has the advantage here. With 6+ years of public-facing templates and millions of users, Zapier's template library and community forum are extensive. Search any common automation ("Slack to Trello", "Gmail to Notion") and you'll find a ready-made Zap.
+
+**n8n** has a growing templates library and an active Discord community that's especially strong for developers and AI workflow builders. The n8n community forums are technically deep — if you're stuck on a complex data transformation or building an AI agent, you'll find help. The volume of templates and beginner answers is smaller than Zapier's, but the quality of advanced content is excellent.
+
+**Templates verdict:** Zapier for common business automations out of the box. n8n for developers who want to learn from examples of complex workflows.
+
 ## When to Choose Zapier
 
 - You're not technical and want the simplest possible setup
