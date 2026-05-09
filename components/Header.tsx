@@ -53,6 +53,7 @@ export default function Header() {
                 <a href="#results" className="nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
                 <a href="#services" className="nav-link" onClick={(e) => handleNavClick(e, "#services")}>Services</a>
                 <a href="#process" className="nav-link" onClick={(e) => handleNavClick(e, "#process")}>Process</a>
+                <Link href="/blog" className="nav-link">Blog</Link>
               </nav>
 
               {/* Desktop CTA */}
@@ -78,6 +79,7 @@ export default function Header() {
               <a href="#results" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
               <a href="#services" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#services")}>Services</a>
               <a href="#process" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#process")}>Process</a>
+              <Link href="/blog" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Blog</Link>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
             </div>
           </div>
