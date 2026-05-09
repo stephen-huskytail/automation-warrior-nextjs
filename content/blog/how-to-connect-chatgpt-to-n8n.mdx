@@ -1,0 +1,193 @@
+---
+title: "How to Connect ChatGPT to n8n (Step-by-Step Guide)"
+description: "Learn how to connect ChatGPT to n8n using the OpenAI node. Build your first AI-powered automation workflow in under 30 minutes — no coding required."
+date: "2026-05-13"
+slug: "how-to-connect-chatgpt-to-n8n"
+tags: ["n8n", "ChatGPT", "OpenAI", "Tutorial", "AI Automation"]
+author: "Automation Warrior"
+draft: true
+---
+
+One of the most powerful things you can do with n8n is wire it up to ChatGPT (via the OpenAI API). Once connected, you can build workflows that analyze incoming emails, summarize documents, classify support tickets, generate personalized content, and more — all automatically.
+
+The good news: connecting n8n to ChatGPT takes about 15 minutes if you follow these steps.
+
+> *Disclosure: This post contains affiliate links. If you purchase through my links, I may earn a commission at no extra cost to you.*
+
+## What You'll Need
+
+Before we start, make sure you have:
+
+1. **An n8n account** — cloud (starts at $20/month) or self-hosted (free). [Sign up for n8n here →](https://n8n.io/?via=automationwarrior)
+2. **An OpenAI account** with API access — you'll need to generate an API key
+3. About 15–30 minutes
+
+## Step 1: Get Your OpenAI API Key
+
+If you don't already have an OpenAI API key:
+
+1. Go to [platform.openai.com](https://platform.openai.com)
+2. Sign in or create an account
+3. Navigate to **API Keys** in the left sidebar (or go to platform.openai.com/api-keys)
+4. Click **+ Create new secret key**
+5. Name it something descriptive (e.g., "n8n integration")
+6. Copy the key immediately — you won't be able to see it again
+
+> **Important:** Your API key is a secret. Don't share it publicly or check it into a git repo. In n8n, store it as a credential (not in a workflow variable).
+
+You'll also need to ensure your OpenAI account has billing set up — the API isn't free, though the costs are low for most automation use cases. GPT-4o-mini runs at roughly $0.15 per million input tokens, making it very affordable for automated workflows.
+
+## Step 2: Set Up OpenAI Credentials in n8n
+
+Once you're logged into n8n:
+
+1. Click the **gear icon** (Settings) in the bottom-left sidebar
+2. Navigate to **Credentials**
+3. Click **+ Add credential**
+4. Search for **OpenAI** and select it
+5. Enter your API key in the **API Key** field
+6. Click **Save**
+
+`[Screenshot: n8n credentials screen with OpenAI API key field]`
+
+Your credentials are now stored securely in n8n and can be referenced by any workflow — you won't need to re-enter the key each time.
+
+## Step 3: Create Your First Workflow
+
+Let's build a simple but useful workflow: **Summarize incoming emails with ChatGPT and post the summary to Slack.**
+
+This is a practical workflow that saves real time if you receive high-volume emails that your team needs to act on.
+
+### 3a. Open the Workflow Editor
+
+In n8n, click **+ New Workflow** in the top right corner. You'll see a blank canvas.
+
+### 3b. Add a Trigger Node
+
+Every n8n workflow starts with a trigger — the event that starts the automation.
+
+1. Click the **+** button in the center of the canvas (or click "Add first step")
+2. Search for your email trigger. Options include:
+   - **Gmail Trigger** (for Google Workspace)
+   - **Email Trigger (IMAP)** (for any email provider)
+   - **Outlook Trigger** (for Microsoft 365)
+3. Select your trigger and connect it to your email account following the credential setup
+4. Configure the trigger to fire "On new email received" (or "On new email in folder" for Gmail)
+
+`[Screenshot: n8n trigger node selector showing email options]`
+
+For testing, you can also use a **Manual Trigger** — which lets you run the workflow on demand. This is useful while you're building and want to test without waiting for a real email.
+
+### 3c. Add the OpenAI Node
+
+With your trigger set up:
+
+1. Click the **+** button below your trigger node to add a new step
+2. Search for **OpenAI** in the node search
+3. Select the **OpenAI** node
+4. In the node settings, configure:
+   - **Credential:** Select the OpenAI credential you set up in Step 2
+   - **Resource:** Message
+   - **Operation:** Complete (Chat)
+   - **Model:** Select your preferred model (gpt-4o-mini for cost efficiency, gpt-4o for higher quality)
+   - **Messages:** This is where you write your prompt
+
+`[Screenshot: n8n OpenAI node configuration]`
+
+### 3d. Write Your Prompt
+
+In the Messages section, you'll configure the conversation:
+
+**System message:**
+```
+You are an email summarizer. Your job is to read incoming business emails and produce a concise 2-3 sentence summary. Focus on: who sent it, what they're asking for, and any action required.
+```
+
+**User message:**
+```
+Summarize this email:
+
+From: {{ $('Gmail Trigger').item.json.from }}
+Subject: {{ $('Gmail Trigger').item.json.subject }}
+Body: {{ $('Gmail Trigger').item.json.text }}
+```
+
+The `{{ }}` syntax is n8n's expression syntax for pulling data from previous nodes. When the workflow runs, n8n will replace these expressions with actual values from your email trigger.
+
+`[Screenshot: n8n OpenAI node with prompt configured, showing expressions]`
+
+### 3e. Add a Slack Notification (Optional)
+
+To post the AI summary to Slack:
+
+1. Add a **Slack** node after the OpenAI node
+2. Connect your Slack workspace (follow the credential setup)
+3. Set **Operation** to "Send a message"
+4. Set **Channel** to the channel where you want summaries posted
+5. Set **Text** to:
+   ```
+   📧 *New email from {{ $('Gmail Trigger').item.json.from }}*
+   *Subject:* {{ $('Gmail Trigger').item.json.subject }}
+   *Summary:* {{ $('OpenAI').item.json.message.content }}
+   ```
+
+### 3f. Test Your Workflow
+
+1. Click **Test workflow** (or activate the Manual Trigger if you used that)
+2. n8n will step through the workflow and show you the output of each node
+3. Check the OpenAI node output — you should see the email summary in the response
+4. Check Slack to confirm the message was posted
+
+`[Screenshot: n8n workflow execution showing OpenAI node output with email summary]`
+
+If everything works, click **Save** and then **Activate** the workflow. It will now run automatically when new emails arrive.
+
+## Common Mistakes to Avoid
+
+**Using the wrong node:** n8n has both an "OpenAI" node and a "ChatOpenAI" node (which is part of the LangChain integration). For simple ChatGPT calls, use the standard **OpenAI** node. The LangChain nodes are for building AI agents with memory and tool-calling.
+
+**Not setting a token limit:** By default, OpenAI responses can be long. Set `Max Tokens` in the OpenAI node to limit response length (e.g., 300 tokens for a short summary) and control costs.
+
+**Forgetting error handling:** Production workflows should have error handling. Add an "On Error" behavior to the OpenAI node (continue with empty output, or send an error alert) so a failed AI call doesn't silently break your workflow.
+
+**Exposing your API key in expressions:** Never hard-code your OpenAI key into a workflow expression. Always use n8n credentials.
+
+## Workflow Ideas to Build Next
+
+Once you've got the basics working, here are three more workflows worth building:
+
+### 1. AI Support Ticket Classifier
+
+**Trigger:** New email to support@yourcompany.com (or new Zendesk ticket)
+**OpenAI prompt:** Classify this support request into one of: [billing, technical, general, urgent]. Respond with just the category label.
+**Action:** Route to different team channels or assign labels based on the classification.
+
+This reduces manual triage time dramatically for teams handling high support volume.
+
+### 2. Lead Research Auto-Brief
+
+**Trigger:** New contact added to your CRM (HubSpot, GHL, etc.)
+**Actions:** Pull company info from Clearbit → send to OpenAI with prompt: "Based on this company profile, write a 3-sentence sales brief covering their industry, likely pain points, and how [your product] could help."
+**Output:** Post the brief to Slack or attach it to the contact record in your CRM.
+
+### 3. Content Calendar Ideator
+
+**Trigger:** Weekly Schedule Trigger (every Monday at 9am)
+**OpenAI prompt:** Generate 5 blog post ideas about [your niche] that would appeal to [your audience]. For each, include a target keyword and a one-sentence angle.
+**Output:** Create tasks in Notion or Airtable, or post to Slack.
+
+This is essentially a lightweight editorial assistant running automatically every week.
+
+## Scaling and Cost Considerations
+
+For small-scale workflows (a few hundred executions per month), OpenAI API costs are genuinely minimal — often under $5/month. GPT-4o-mini is the cost-efficient choice for most summarization and classification tasks.
+
+At scale (thousands of runs per day), costs add up. Monitor your OpenAI usage dashboard and set spending limits to avoid surprises.
+
+n8n's own pricing: cloud starts at $20/month for 2,500 workflow executions. Self-hosted n8n is free — if you're running high-volume AI workflows, self-hosting on a $10–$20/month VPS is the most cost-effective setup.
+
+**[Get started with n8n →](https://n8n.io/?via=automationwarrior)**
+
+---
+
+*Ready to go deeper? Read my [n8n vs Make comparison](/blog/n8n-vs-make) to see how n8n stacks up against the other major automation platforms.*

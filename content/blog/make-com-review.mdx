@@ -1,0 +1,168 @@
+---
+title: "Make.com Review (2026): The Best Visual Automation Tool for Non-Developers?"
+description: "An honest Make.com review covering the visual builder, pricing (operations model), 1,800+ integrations, AI capabilities, and who it's actually best for in 2026."
+date: "2026-05-12"
+slug: "make-com-review"
+tags: ["Make.com", "Workflow Automation", "Review"]
+author: "Automation Warrior"
+draft: true
+---
+
+Make.com has one of the best visual automation builders in the market. If you've ever looked at a Zapier workflow and thought "I wish I could see what's actually happening," Make's scenario builder is the answer.
+
+I've used Make to build everything from simple two-step automations to complex multi-branch workflows with error handling and custom API calls. Here's what it's like in practice — the good, the frustrating, and the situations where it's not the right tool.
+
+> *Disclosure: This post contains affiliate links. If you purchase through my links, I may earn a commission at no extra cost to you.*
+
+## What Is Make.com?
+
+Make.com (formerly Integromat until it rebranded in 2022) is a cloud-based workflow automation platform. You connect apps through a visual "scenario" builder, defining triggers, actions, and logic flows that run automatically.
+
+The core value proposition: automate repetitive work between apps without writing code. Lead comes in → update CRM → send Slack notification → create task in project management tool. That kind of thing, visually and at scale.
+
+Make is now part of Celonis, a large enterprise software company, which has accelerated the platform's development while keeping the SMB-friendly pricing intact.
+
+## The Visual Builder: Make's Biggest Advantage
+
+The first thing most people notice about Make is how good the scenario builder looks. Workflows are displayed as a horizontal flow of circular modules connected by lines — like a flowchart you can actually understand.
+
+When you hover over a connection, you can see exactly what data is flowing from one step to the next. This makes debugging vastly easier than text-based automation tools. You can run individual scenarios, step through executions, and inspect data at each point in the workflow.
+
+Branching logic, filters, routers (Make's term for conditional paths), and error handlers are all visual. Even complex scenarios with multiple branches, conditional paths, and fallback handlers are readable at a glance.
+
+I've handed Make scenarios to non-technical clients who could follow the logic without any explanation. That level of readability is genuinely useful when you're building workflows that other people need to maintain.
+
+## Make.com Pricing: The Operations Model Explained
+
+Make's pricing is based on **operations** — the most important thing to understand before committing to the platform.
+
+**Every individual step in a workflow counts as one operation.**
+
+A 5-step workflow that runs 1,000 times per month uses 5,000 operations. A 20-step workflow running 1,000 times uses 20,000 operations. This can compound quickly for complex, high-volume workflows.
+
+| Plan | Price/Month | Operations/Month | Notable Features |
+|------|-------------|-----------------|-----------------|
+| Free | $0 | 1,000 | 2 active scenarios, 15-min interval |
+| Core | $9 | 10,000 | Unlimited scenarios |
+| Pro | $16 | 10,000 | Advanced tools, custom apps |
+| Teams | $29/user | 10,000 | Collaboration, shared assets |
+| Enterprise | Custom | Custom | SSO, priority support, advanced security |
+
+Additional operation packs can be purchased if you exceed your monthly limit.
+
+### Is the Operations Model a Problem?
+
+It depends on your use case:
+
+**For most small business automations:** No. Simple workflows (5–10 steps) running a few hundred times per month burn through operations slowly. The Core plan at $9/month is excellent value.
+
+**For high-volume or complex workflows:** Yes, it can get expensive. If you're processing 10,000+ records monthly through 15-step workflows, you'll hit the ceiling fast. At that scale, n8n (especially self-hosted) becomes significantly cheaper. See my [n8n vs Make comparison](/blog/n8n-vs-make) for that breakdown.
+
+## Integrations: 1,800+ Apps
+
+Make has one of the largest native integration libraries of any automation tool — over 1,800 apps at last count. This is a genuine strength.
+
+Common apps you'd expect are all there with well-documented modules: Google Workspace, Microsoft 365, Slack, Notion, Airtable, HubSpot, Salesforce, Shopify, WooCommerce, Stripe, Twilio, OpenAI, and hundreds more.
+
+Where Make's integration library really shines is coverage of niche and regional tools. I've connected tools to Make that I couldn't find native integrations for in any other no-code platform.
+
+For the tools that don't have native integrations, Make's HTTP module lets you connect to any REST API — and the module is well-designed, making custom API calls more accessible than in most no-code tools.
+
+## AI and Automation Capabilities
+
+Make has been building out AI capabilities, and it's a meaningful part of the platform now:
+
+- **OpenAI module:** Send prompts, get completions, generate images (DALL-E), handle structured output
+- **Anthropic module:** Claude integration for text and analysis tasks
+- **AI Transformer:** Parse, classify, and transform data using AI without explicit prompting
+- **Perplexity and other AI tool integrations**
+
+Building an AI-powered workflow in Make is genuinely accessible — create a lead, run the contact info through an OpenAI prompt to generate a personalized email draft, send that to Gmail. That kind of thing requires no code.
+
+Where Make is less strong is building **autonomous AI agents** — workflows where an AI makes decisions about what to do next based on results. n8n has more mature native LangChain integration for those use cases. Make's AI workflows are more pipeline-style (input → AI processing → output) than agentic.
+
+## Data Structures and Advanced Logic
+
+Make handles complex data structures well. Arrays, collections, iterators, and aggregators allow you to work with multi-record payloads — something basic automation tools struggle with.
+
+The built-in functions for data transformation (string manipulation, date formatting, math operations) are solid and accessible without code. For cases where you need custom logic, Make's Code module supports JavaScript — though this is more limited than n8n's first-class code support.
+
+**Routers** (Make's branching mechanism) let you send data down different paths based on conditions. You can stack multiple conditions and handle multiple paths from a single router. The visual representation of branched logic is where Make's builder really shines over other tools.
+
+## Error Handling
+
+Make has thoughtful error handling built in. You can set up dedicated error handlers on any module — defining what happens if a step fails. This is critical for production workflows where you want graceful fallback behavior rather than silent failures.
+
+The error handler approach in Make is one of the clearest implementations I've seen across automation platforms. You can route errors to a dedicated handler that logs the issue, sends an alert, and then either retries or skips to the next record.
+
+## Make vs Competitors
+
+| | **Make** | **Zapier** | **n8n** |
+|---|---|---|---|
+| Visual builder | Excellent | Basic | Good |
+| Pricing | Per-operation | Per-task | Per-execution or free self-hosted |
+| Integrations | 1,800+ | 6,000+ | 400+ |
+| Self-hosting | No | No | Yes |
+| AI capabilities | Growing | Basic | Strong |
+| Developer-friendly | Moderate | Low | High |
+| Best for | Visual workflows, broad app coverage | Simple automations, widest integration library | AI workflows, high volume, developers |
+
+For a deeper Zapier vs alternatives comparison, see my [n8n vs Zapier post](/blog/n8n-vs-zapier).
+
+## What Make Does Best
+
+**Visual complexity management.** Large, branching workflows that would be incomprehensible as text-based automation are readable in Make's scenario builder. This is Make's clearest competitive advantage.
+
+**Non-developer accessibility.** You can build genuinely sophisticated workflows in Make without writing a line of code. The learning curve is real (the operations model, routers, iterators can take time to internalize) but it's shallower than n8n.
+
+**Broad integration coverage.** 1,800+ native integrations covers most tools a business will encounter. The HTTP module handles the rest.
+
+**Data processing.** Array handling, aggregators, and built-in data transformation functions make Make strong for workflows that need to process multi-record payloads.
+
+## Honest Cons
+
+**Operations pricing can surprise you.** Complex workflows burn through operations fast. If you're processing high volumes, the cost math changes significantly compared to the entry-level pricing.
+
+**No self-hosting.** For users who want to run automation infrastructure on their own servers (for cost or privacy reasons), Make isn't an option.
+
+**AI agent workflows are limited.** Multi-step agentic AI workflows (LLM decides what action to take next based on results) are hard to build in Make. n8n is notably better here.
+
+**The learning curve is real.** Make is easier than n8n, but it's more complex than Zapier. Understanding routers, iterators, and aggregators takes time and experimentation.
+
+**15-minute minimum interval on free plan.** If you need near-real-time automation on a budget, the free plan won't work.
+
+## Who Make.com Is Best For
+
+**Business operators who want visual clarity.** If you want to see exactly what your automations are doing and why, Make's builder is the best in class.
+
+**Non-developers building complex workflows.** For teams without engineering resources, Make lets you build multi-step, multi-branch workflows that would require custom code in most other tools.
+
+**Teams with diverse app stacks.** 1,800+ integrations means less time building custom API connections.
+
+**Moderate-volume automation at fair price.** The Core plan at $9/month is exceptional value for straightforward automation needs.
+
+## Who Should Look Elsewhere
+
+**High-volume processing.** If you're running millions of operations monthly, n8n self-hosted is dramatically cheaper.
+
+**AI agent workflows.** n8n is the better platform for building agentic AI systems.
+
+**Developers who want code-first control.** n8n's code integration is more flexible and powerful.
+
+## My Rating
+
+**4.2/5**
+
+- Visual builder: 5/5
+- Integration library: 4.5/5
+- Pricing value: 4/5 (excellent for low-medium volume, less so at high volume)
+- AI capabilities: 3.5/5
+- Developer experience: 3/5
+
+Make.com is a genuinely excellent automation platform for the right user profile. If you're a business owner or marketer who wants sophisticated automation without writing code and values clear visual representation of your workflows, Make is hard to beat.
+
+**[Start with Make.com free →](https://www.make.com/en/register?pc=automationwarrior)**
+
+---
+
+*Compare Make against n8n in detail: [n8n vs Make: Which Should You Choose?](/blog/n8n-vs-make)*
