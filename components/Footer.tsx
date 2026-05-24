@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+const PHONE = "702-276-6921";
+const PHONE_TEL = "tel:7022766921";
+
 export default function Footer() {
   return (
     <footer className="footer-section">
@@ -16,6 +19,13 @@ export default function Footer() {
                 className="footer-logo"
                 style={{ objectFit: "contain" }}
               />
+              <a
+                href={PHONE_TEL}
+                className="footer-menu-link"
+                style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginTop: "12px", fontSize: "14px" }}
+              >
+                📞 {PHONE}
+              </a>
             </div>
             <div className="footer-block2">
               <div className="footer-column1">

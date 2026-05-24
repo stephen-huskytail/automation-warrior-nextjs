@@ -1,4 +1,6 @@
 const BOOK_URL = "/book-a-call";
+const PHONE = "702-276-6921";
+const PHONE_TEL = "tel:7022766921";
 
 export default function CtaSection() {
   return (
@@ -9,7 +11,10 @@ export default function CtaSection() {
             <div className="content-box-650">
               <h2 className="heading-h2">What do you want to build with AI?</h2>
               <p className="text-paragraph">Let&apos;s see how much capacity we can unlock in your business.</p>
-              <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+                <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
+                <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
+              </div>
             </div>
           </div>
         </div>
