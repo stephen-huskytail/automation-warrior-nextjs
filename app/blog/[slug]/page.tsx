@@ -7,9 +7,8 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { MDXContent } from "@/components/MDXContent";
 import AffiliateDisclosure from "@/components/AffiliateDisclosure";
-import AuthorBox from "@/components/AuthorBox";
-import TableOfContents from "@/components/TableOfContents";
 import StarRating from "@/components/StarRating";
+import BlogSidebar from "@/components/BlogSidebar";
 import { blog as posts } from "@/.velite";
 
 interface Props {
@@ -139,7 +138,7 @@ function buildBreadcrumbSchema(post: ReturnType<typeof getPost>) {
   };
 }
 
-function getRelatedPosts(currentPost: ReturnType<typeof getPost>, limit = 3) {
+function getRelatedPosts(currentPost: ReturnType<typeof getPost>, limit = 4) {
   if (!currentPost) return [];
   const currentTags = new Set(currentPost.tags);
   return posts
@@ -163,9 +162,16 @@ export default async function BlogPost({ params }: Props) {
   const schemas = buildSchemas(post);
   const breadcrumbSchema = buildBreadcrumbSchema(post);
 
+  const sidebarRelated = relatedPosts.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt,
+    date: p.date,
+    tags: p.tags,
+  }));
+
   return (
     <>
-      {/* JSON-LD Schemas */}
       {schemas.map((schema, i) => (
         <script
           key={i}
@@ -184,116 +190,90 @@ export default async function BlogPost({ params }: Props) {
       <main className="page-wrapper">
         <Header />
         <div id="scroll" className="main-wrapper">
-          <article className="blog-post-section">
+          <div className="blog-post-page">
             <div className="padding-global">
-              <div className="blog-post-container">
 
-                {/* Visual Breadcrumb */}
-                <nav className="blog-breadcrumb" aria-label="Breadcrumb">
-                  <Link href="/" className="blog-breadcrumb-link">Home</Link>
-                  <span className="blog-breadcrumb-sep">›</span>
-                  <Link href="/blog" className="blog-breadcrumb-link">Blog</Link>
-                  <span className="blog-breadcrumb-sep">›</span>
-                  <span className="blog-breadcrumb-current">{post.title}</span>
-                </nav>
+              {/* Breadcrumb — full width above columns */}
+              <nav className="blog-breadcrumb" aria-label="Breadcrumb">
+                <Link href="/" className="blog-breadcrumb-link">Home</Link>
+                <span className="blog-breadcrumb-sep">›</span>
+                <Link href="/blog" className="blog-breadcrumb-link">Blog</Link>
+                <span className="blog-breadcrumb-sep">›</span>
+                <span className="blog-breadcrumb-current">{post.title}</span>
+              </nav>
 
-                {/* Featured Image */}
-                {post.featured_image && (
-                  <div className="blog-post-hero">
-                    <Image
-                      src={post.featured_image}
-                      alt={post.image_alt || post.title}
-                      width={1200}
-                      height={630}
-                      className="blog-post-hero-img"
-                      priority
-                    />
-                  </div>
-                )}
+              {/* Two-column layout */}
+              <div className="blog-two-col">
 
-                {/* Affiliate Disclosure */}
-                <AffiliateDisclosure />
+                {/* ── LEFT: Main Content ── */}
+                <article className="blog-main-col">
 
-                {/* Post Header */}
-                <header className="blog-post-header">
-                  <div className="blog-post-meta">
-                    <span className="blog-card-date">{formatDate(post.date)}</span>
-                    {post.updatedDate && post.updatedDate !== post.date && (
-                      <span className="blog-post-updated">
-                        Updated {formatDate(post.updatedDate)}
-                      </span>
-                    )}
-                    <span className="blog-post-reading-time">{post.readingTime} min read</span>
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="blog-card-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h1 className="blog-post-title">{post.title}</h1>
-                  <p className="blog-post-description">{post.description}</p>
-
-                  {/* Star Rating (review posts) */}
-                  {post.schema_type === "Review" && post.rating && (
-                    <StarRating rating={post.rating} />
+                  {/* Hero Image */}
+                  {post.featured_image && (
+                    <div className="blog-post-hero">
+                      <Image
+                        src={post.featured_image}
+                        alt={post.image_alt || post.title}
+                        width={1200}
+                        height={630}
+                        className="blog-post-hero-img"
+                        priority
+                      />
+                    </div>
                   )}
 
-                  <div className="blog-post-author-line">
-                    <span>By {post.author}</span>
-                  </div>
-                </header>
-
-                {/* Table of Contents */}
-                {post.toc.length > 0 && (
-                  <TableOfContents toc={post.toc} />
-                )}
-
-                {/* Content */}
-                <div className="blog-post-body">
-                  <MDXContent code={post.content} />
-                </div>
-
-                {/* Author Box */}
-                <AuthorBox name={post.author} />
-
-                {/* Related Posts */}
-                {relatedPosts.length > 0 && (
-                  <section className="related-posts">
-                    <h2 className="related-posts-heading">Related Articles</h2>
-                    <div className="related-posts-grid">
-                      {relatedPosts.map((related) => (
-                        <Link
-                          key={related.slug}
-                          href={`/blog/${related.slug}`}
-                          className="related-post-card"
-                        >
-                          <div className="related-post-meta">
-                            <span className="blog-card-date">{formatDate(related.date)}</span>
-                            {related.tags[0] && (
-                              <span className="blog-card-tag">{related.tags[0]}</span>
-                            )}
-                          </div>
-                          <h3 className="related-post-title">{related.title}</h3>
-                          <p className="related-post-excerpt">{related.excerpt}</p>
-                        </Link>
+                  {/* Post Header */}
+                  <header className="blog-post-header">
+                    <div className="blog-post-meta">
+                      <span className="blog-card-date">{formatDate(post.date)}</span>
+                      {post.updatedDate && post.updatedDate !== post.date && (
+                        <span className="blog-post-updated">
+                          Updated {formatDate(post.updatedDate)}
+                        </span>
+                      )}
+                      <span className="blog-post-reading-time">{post.readingTime} min read</span>
+                      {post.tags.slice(0, 2).map((tag) => (
+                        <span key={tag} className="blog-card-tag">{tag}</span>
                       ))}
                     </div>
-                  </section>
-                )}
+                    <h1 className="blog-post-title">{post.title}</h1>
+                    <p className="blog-post-description">{post.description}</p>
 
-                {/* CTA */}
-                <div className="blog-post-cta">
-                  <p className="blog-post-cta-text">
-                    Ready to automate your business workflows?
-                  </p>
-                  <Link href="/book-a-call" className="primary-button">
-                    Book a free call →
-                  </Link>
-                </div>
+                    {post.schema_type === "Review" && post.rating && (
+                      <StarRating rating={post.rating} />
+                    )}
+
+                    <div className="blog-post-author-line">
+                      <span>By {post.author}</span>
+                    </div>
+                  </header>
+
+                  {/* Affiliate Disclosure */}
+                  <AffiliateDisclosure />
+
+                  {/* Body */}
+                  <div className="blog-post-body">
+                    <MDXContent code={post.content} />
+                  </div>
+
+                  {/* Mobile-only CTA (shown below content on small screens) */}
+                  <div className="blog-mobile-cta">
+                    <p className="blog-post-cta-text">Ready to automate your business?</p>
+                    <Link href="/strategy" className="primary-button">Book a free call →</Link>
+                  </div>
+
+                </article>
+
+                {/* ── RIGHT: Sidebar ── */}
+                <BlogSidebar
+                  toc={post.toc}
+                  relatedPosts={sidebarRelated}
+                  authorName={post.author}
+                />
 
               </div>
             </div>
-          </article>
+          </div>
 
           <Footer />
         </div>
