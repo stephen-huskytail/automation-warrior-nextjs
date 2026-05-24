@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.automationwarrior.ai"),
@@ -39,6 +41,8 @@ export default function RootLayout({
       <body>
         {children}
         {/* JS is injected dynamically by CustomCursor component — no blocking */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
