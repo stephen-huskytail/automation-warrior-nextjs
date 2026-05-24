@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -73,6 +74,17 @@ export default function BlogIndex() {
                         href={`/blog/${post.slug}`}
                         className="blog-card"
                       >
+                        {post.featured_image && (
+                          <div className="blog-card-thumb">
+                            <Image
+                              src={post.featured_image}
+                              alt={post.image_alt || post.title}
+                              width={600}
+                              height={340}
+                              className="blog-card-thumb-img"
+                            />
+                          </div>
+                        )}
                         <div className="blog-card-inner">
                           <div className="blog-card-meta">
                             <span className="blog-card-date">
