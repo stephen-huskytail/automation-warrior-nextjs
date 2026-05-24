@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 const BOOK_URL = "/book-a-call";
+const PHONE = "702-276-6921";
+const PHONE_TEL = "tel:7022766921";
 
 export default function Hero() {
   return (
@@ -15,8 +17,8 @@ export default function Hero() {
               </p>
             </div>
             <div className="button-group">
+              <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
               <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
-              <a href="#clients" className="secondary-button mobile-hide">Learn More</a>
             </div>
           </div>
         </div>
