@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BOOK_URL = "/book-a-call";
+const PHONE = "702-276-6921";
+const PHONE_TEL = "tel:7022766921";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,6 +71,7 @@ export default function Header() {
 
               {/* Desktop CTA */}
               <div className="header-button-box">
+                <a href={PHONE_TEL} className="nav-link" style={{ fontVariantNumeric: "tabular-nums" }}>📞 {PHONE}</a>
                 <a href={BOOK_URL} className="header-button">Book a call</a>
               </div>
 
@@ -91,6 +94,7 @@ export default function Header() {
               <a href="#services" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#services")}>Services</a>
               <a href="#process" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#process")}>Process</a>
               <Link href="/blog" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Blog</Link>
+              <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
             </div>
           </div>
