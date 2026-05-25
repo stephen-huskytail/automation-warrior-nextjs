@@ -20,7 +20,7 @@ export default function TermsPage() {
             <div className="padding-global">
               <div className="legal-page-container">
                 <h1 className="legal-page-heading">Terms of Use</h1>
-                <p className="legal-page-date">Last updated: May 9, 2026</p>
+                <p className="legal-page-date">Last updated: May 25, 2026</p>
 
                 <p className="legal-page-text">
                   By accessing automationwarrior.ai (the &quot;Site&quot;), you agree to these
@@ -43,30 +43,63 @@ export default function TermsPage() {
                   frequently — always verify with the source before making purchasing decisions.
                 </p>
 
+                <h2 className="legal-page-subheading">Earnings &amp; Results Disclaimer</h2>
+                <p className="legal-page-text">
+                  Any results, statistics, or outcomes referenced on this Site — including but
+                  not limited to claims such as increased booking volume, lead generation
+                  improvements, or percentage of tasks automated — represent examples or averages
+                  and are <strong>not guaranteed</strong>. Individual results will vary based on
+                  your industry, business model, implementation, team, and numerous other factors
+                  outside our control.
+                </p>
+                <p className="legal-page-text">
+                  Nothing on this Site constitutes a guarantee of income, revenue, or specific
+                  business outcomes. We make no representation that you will achieve similar
+                  results by using AI automation tools or services referenced or recommended here.
+                  Any forward-looking statements about business improvement are illustrative only.
+                </p>
+
                 <h2 className="legal-page-subheading">Affiliate Relationships</h2>
                 <p className="legal-page-text">
                   This Site participates in affiliate programs. We may earn commissions when you
                   purchase products or services through links on this Site. This does not affect
-                  the price you pay or our editorial independence.
+                  the price you pay or our editorial independence. See our full{" "}
+                  <a href="/affiliate-disclosure" className="legal-page-link">
+                    Affiliate Disclosure
+                  </a>{" "}
+                  for details.
                 </p>
 
                 <h2 className="legal-page-subheading">No Warranty</h2>
                 <p className="legal-page-text">
                   This Site is provided &quot;as is&quot; without any warranty, express or
                   implied. We do not guarantee that the Site will be error-free or uninterrupted.
+                  We make no warranty regarding the accuracy, completeness, or reliability of any
+                  content on the Site.
                 </p>
 
                 <h2 className="legal-page-subheading">Limitation of Liability</h2>
                 <p className="legal-page-text">
                   To the maximum extent permitted by law, Automation Warrior is not liable for any
-                  indirect, incidental, or consequential damages arising from your use of this
-                  Site or reliance on its content.
+                  indirect, incidental, consequential, or punitive damages arising from your use
+                  of this Site, reliance on its content, or your use of any tools or services
+                  referenced here.
                 </p>
 
                 <h2 className="legal-page-subheading">External Links</h2>
                 <p className="legal-page-text">
-                  This Site contains links to third-party websites. We are not responsible for the
-                  content, privacy practices, or terms of those sites.
+                  This Site contains links to third-party websites, including affiliate and
+                  partner sites. We are not responsible for the content, privacy practices,
+                  accuracy, or terms of those sites. Linking to a third-party site does not
+                  constitute an endorsement beyond what is stated in our editorial content.
+                </p>
+
+                <h2 className="legal-page-subheading">Governing Law</h2>
+                <p className="legal-page-text">
+                  These Terms are governed by the laws of the State of Nevada, without regard to
+                  conflict of law principles. Any disputes arising from use of this Site shall be
+                  subject to the exclusive jurisdiction of the courts located in Clark County,
+                  Nevada.
                 </p>
 
                 <h2 className="legal-page-subheading">Changes to Terms</h2>
