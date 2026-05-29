@@ -935,6 +935,23 @@ ul { list-style: none; margin: 0; padding: 0; }
   gap: 10px;
 }
 
+.product-card-badge {
+  color: #fff;
+  letter-spacing: -0.02em;
+  background-color: #ff453326;
+  border: 1px solid #ff453380;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1em;
+  position: absolute;
+  top: -32px;
+  right: 20px;
+  z-index: 2;
+}
+
 .product-card-title,
 .product-card-description,
 .product-card-best-for {
