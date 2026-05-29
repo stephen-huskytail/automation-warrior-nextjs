@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const BOOK_URL = "/book-a-call";
 const PLANS_HASH = "#services";
 
@@ -96,13 +94,6 @@ export default function ServicesSection() {
                 </article>
               ))}
             </div>
-          </div>
-
-          <div className="services-button-box">
-            <a href={BOOK_URL} className="primary-button">
-              <span>Book a Strategy Call</span>
-              <Image src="/images/svgviewer-output-1.svg" alt="" width={18} height={18} className="button-icon" />
-            </a>
           </div>
         </div>
       </div>
