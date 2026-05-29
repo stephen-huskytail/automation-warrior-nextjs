@@ -18,6 +18,7 @@ const products = [
     ],
     bestFor: "solo operators and small teams who want one capable agent handling the busywork.",
     blobPosition: "left" as const,
+    badge: null,
   },
   {
     name: "AI Operations Team",
@@ -33,6 +34,7 @@ const products = [
     ],
     bestFor: "businesses that want a full AI team handling operations across multiple functions.",
     blobPosition: "right" as const,
+    badge: "Most popular",
   },
 ];
 
@@ -71,6 +73,7 @@ export default function ServicesSection() {
                 <article className="service-item-box product-card" key={product.name}>
                   <GradientBlob position={product.blobPosition} />
                   <div className="product-card-header">
+                    {product.badge ? <span className="product-card-badge">{product.badge}</span> : null}
                     <h3 className="heading-h3-large product-card-title">{product.name}</h3>
                     <p className="product-card-description">{product.description}</p>
                   </div>
