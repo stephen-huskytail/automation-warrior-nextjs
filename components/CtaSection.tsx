@@ -9,8 +9,8 @@ export default function CtaSection() {
         <div className="container">
           <div className="cta-block">
             <div className="content-box-650">
-              <h2 className="heading-h2">What do you want to build with AI?</h2>
-              <p className="text-paragraph">Let&apos;s see how much capacity we can unlock in your business.</p>
+              <h2 className="heading-h2">Ready to put an AI agent to work?</h2>
+              <p className="text-paragraph">Book a call and we&apos;ll help you pick the right plan for your business.</p>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
                 <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
                 <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
