@@ -1,6 +1,40 @@
 import Image from "next/image";
 
 const BOOK_URL = "/book-a-call";
+const PLANS_HASH = "#services";
+
+const products = [
+  {
+    name: "AI Operator",
+    description: "One AI agent that learns your business and works where you do.",
+    price: "$497/mo",
+    setup: "+ $997 one-time setup",
+    bullets: [
+      "A single agent that lives in Slack or Telegram",
+      "Learns your business, handles tasks, makes connections",
+      "3 million tokens/mo included",
+      "Up to 2 tool integrations",
+      "30 minutes of human support each month",
+    ],
+    bestFor: "solo operators and small teams who want one capable agent handling the busywork.",
+    blobPosition: "left" as const,
+  },
+  {
+    name: "AI Operations Team",
+    description: "Five coordinated AI agents working as a team — not five chatbots.",
+    price: "$1,997/mo",
+    setup: "+ $4,500 one-time setup",
+    bullets: [
+      "A coordinated team with defined roles: intake, builder, specialist, quality review, and reporting",
+      "One specialist agent configured to your business: social media, content, sales, support, and more",
+      "15 million tokens/mo included",
+      "Up to 5 tool integrations",
+      "2 hours of human support each month",
+    ],
+    bestFor: "businesses that want a full AI team handling operations across multiple functions.",
+    blobPosition: "right" as const,
+  },
+];
 
 function GradientBlob({ position }: { position: "left" | "right" | "right-blue" | "bottom" }) {
   const cls =
@@ -32,60 +66,32 @@ export default function ServicesSection() {
               <h2 className="heading-h2">Address your biggest business needs.</h2>
             </div>
 
-            <div className="service-column">
-              {/* Card 1 - AI Prompt Engineering */}
-              <div className="service-item-box">
-                <GradientBlob position="left" />
-                <h3 className="heading-h3-large">AI Prompt Engineering</h3>
-                <p className="service-text">
-                  Unlock the full potential of your AI systems with our expert AI Prompt Engineering
-                  services! In today&apos;s fast-paced digital landscape, the ability to craft precise
-                  and effective prompts is crucial for maximizing the performance of your AI models.
-                  Our team of skilled professionals specializes in designing tailored prompts that
-                  ensure your AI delivers accurate, relevant, and high-quality outputs every time.
-                  Whether you&apos;re looking to enhance customer interactions, streamline workflows, or
-                  generate insightful data, our prompt engineering solutions will empower your AI to
-                  achieve remarkable results.
-                </p>
-              </div>
-
-              {/* Card 2 - AI Workflow Automation */}
-              <div className="service-item-box">
-                <GradientBlob position="right" />
-                <h3 className="heading-h3-large">AI Workflow Automation</h3>
-                <p className="service-text">
-                  Transform your small business with our AI Automation Service, designed to
-                  streamline operations and enhance efficiency. We analyze your existing workflows to
-                  identify tailored automation opportunities, seamlessly integrating various
-                  applications and systems, including CRMs and task management tools. This approach
-                  reduces costs and provides real-time data access for informed decision-making,
-                  freeing you from high overhead expenses. Embrace the future of business with our
-                  custom AI solutions to optimize tasks or overhaul your entire workflow, unlocking
-                  your business&apos;s full potential and boosting productivity.
-                </p>
-              </div>
-
-              {/* Card 3 - AI Agent Building (spans 2 cols) */}
-              <div className="service-item-box span-2">
-                <GradientBlob position="right-blue" />
-                <GradientBlob position="bottom" />
-                <h3 className="heading-h3-large">AI Agent Building</h3>
-                <p className="service-text">
-                  Transform the way you interact with customers and streamline operations through our
-                  AI Agent Development service. We specialize in creating intelligent, responsive AI
-                  agents tailored to your specific business needs. These agents can handle customer
-                  inquiries, automate routine tasks, and provide personalized experiences, all while
-                  learning and adapting to improve their performance over time. By integrating AI
-                  agents into your operations, you can enhance customer satisfaction, reduce response
-                  times, and free up valuable resources for your team.
-                  <br /><br />
-                  Our expert team collaborates with you to design and develop AI agents that
-                  seamlessly integrate with your existing systems. We focus on building solutions
-                  that not only meet your immediate needs but also scale as your business grows.
-                  Contact us today to discover how our AI agents can revolutionize your business
-                  operations and elevate your customer engagement!
-                </p>
-              </div>
+            <div className="service-column product-card-column">
+              {products.map((product) => (
+                <article className="service-item-box product-card" key={product.name}>
+                  <GradientBlob position={product.blobPosition} />
+                  <div className="product-card-header">
+                    <h3 className="heading-h3-large product-card-title">{product.name}</h3>
+                    <p className="product-card-description">{product.description}</p>
+                  </div>
+                  <div className="product-card-price-row">
+                    <span className="product-card-price">{product.price}</span>
+                    <span className="product-card-setup">{product.setup}</span>
+                  </div>
+                  <ul className="product-card-list">
+                    {product.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                  <p className="product-card-best-for">
+                    <strong>Best for:</strong> {product.bestFor}
+                  </p>
+                  <div className="product-card-buttons">
+                    <a href={PLANS_HASH} className="secondary-button">See plans</a>
+                    <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
 

@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 const BOOK_URL = "/book-a-call";
+const PLANS_HASH = "#services";
 const PHONE = "702-276-6921";
 const PHONE_TEL = "tel:7022766921";
 
@@ -15,9 +14,16 @@ export default function Hero() {
               <p className="text-paragraph">
                 We build Generative AI Automation Workflows &amp; AI Agents that accelerate your business.
               </p>
+              <div className="hero-offer-lines">
+                <p className="hero-price-anchor">Done-for-you AI agents for your business. Plans start at $497/mo.</p>
+                <p className="hero-buyer-statement">
+                  Built for service businesses and busy owners who need to get more done without hiring more people.
+                </p>
+              </div>
             </div>
             <div className="button-group">
               <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
+              <a href={PLANS_HASH} className="secondary-button">See plans</a>
               <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
             </div>
           </div>

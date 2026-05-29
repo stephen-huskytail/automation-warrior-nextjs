@@ -250,6 +250,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   gap: 24px;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 /* ─── Content Boxes ─────────────────────────────────────────────── */
@@ -347,6 +348,12 @@ ul { list-style: none; margin: 0; padding: 0; }
   background-color: #ffffff1a;
 }
 
+.header-button-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .header-button {
   background-color: var(--red);
   color: #fff;
@@ -364,6 +371,25 @@ ul { list-style: none; margin: 0; padding: 0; }
 .header-button:hover {
   background-color: #ff220e;
   box-shadow: 0 4px 10px -2px #0000000d, 0 2px 2px -1px #0000001a, 0 0 0 5px #ff45331f;
+}
+
+.header-secondary-button {
+  color: #fff;
+  letter-spacing: -0.02em;
+  background-color: #0a0a0a80;
+  border-radius: 12px;
+  padding: 9px 13px;
+  font-family: Satoshi, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 4px 10px -2px #0000001a, 0 2px 2px -1px #0000001a, 0 0 0 1px #ffffff14;
+}
+
+.header-secondary-button:hover {
+  box-shadow: 0 4px 10px -2px #0000000d, 0 2px 2px -1px #0000001a, 0 0 0 4px #ffffff14;
 }
 
 /* Mobile hamburger */
@@ -435,6 +461,25 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-top: 10px;
 }
 
+.mobile-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #0a0a0a80;
+  color: #fff;
+  letter-spacing: -0.02em;
+  border-radius: 12px;
+  justify-content: center;
+  padding: 12px 18px;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-decoration: none;
+  margin-top: 10px;
+  box-shadow: 0 0 0 1px #ffffff14;
+}
+
 /* ─── HERO / BANNER ─────────────────────────────────────────────── */
 .banner-section {
   display: flex;
@@ -461,6 +506,34 @@ ul { list-style: none; margin: 0; padding: 0; }
   flex-direction: column;
   gap: 24px;
   width: 100%;
+}
+
+.hero-offer-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-price-anchor,
+.hero-buyer-statement {
+  color: #999;
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: Satoshi, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.4em;
+}
+
+.hero-price-anchor {
+  font-size: 16px;
+}
+
+.hero-buyer-statement {
+  max-width: 680px;
+  font-size: 18px;
 }
 
 /* Conic gradient blobs */
@@ -793,6 +866,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .services-section {
   padding-top: 37px;
   padding-bottom: 37px;
+  scroll-margin-top: 110px;
 }
 
 .services-inner {
@@ -839,6 +913,102 @@ ul { list-style: none; margin: 0; padding: 0; }
   font-size: 16px;
   font-weight: 500;
   line-height: 1.4em;
+}
+
+.product-card-column {
+  align-items: stretch;
+}
+
+.product-card {
+  gap: 22px;
+  padding: 40px 28px;
+}
+
+.product-card > *:not(.service-background-box) {
+  position: relative;
+  z-index: 1;
+}
+
+.product-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-card-title,
+.product-card-description,
+.product-card-best-for {
+  text-align: left;
+}
+
+.product-card-description,
+.product-card-setup,
+.product-card-list,
+.product-card-best-for {
+  color: #999;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: Satoshi, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.4em;
+}
+
+.product-card-description {
+  font-size: 17px;
+}
+
+.product-card-price-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-card-price {
+  color: #fff;
+  letter-spacing: -0.02em;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.1em;
+}
+
+.product-card-setup {
+  font-size: 16px;
+}
+
+.product-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  font-size: 16px;
+}
+
+.product-card-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+}
+
+.product-card-list li::before {
+  content: "•";
+  color: #fff;
+}
+
+.product-card-best-for {
+  font-size: 16px;
+}
+
+.product-card-best-for strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.product-card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
 }
 
 /* Service gradient blobs */
@@ -1478,6 +1648,18 @@ ul { list-style: none; margin: 0; padding: 0; }
 @media screen and (max-width: 767px) {
   .banner-section {
     padding-top: 110px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .button-group .primary-button,
+  .button-group .secondary-button,
+  .product-card-buttons .primary-button,
+  .product-card-buttons .secondary-button {
+    width: 100%;
   }
 
   .heading-h1 {
