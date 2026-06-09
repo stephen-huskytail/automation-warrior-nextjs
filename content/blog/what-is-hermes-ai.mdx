@@ -1,0 +1,186 @@
+---
+title: "What Is Hermes AI? The Open-Source LLM Model Explained"
+description: "Hermes AI by Nous Research is an open-source LLM built for agents and automation. Learn what makes it different from ChatGPT and how to use it."
+date: "2026-06-09"
+slug: "what-is-hermes-ai"
+tags: ["Hermes AI", "Open Source AI", "Nous Research"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/what-is-hermes-ai.jpg"
+image_alt: "Hermes AI open-source LLM model by Nous Research with neural network visualization"
+schema_type: "Article"
+---
+
+If you have been paying attention to the open-source AI space, you have probably heard the name **Hermes** floating around developer forums, Reddit threads, and GitHub repos. But what exactly is it, and why do so many AI practitioners swear by it over closed-source alternatives?
+
+Hermes AI is a family of open-source large language models built by **Nous Research** — fine-tuned specifically for instruction-following, function calling, and agentic workflows. It is not a chatbot. It is a working model designed to follow your instructions precisely, call tools reliably, and operate inside autonomous systems without over-refusing legitimate requests.
+
+Here is what you need to know.
+
+## Quick Summary
+
+- **Hermes AI** is a series of open-source LLMs by Nous Research, fine-tuned for agents and automation
+- The latest version, **Hermes 4.3**, is a 36B-parameter model with a 512K token context window
+- It leads open-source models in **function calling reliability** and minimal refusals
+- You can run it locally via Ollama, vLLM, or llama.cpp — no API fees
+- Nous Research also released **Hermes Agent**, a self-improving AI agent framework built on top of the model
+
+## Who Is Nous Research?
+
+Nous Research is an American AI research lab focused on open-source language models. They are not a megacorp. They are a lean team of researchers who believe AI models should be transparent, reproducible, and available to everyone — not locked behind API paywalls.
+
+Their philosophy is simple: train world-class models, release the weights, and let developers build what they want without artificial guardrails getting in the way.
+
+Since 2023, Nous Research has released dozens of models, but the Hermes series is their flagship. It is what put them on the map and what keeps their community growing.
+
+## The Hermes Model Family: A Brief History
+
+The Hermes series has evolved rapidly. Here is the lineage:
+
+| Version | Base Model | Release | Key Improvement |
+|---------|-----------|---------|-----------------|
+| Hermes 1 | LLaMA | 2023 | First instruction-tuned Hermes release |
+| Hermes 2 Pro | LLaMA 3 8B/70B | 2024 | Dedicated function-calling tokens |
+| Hermes 3 | LLaMA 3.1 8B/70B/405B | August 2024 | 128K context, reliable tool calling, agentic capabilities |
+| Hermes 4 | LLaMA 3.1 70B/405B | August 2025 | Hybrid reasoning mode, RefusalBench leader |
+| Hermes 4.3 | ByteDance Seed 36B | December 2025 | 512K context, 70B-class performance at 36B size |
+
+Each version has pushed the boundaries of what open-source models can do in production environments. Hermes 3 was the version that made enterprise teams take notice. Hermes 4.3 is the version that made them switch.
+
+## Key Features That Set Hermes Apart
+
+### Reliable Function Calling and Tool Use
+
+This is the feature that matters most for anyone building AI agents or automation workflows.
+
+Since Hermes 2 Pro, the model has used dedicated tokens — `<tools>`, `<tool_call>`, `<tool_response>` — for structured function calling. This is not a hack or a prompt engineering trick. The model was trained to emit properly formatted JSON tool calls as a core behavior.
+
+In practice, this means Hermes models can reliably call APIs, query databases, trigger workflows, and interact with external systems. If you are building [AI agents for business automation](/blog/gohighlevel-ai-agents), function calling reliability is not optional — it is the entire foundation.
+
+Hermes 4.3 improved schema adherence specifically to reduce runtime errors in complex multi-tool workflows. For teams running production agent pipelines, fewer parsing failures means fewer crashed runs and less babysitting.
+
+### Minimal Refusals (RefusalBench)
+
+Here is where Hermes gets controversial — and where it genuinely shines for business use.
+
+Most commercial AI models (ChatGPT, Claude, Gemini) are heavily filtered. They refuse requests that are completely legitimate because their safety training is overly broad. Ask a commercial model to write a negotiation script or draft a legal demand letter and you might get a refusal. Ask it to help with competitive analysis and it might hedge so much that the output is useless.
+
+Hermes takes a different approach. Nous Research's philosophy is **user-aligned, minimally filtered, and highly steerable**. The model follows your system prompt and instructions precisely, without second-guessing whether your request is appropriate.
+
+The numbers tell the story:
+- **GPT-4o**: ~17% on RefusalBench (refuses 83% of edge-case prompts)
+- **Claude**: ~17% on RefusalBench
+- **Hermes 4.3**: 74.6% on RefusalBench (answers nearly 3 out of 4)
+
+This is not about removing safety guardrails. It is about a model that trusts you to set the boundaries via your system prompt, then follows your instructions without over-filtering. For business automation where over-refusal breaks workflows, this is a concrete advantage.
+
+### Hybrid Reasoning Mode
+
+Hermes 4 introduced a thinking mode similar to what you see in [frontier AGI-class models](/blog/what-is-agi). The model can work through multi-step reasoning inside `<think>...</think>` blocks before producing a final answer.
+
+This is particularly useful for:
+- Complex planning and decomposition tasks
+- Multi-step tool selection decisions
+- Math, logic, and coding problems where step-by-step reasoning improves accuracy
+
+Hermes 4.3 scores 93.8% on MATH-500 and 71.9% on AIME 2024 — numbers that would have been frontier-model territory just a year ago, achieved by a 36B open-source model you can run on your own hardware.
+
+### Fully Open Source and Self-Hosted
+
+Every Hermes model is available on HuggingFace with open weights. You can download it, run it on your own GPU, and never send a single token to an external API.
+
+This matters for:
+- **Privacy**: Your data never leaves your infrastructure
+- **Cost**: No per-token API charges — run as many queries as your hardware supports
+- **Control**: Customize the system prompt, fine-tune further on your own data, or modify behavior without asking permission
+- **Uptime**: No rate limits, no API outages, no pricing changes
+
+You can run Hermes locally through Ollama (the easiest option), vLLM (for production serving), or llama.cpp (for maximum hardware efficiency). The 36B Hermes 4.3 model runs on a single GPU with 24-32GB of VRAM when quantized to Q4.
+
+## Hermes 3 vs Hermes 4 vs Hermes 4.3
+
+If you are deciding which version to use, here is the practical breakdown:
+
+**Hermes 3 (LLaMA 3.1 base)** — Still widely used. Available at 8B, 70B, and 405B sizes. The 8B version runs on consumer hardware and is great for lightweight agentic tasks. The 70B and 405B versions are production-grade. Best choice if you need a LLaMA-based model for compatibility reasons.
+
+**Hermes 4 (LLaMA 3.1 base)** — Adds hybrid reasoning mode and significantly reduced refusals. The 70B version is excellent for complex reasoning tasks. Choose this if you need strong reasoning on LLaMA architecture.
+
+**Hermes 4.3 (ByteDance Seed 36B base)** — The current flagship. Delivers 70B-class performance in a 36B model, which means lower hardware requirements and faster inference. The 512K context window is massive. Best choice for most new deployments, especially agent workflows.
+
+For most people reading this, **Hermes 4.3 is the model to start with**. It hits the sweet spot of performance, efficiency, and capability.
+
+## Hermes AI vs ChatGPT vs Claude
+
+How does Hermes stack up against the commercial heavyweights? Here is an honest comparison:
+
+| Feature | Hermes 4.3 | ChatGPT (GPT-4o) | Claude (Sonnet) |
+|---------|-----------|------------------|----------------|
+| Open source | ✅ Full open weights | ❌ Closed | ❌ Closed |
+| Self-hosted | ✅ Run locally | ❌ API only | ❌ API only |
+| Function calling | ✅ Excellent | ✅ Excellent | ✅ Good |
+| Refusal rate | Low (74.6% RefusalBench) | High (~17%) | High (~17%) |
+| Reasoning mode | ✅ Hybrid think mode | ✅ o-series models | ✅ Extended thinking |
+| Context window | 512K tokens | 128K tokens | 200K tokens |
+| Cost | Free (your hardware) | $5-20/M tokens | $3-15/M tokens |
+| Coding ability | Strong | Excellent | Excellent |
+| General knowledge | Good | Excellent | Excellent |
+
+If you need raw general knowledge and the absolute best coding ability, ChatGPT and Claude still have an edge at the frontier level. Read our [ChatGPT for business guide](/blog/chatgpt-for-business) for a deep dive on what GPT-4o does well.
+
+But if you need an AI model that runs on your own infrastructure, follows instructions without over-filtering, and integrates reliably into agent workflows — Hermes is genuinely competitive and improving fast.
+
+## The Hermes Agent Framework
+
+In February 2026, Nous Research released **Hermes Agent** — a separate product from the model itself. It is an open-source (MIT licensed), Python-based AI agent runtime that uses Hermes models as its brain.
+
+What makes Hermes Agent interesting:
+- **Self-improving**: It creates skills from experience and improves them during use
+- **Persistent memory**: It remembers context across sessions and builds a model of who you are
+- **Model-agnostic**: Supports 400+ models via Nous Portal, Ollama, vLLM, and any OpenAI-compatible endpoint
+- **Fully local**: Can run entirely on your own hardware with no external API calls
+
+As of June 2026, Hermes Agent has over 32K GitHub stars and is on version 0.16.0. It is one of the most actively developed open-source agent frameworks available.
+
+For teams building [automation workflows with tools like n8n and Zapier](/blog/n8n-vs-zapier), Hermes Agent represents the next evolution — an AI that does not just connect apps, but actually reasons about what to do and learns from the results.
+
+## Who Should Use Hermes AI?
+
+Hermes is not for everyone. Here is who benefits most:
+
+**Developers building AI agents** — If you are building autonomous systems that need reliable function calling, tool use, and instruction adherence, Hermes is purpose-built for this use case.
+
+**Privacy-conscious businesses** — If your data cannot leave your infrastructure (legal, healthcare, finance), self-hosted Hermes gives you frontier-adjacent AI capabilities without any data exposure.
+
+**Teams tired of over-refusals** — If commercial AI models keep refusing legitimate business requests or hedging their outputs into uselessness, Hermes will follow your instructions as written.
+
+**Cost-conscious operators** — If you are running thousands of AI queries per day and API costs are adding up, local Hermes inference eliminates per-token charges entirely.
+
+**Hobbyists and researchers** — If you want to experiment with AI models, fine-tune on custom data, or understand how LLMs work from the inside, open weights are the only way to do it.
+
+## FAQs
+
+### Is Hermes AI free to use?
+
+Yes. All Hermes models are open-source and available for free on HuggingFace. You download the weights and run them on your own hardware. There are no licensing fees for commercial use (check the specific license for each version — Hermes 3 uses LLaMA's license, Hermes 4.3 uses ByteDance Seed's license).
+
+### Can I run Hermes on my laptop?
+
+It depends on the model size. The Hermes 3 8B version can run on a modern laptop with 16GB of RAM using Ollama with quantization. Hermes 4.3 at 36B needs a GPU with 24-32GB of VRAM for reasonable performance. For the larger 70B and 405B models, you need serious server hardware.
+
+### How does Hermes compare to LLaMA directly?
+
+Hermes models are fine-tuned versions of base models (LLaMA, ByteDance Seed). They add instruction-following, function calling, and reduced refusals on top of the base model's capabilities. Think of it like this: LLaMA is the engine, Hermes is the tuned vehicle built for a specific purpose.
+
+### Is Hermes safe to use in production?
+
+Nous Research designs Hermes to be steerable via system prompts. You set the safety boundaries. For production use, you should implement your own content filtering and guardrails appropriate to your use case, just as you would with any model. The model itself is stable and well-tested — Hermes 3 and 4 are running in production agent pipelines at multiple companies.
+
+### What hardware do I need for Hermes 4.3?
+
+For the quantized (Q4) version of Hermes 4.3 36B, you need a GPU with 24-32GB of VRAM. An NVIDIA RTX 4090 (24GB) or A100 (40GB/80GB) works well. For CPU-only inference via llama.cpp, expect significantly slower performance but it is technically possible with 64GB+ of system RAM.
+
+## The Bottom Line
+
+Hermes AI is the model you use when you need an AI that actually does what you tell it to do. No over-refusals. No hedging. No API dependency. Just a well-trained open-source model that excels at the agentic, tool-calling, automation-heavy workflows that matter for real business operations.
+
+If you are exploring how AI agents and automation can transform your business operations, [book a free strategy session](https://automationwarrior.ai) with our team. We will map out exactly where AI creates the most value in your specific workflow — whether that means open-source models like Hermes, commercial APIs, or a hybrid approach.
