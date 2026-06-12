@@ -14,7 +14,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Notify the Automation Warrior team
-    await resend.emails.send({
+    // resend.emails.send() reports API failures via {error}, it does NOT throw —
+    // the result must be checked or a failed send still returns success:true
+    const { error: notifyError } = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
       replyTo: email,
@@ -36,8 +38,13 @@ export async function POST(req: NextRequest) {
       `,
     });
 
-    // Auto-reply to the prospect
-    await resend.emails.send({
+    if (notifyError) {
+      console.error("[book-a-call] team notification FAILED — lead NOT delivered:", notifyError, name, email);
+      return NextResponse.json({ error: "Failed to send. Please email us directly." }, { status: 502 });
+    }
+
+    // Auto-reply to the prospect — failure logged, doesn't fail the request (lead was delivered)
+    const { error: replyError } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "We got your message — talk soon!",
@@ -56,6 +63,8 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+
+    if (replyError) console.error("[book-a-call] auto-reply failed (lead WAS delivered):", replyError, email);
 
     return NextResponse.json({ success: true });
   } catch (err) {
