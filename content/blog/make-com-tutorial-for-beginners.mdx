@@ -1,0 +1,246 @@
+---
+title: "Make.com Tutorial for Beginners: Build Your First Automation"
+description: "Learn how to build your first Make.com automation step by step. This beginner tutorial covers scenarios, modules, triggers, and real workflow examples."
+date: "2026-06-21"
+slug: "make-com-tutorial-for-beginners"
+tags: ["Make.com", "Automation", "Tutorial", "No-Code"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/make-com-tutorial-for-beginners.jpg"
+image_alt: "Make.com automation workflow tutorial with connected modules and glowing nodes"
+schema_type: "Article"
+---
+
+You keep hearing about Make.com, you know it can automate repetitive work, but every time you log in you stare at a blank canvas and wonder where to start. That was me three years ago — and now I build Make.com scenarios for clients that save them 20+ hours a week.
+
+This tutorial walks you through everything from creating your free account to building a real, working automation in under 30 minutes. No code. No prior experience. Just follow along.
+
+> **Quick Summary**
+>
+> - Make.com uses a visual canvas where you drag and connect modules to build automations called scenarios
+> - You can start with a free account that includes 1,000 operations per month — enough to learn and test
+> - Every scenario starts with a trigger module that watches for an event, followed by action modules that do the work
+> - Filters, routers, and error handlers let you build logic without writing any code
+> - Your first scenario can be live and running in under 30 minutes
+
+## What Is Make.com and How Does It Work?
+
+[Make.com](/blog/make-com-review) (formerly Integromat) is a visual automation platform. Instead of writing code to connect your apps, you build workflows by dragging modules onto a canvas and connecting them with lines.
+
+Each automation is called a **scenario**. A scenario has three core pieces:
+
+1. **Trigger module** — watches for a specific event (new email, form submission, new CRM contact)
+2. **Action modules** — perform tasks in response (send a message, create a spreadsheet row, update a record)
+3. **Connections** — the lines between modules that carry data from one step to the next
+
+The visual approach is what makes Make.com different from tools like [Zapier](/blog/zapier-review). Instead of building a linear list of steps, you design a flowchart where you can see branching paths, loops, and error handling all at once.
+
+Make.com supports over 1,800 app integrations out of the box, and for anything not natively supported, you can use HTTP/webhook modules to connect virtually any API.
+
+## Step 1: Create Your Free Make.com Account
+
+Head to [make.com](https://www.make.com) and click **Get started free**. You'll need an email address — that's it.
+
+The free plan gives you:
+
+- **1,000 operations per month** (each module execution counts as one operation)
+- **2 active scenarios** running simultaneously
+- **15-minute minimum interval** for scheduled triggers
+
+This is more than enough to build your first few automations and learn the platform. For comparison, [Zapier's free tier gives you just 100 tasks per month](/blog/make-vs-zapier) — so Make.com gives you ten times the room to experiment.
+
+Once you're in, you'll land on the dashboard. Click **Create a new scenario** to open the visual editor.
+
+## Step 2: Understand the Scenario Editor
+
+The scenario editor is a blank canvas with a few key elements:
+
+- **The canvas** — your workspace where modules live and connect
+- **The toolbar** (bottom) — controls for running, scheduling, and configuring your scenario
+- **The module menu** (the large + icon) — where you search for and add app modules
+
+When you click the center **+** icon, Make.com shows a search bar. Type any app name — Google Sheets, Slack, Gmail, HubSpot — and you'll see available triggers and actions for that app.
+
+Every module you add needs a **connection** — that's Make.com's term for linking your account credentials. You only set up each connection once, and Make.com stores it securely for all future scenarios.
+
+## Step 3: Build Your First Scenario (Google Sheets to Email)
+
+Let's build something real. Here's the use case: every time a new row is added to a Google Sheet (like a contact form submission), Make.com automatically sends a notification email.
+
+### Add the Trigger Module
+
+1. Click the **+** icon on the canvas
+2. Search for **Google Sheets**
+3. Select **Watch New Rows**
+4. Connect your Google account (one-time setup)
+5. Select the spreadsheet and worksheet you want to monitor
+6. Click **OK**
+
+Make.com now knows to check this sheet for new rows on a schedule.
+
+### Add the Action Module
+
+1. Click the **+** icon that appears to the right of your trigger
+2. Search for **Email** (or Gmail, Outlook — whatever you use)
+3. Select **Send an Email**
+4. Connect your email account
+5. Map the fields:
+   - **To:** click into the field and select the email column from your Google Sheet data
+   - **Subject:** type something like "New form submission from" and then click to insert the name column
+   - **Body:** compose your message, mixing static text with dynamic data from the sheet
+
+The key concept here is **data mapping**. When you click into any field in an action module, Make.com shows you all the data available from previous modules. You click to insert dynamic values — no formulas, no code.
+
+### Test Your Scenario
+
+Before turning it on, test it:
+
+1. Add a sample row to your Google Sheet
+2. Click **Run once** in the bottom toolbar
+3. Watch the modules light up as data flows through them
+
+If everything is green, your scenario works. You'll see the exact data that moved through each module, which makes debugging straightforward.
+
+### Turn It On
+
+Click the **Scheduling** toggle in the bottom-left corner. Choose how often Make.com should check for new rows — every 15 minutes is the minimum on the free plan. Click **OK** and your automation is live.
+
+That's it. You just built your first Make.com automation.
+
+## Key Concepts Every Beginner Should Know
+
+Now that you have a working scenario, here are the concepts that will take you from beginner to confident builder.
+
+### Filters
+
+Filters sit between two modules and act as gates. Only data that matches your condition passes through. For example: only send an email if the "Priority" column equals "High."
+
+To add a filter, click the line connecting two modules and set your condition. Filters use simple logic — equals, contains, greater than — and you can combine multiple conditions with AND/OR.
+
+### Routers
+
+A router splits your scenario into multiple paths. Data hits the router and flows down every path simultaneously (or conditionally, if you add filters to each branch).
+
+Use case: a new lead comes in. One path sends a welcome email. Another path creates a CRM contact. A third path notifies your sales team on Slack. All three happen from a single trigger.
+
+### Error Handlers
+
+Things break. APIs go down, rate limits hit, data comes in malformed. Make.com lets you attach error handlers to any module:
+
+- **Ignore** — skip the error and continue
+- **Resume** — use a fallback value and continue
+- **Rollback** — undo everything in this execution
+- **Break** — pause the scenario and alert you
+
+Error handling is one of the reasons I recommend Make.com over simpler tools for anything beyond basic automations. When you're running workflows that touch real business data, you need to know what happens when something fails.
+
+### Aggregators and Iterators
+
+- **Iterator** — takes an array (like a list of line items) and processes each one individually
+- **Aggregator** — takes multiple items and bundles them back into one (like combining rows into a single summary)
+
+These two modules are what let you handle batch operations — processing all items in an order, looping through a list of contacts, or summarizing data from multiple sources.
+
+## Five Practical Scenarios to Build Next
+
+Once your first automation is running, here are five scenarios that deliver immediate business value:
+
+### 1. Lead Notification Pipeline
+
+**Trigger:** New form submission (Typeform, Google Forms, or website webhook)
+**Actions:** Create contact in CRM → Send internal Slack notification → Send confirmation email to lead → Log to Google Sheet
+
+### 2. Social Media Content Distribution
+
+**Trigger:** New blog post published (RSS or webhook)
+**Actions:** Generate social post text → Post to LinkedIn → Post to Twitter/X → Post to Facebook page
+
+### 3. Invoice Follow-Up Automation
+
+**Trigger:** Scheduled (runs weekly)
+**Actions:** Check accounting software for overdue invoices → Filter by days overdue → Send reminder email with invoice link
+
+### 4. Meeting Notes Distribution
+
+**Trigger:** New calendar event ends (Google Calendar)
+**Actions:** Pull meeting notes from shared doc → Summarize key action items → Send summary to all attendees via email
+
+### 5. Customer Review Request
+
+**Trigger:** Project marked complete in project management tool
+**Actions:** Wait 3 days (delay module) → Send review request email → If no response after 7 days, send follow-up
+
+Each of these takes 15 to 30 minutes to build once you understand the basics. The [business automation guide](/blog/business-automation-guide) on this site covers which processes to automate first for maximum ROI.
+
+## Make.com Pricing: What You Need as You Grow
+
+The free plan works for learning and light personal use. When you're ready to scale:
+
+| Plan | Monthly Cost | Operations | Active Scenarios |
+|------|-------------|------------|-----------------|
+| Free | $0 | 1,000 | 2 |
+| Core | $10.59 | 10,000 | Unlimited |
+| Pro | $18.82 | 10,000 | Unlimited |
+| Teams | $34.12 | 10,000 | Unlimited |
+| Enterprise | Custom | Custom | Unlimited |
+
+The Pro plan is the sweet spot for most businesses — it adds features like custom variables, full-text log search, and priority execution that become essential once you're running production workflows.
+
+For a detailed breakdown of how these plans compare against alternatives, check the [Make.com vs Zapier comparison](/blog/make-vs-zapier).
+
+## Common Beginner Mistakes to Avoid
+
+After building hundreds of Make.com scenarios for clients, these are the mistakes I see most often:
+
+**Using too many modules in one scenario.** Start simple. A scenario with 3 to 5 modules is easier to maintain and debug than a 20-module monster. Break complex workflows into multiple scenarios that trigger each other.
+
+**Ignoring error handling.** Your scenario will eventually encounter a failed API call or bad data. Add error handlers from the start — not after your first data loss incident.
+
+**Not testing with real data.** The "Run once" button is your best friend. Always test with actual data before scheduling. Edge cases you didn't anticipate — empty fields, special characters, unexpected date formats — show up immediately in testing.
+
+**Forgetting about operation counts.** Every module execution costs one operation. A scenario with 10 modules that runs 100 times uses 1,000 operations. Plan your operation budget before building.
+
+**Skipping the documentation.** Name your scenarios clearly. Add notes to complex modules. Future you (or your team) will thank you when something needs updating six months later.
+
+## When Make.com Is the Right Choice
+
+Make.com is the right tool when you need visual, flexible automation without writing code. It excels at:
+
+- **Complex workflows** with branching logic, loops, and conditional paths
+- **Data transformation** — reformatting, filtering, and restructuring data between apps
+- **Cost-sensitive scaling** — running thousands of operations without enterprise-tier pricing
+- **API-heavy integrations** — the HTTP module handles any REST API, even without a native connector
+
+If your needs are simpler — basic two-step automations with minimal logic — [Zapier](/blog/zapier-review) might get you there faster. But for anything beyond linear workflows, Make.com's visual editor and pricing make it the stronger platform.
+
+For teams that want maximum control and self-hosting capability, [n8n](/blog/what-is-n8n) is worth evaluating as an open-source alternative. And if you need automation built into your CRM, marketing, and sales stack, a platform like [GoHighLevel](/blog/go-high-level-review) bundles automation with everything else.
+
+## FAQs
+
+### Is Make.com really free to start?
+
+Yes. The free plan includes 1,000 operations per month and 2 active scenarios. No credit card required. It's enough to build and test real automations before deciding whether to upgrade.
+
+### How long does it take to learn Make.com?
+
+Most people can build their first working scenario in 30 minutes. To become comfortable with filters, routers, and error handling, expect to spend a few hours over a week or two. The visual interface makes the learning curve significantly shorter than code-based tools.
+
+### Can Make.com replace Zapier?
+
+For most use cases, yes. Make.com handles everything Zapier does and offers more flexibility for complex workflows at a lower price point. The main tradeoff is that Zapier has more native app integrations (7,000+ vs 1,800+), though Make.com's HTTP module covers the gap.
+
+### What happens if my scenario fails?
+
+Make.com logs every execution with detailed error messages. You can set up error handlers to automatically retry, use fallback values, or pause the scenario and notify you. The execution history shows exactly which module failed and why.
+
+### Do I need coding experience to use Make.com?
+
+No. Make.com is designed for non-technical users. Everything is visual — drag modules, click to map data, set filters with dropdowns. That said, basic understanding of concepts like APIs, JSON, and data types will help you build more advanced scenarios faster.
+
+## Start Building
+
+The fastest way to learn Make.com is to build something real. Pick one repetitive task you do every week — a manual data transfer, a notification you send repeatedly, a report you compile from multiple sources — and automate it.
+
+Start with the free plan, follow the steps in this tutorial, and you'll have a working automation running before lunch.
+
+If you want help identifying which processes in your business would benefit most from automation, [book a free strategy session](https://automationwarrior.ai) and we'll map it out together.
