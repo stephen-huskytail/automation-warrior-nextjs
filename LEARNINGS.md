@@ -72,6 +72,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | Date | Slug |
 |------|------|
 | 2026-06-09 | what-is-hermes-ai |
+| 2026-06-27 | hermes-ai-vs-chatgpt |
 
 ### Automation Tips
 | Date | Slug |
@@ -88,7 +89,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-06-25
-- **Category:** Zapier
-- **Slug:** zapier-pricing-guide
-- **Next category in rotation:** Hermes AI
+- **Date:** 2026-06-27
+- **Category:** Hermes AI
+- **Slug:** hermes-ai-vs-chatgpt
+- **Next category in rotation:** Automation Tips
