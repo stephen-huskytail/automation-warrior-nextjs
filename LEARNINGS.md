@@ -25,6 +25,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-05-24 | gohighlevel-vs-clickfunnels |
 | 2026-05-24 | gohighlevel-vs-salesforce |
 | 2026-06-11 | gohighlevel-crm-tutorial |
+| 2026-07-01 | gohighlevel-email-marketing |
 
 ### n8n
 | Date | Slug |
@@ -90,7 +91,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-06-29
-- **Category:** Automation Tips
-- **Slug:** automated-lead-followup-system
-- **Next category in rotation:** GoHighLevel
+- **Date:** 2026-07-01
+- **Category:** GoHighLevel
+- **Slug:** gohighlevel-email-marketing
+- **Next category in rotation:** n8n
