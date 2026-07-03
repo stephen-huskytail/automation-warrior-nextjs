@@ -32,6 +32,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 |------|------|
 | 2026-06-02 | what-is-n8n |
 | 2026-06-13 | n8n-self-hosted-setup |
+| 2026-07-03 | n8n-ai-agent-workflows |
 
 ### AI/AGI/Claude
 | Date | Slug |
@@ -91,7 +92,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-01
-- **Category:** GoHighLevel
-- **Slug:** gohighlevel-email-marketing
-- **Next category in rotation:** n8n
+- **Date:** 2026-07-03
+- **Category:** n8n
+- **Slug:** n8n-ai-agent-workflows
+- **Next category in rotation:** AI/AGI/Claude
