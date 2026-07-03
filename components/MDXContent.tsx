@@ -26,9 +26,24 @@ const components = {
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
     <li className="mdx-li" {...props} />
   ),
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className="mdx-a" {...props} />
-  ),
+  a: ({ href = "", ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    // Affiliate links (via /go/ redirects or direct) must carry rel="sponsored"
+    const isAffiliate =
+      href.startsWith("/go/") ||
+      /affiliates\.gohighlevel\.com|try\.kartra\.com|app\.kartra\.com|go\.ontraport\.net/.test(href);
+    if (isAffiliate) {
+      return <a className="mdx-a" href={href} target="_blank" rel="sponsored nofollow noopener" {...props} />;
+    }
+    // Own-domain absolute URLs render as normal internal links
+    const internal = href.replace(/^https?:\/\/(www\.)?automationwarrior\.ai/, "");
+    if (internal !== href) {
+      return <a className="mdx-a" href={internal || "/"} {...props} />;
+    }
+    if (/^https?:\/\//.test(href)) {
+      return <a className="mdx-a" href={href} target="_blank" rel="noopener" {...props} />;
+    }
+    return <a className="mdx-a" href={href} {...props} />;
+  },
   blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote className="mdx-blockquote" {...props} />
   ),

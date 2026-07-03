@@ -2,6 +2,14 @@
 
 Tracks all published blog posts by category and date. Check this file before every run to avoid duplicate slugs.
 
+## Affiliate Link Policy (2026-07-03)
+
+- **Never paste raw affiliate URLs in posts.** Always link through the central redirect: `/go/<tool>`. Tracking codes live in one place: `app/go/[slug]/route.ts`.
+- Available slugs: `/go/gohighlevel`, `/go/kartra`, `/go/ontraport`. More (n8n, make, zapier, openai, anthropic) will be added as affiliate codes are obtained — check the route file before linking.
+- **Do not add inline disclosure blockquotes** (`> *Disclosure: ...*`) — the post template auto-renders a disclosure box on any post containing affiliate links.
+- Review posts must set frontmatter `schema_type: "Review"`, `tool_name`, and `rating` (only if a numeric rating is stated in the post body) to get review rich snippets.
+- Internal links must be relative paths (`/blog/foo`, `/book-a-call`), never `https://automationwarrior.ai/...`. Exception: a link to the bare homepage must be written `https://www.automationwarrior.ai/` (a bare `](/)` breaks the Velite build).
+
 ## Category Rotation Order
 
 GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → OpenAI → Zapier → Hermes AI → Automation Tips → [repeat]

@@ -28,6 +28,8 @@ declare module "@/.velite" {
     content: string;
     excerpt: string;
     toc: TocEntry[];
+    /** True when the raw MDX contains /go/ or known affiliate-domain links */
+    hasAffiliateLinks: boolean;
     readingTime: number;
   }
 

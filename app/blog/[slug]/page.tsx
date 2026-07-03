@@ -248,8 +248,8 @@ export default async function BlogPost({ params }: Props) {
                     </div>
                   </header>
 
-                  {/* Affiliate Disclosure */}
-                  <AffiliateDisclosure />
+                  {/* Affiliate Disclosure — only on posts that contain affiliate links */}
+                  {post.hasAffiliateLinks && <AffiliateDisclosure />}
 
                   {/* Body */}
                   <div className="blog-post-body">

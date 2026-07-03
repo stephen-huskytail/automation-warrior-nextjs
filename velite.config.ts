@@ -24,6 +24,11 @@ const blog = defineCollection({
     content: s.mdx(),
     excerpt: s.excerpt(),
     toc: s.toc(),
+    hasAffiliateLinks: s
+      .raw()
+      .transform((raw) =>
+        /\]\(\/go\/[a-z0-9-]+\)|affiliates\.gohighlevel\.com|try\.kartra\.com|app\.kartra\.com|go\.ontraport\.net/.test(raw)
+      ),
     readingTime: s.raw().transform((raw) => {
       const stripped = raw.replace(/^---[\s\S]*?---/, "").trim();
       const words = stripped.split(/\s+/).filter(Boolean).length;
