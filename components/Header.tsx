@@ -64,17 +64,17 @@ export default function Header() {
 
               {/* Desktop nav */}
               <nav className="header-nav">
-                <a href="#clients" className="nav-link" onClick={(e) => handleNavClick(e, "#clients")}>About Us</a>
+                <a href="#clients" className="nav-link" onClick={(e) => handleNavClick(e, "#clients")}>How it works</a>
+                <a href="#services" className="nav-link" onClick={(e) => handleNavClick(e, "#services")}>Pricing</a>
                 <a href="#results" className="nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-                <a href="#services" className="nav-link" onClick={(e) => handleNavClick(e, "#services")}>Services</a>
-                <a href="#process" className="nav-link" onClick={(e) => handleNavClick(e, "#process")}>Process</a>
+                <a href="#faq" className="nav-link" onClick={(e) => handleNavClick(e, "#faq")}>FAQ</a>
                 <Link href="/blog" className="nav-link">Blog</Link>
               </nav>
 
               {/* Desktop CTA */}
               <div className="header-button-box">
                 <a href={PHONE_TEL} className="nav-link" style={{ fontVariantNumeric: "tabular-nums" }}>📞 {PHONE}</a>
-                <a href={PLANS_HASH} className="header-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See plans</a>
+                <a href={PLANS_HASH} className="header-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See pricing</a>
                 <a href={BOOK_URL} className="header-button">Book a call</a>
               </div>
 
@@ -92,13 +92,13 @@ export default function Header() {
 
             {/* Mobile dropdown */}
             <div className={`mobile-menu-dropdown${menuOpen ? " open" : ""}`}>
-              <a href="#clients" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#clients")}>About Us</a>
+              <a href="#clients" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#clients")}>How it works</a>
+              <a href="#services" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#services")}>Pricing</a>
               <a href="#results" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-              <a href="#services" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#services")}>Services</a>
-              <a href="#process" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#process")}>Process</a>
+              <a href="#faq" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#faq")}>FAQ</a>
               <Link href="/blog" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Blog</Link>
               <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
-              <a href={PLANS_HASH} className="mobile-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See plans</a>
+              <a href={PLANS_HASH} className="mobile-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See pricing</a>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
             </div>
           </div>

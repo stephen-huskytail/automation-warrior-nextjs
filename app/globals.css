@@ -780,6 +780,11 @@ ul { list-style: none; margin: 0; padding: 0; }
   padding: 0;
 }
 
+/* 4-card variant (Week One section) — 2x2 so no orphan card */
+.approach-steps-grid.grid-two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .approach-step-card {
   height: 100%;
 }
@@ -1741,7 +1746,8 @@ ul { list-style: none; margin: 0; padding: 0; }
     padding-bottom: 12px;
   }
 
-  .approach-steps-grid {
+  .approach-steps-grid,
+  .approach-steps-grid.grid-two-col {
     grid-template-columns: 1fr;
   }
 

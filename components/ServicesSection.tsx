@@ -1,38 +1,42 @@
 const BOOK_URL = "/book-a-call";
-const PLANS_HASH = "#services";
+const FAQ_HASH = "#faq";
 
 const products = [
   {
     name: "AI Operator",
-    description: "One AI agent that learns your business and works where you do.",
+    description: "One AI agent that learns your business and works where you already do — Slack or Telegram.",
     price: "$497/mo",
     setup: "+ $997 one-time setup",
+    mathLine: "An ops hire runs $4,000+/mo before taxes. Your AI Operator is $497 — and it never sleeps.",
     bullets: [
-      "A single agent that lives in Slack or Telegram",
-      "Learns your business, handles tasks, makes connections",
-      "3 million tokens/mo included",
-      "Up to 2 tool integrations",
-      "30 minutes of human support each month",
+      "Answers new-lead inquiries in minutes — nights and weekends included",
+      "Drafts follow-ups, quotes, and emails in your voice for you to approve",
+      "Keeps your CRM updated and preps your morning brief before your coffee",
+      "Connected to 2 of your tools — GoHighLevel, Google Calendar, Gmail, Slack, and more",
+      "30 minutes of human support each month, plus a weekly report of everything it did",
     ],
-    bestFor: "solo operators and small teams who want one capable agent handling the busywork.",
+    bestFor: "solo operators and small teams who want their busywork handled this month, not this quarter.",
+    finePrint: "Includes 3M AI tokens/mo — thousands of tasks for a typical business.",
     blobPosition: "left" as const,
-    badge: null,
+    badge: "Start here",
   },
   {
     name: "AI Operations Team",
-    description: "Five coordinated AI agents working as a team — not five chatbots.",
+    description: "Five coordinated AI agents with defined roles — an operations department, not five chatbots.",
     price: "$1,997/mo",
     setup: "+ $4,500 one-time setup",
+    mathLine: "Five roles covered for less than half the cost of one salary.",
     bullets: [
-      "A coordinated team with defined roles: intake, builder, specialist, quality review, and reporting",
-      "One specialist agent configured to your business: social media, content, sales, support, and more",
-      "15 million tokens/mo included",
-      "Up to 5 tool integrations",
-      "2 hours of human support each month",
+      "A coordinated team: intake, builder, specialist, quality review, and reporting",
+      "One specialist configured to your business — social media, content, sales, or support",
+      "Agents check each other's work before it reaches you",
+      "Connected to 5 of your tools across sales, marketing, and operations",
+      "2 hours of human support each month, plus weekly performance reports",
     ],
-    bestFor: "businesses that want a full AI team handling operations across multiple functions.",
+    bestFor: "businesses ready to hand a whole function — not just tasks — to AI.",
+    finePrint: "Includes 15M AI tokens/mo. Operator customers can upgrade anytime — setup fee credited.",
     blobPosition: "right" as const,
-    badge: "Most popular",
+    badge: "When one agent isn't enough",
   },
 ];
 
@@ -62,8 +66,12 @@ export default function ServicesSection() {
         <div className="inner-container">
           <div className="services-inner">
             <div className="content-box-680">
-              <div className="sub-heading">Services</div>
-              <h2 className="heading-h2">Address your biggest business needs.</h2>
+              <div className="sub-heading">Pricing</div>
+              <h2 className="heading-h2">Hire your first AI employee.</h2>
+              <p className="text-paragraph">
+                Two plans, public pricing, no custom-quote runaround. No contracts — cancel anytime
+                and keep the workflows we built for you.
+              </p>
             </div>
 
             <div className="service-column product-card-column">
@@ -79,6 +87,7 @@ export default function ServicesSection() {
                     <span className="product-card-price">{product.price}</span>
                     <span className="product-card-setup">{product.setup}</span>
                   </div>
+                  <p className="product-card-best-for">{product.mathLine}</p>
                   <ul className="product-card-list">
                     {product.bullets.map((bullet) => (
                       <li key={bullet}>{bullet}</li>
@@ -87,8 +96,9 @@ export default function ServicesSection() {
                   <p className="product-card-best-for">
                     <strong>Best for:</strong> {product.bestFor}
                   </p>
+                  <p className="product-card-setup">{product.finePrint}</p>
                   <div className="product-card-buttons">
-                    <a href={PLANS_HASH} className="secondary-button">See plans</a>
+                    <a href={FAQ_HASH} className="secondary-button">Common questions</a>
                     <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
                   </div>
                 </article>

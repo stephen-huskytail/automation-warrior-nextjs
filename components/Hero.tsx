@@ -23,9 +23,10 @@ export default function Hero() {
             </div>
             <div className="button-group">
               <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
-              <a href={PLANS_HASH} className="secondary-button">See plans</a>
+              <a href={PLANS_HASH} className="secondary-button">See pricing</a>
               <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
             </div>
+            <p className="hero-buyer-statement">No contracts — cancel anytime.</p>
           </div>
         </div>
       </div>

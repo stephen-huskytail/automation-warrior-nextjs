@@ -7,8 +7,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.automationwarrior.ai"),
-  title: "Automation Warrior",
-  description: "We build Generative AI Automation Workflows & AI Agents that accelerate your business.",
+  title: "Done-For-You AI Agents for Service Businesses — from $497/mo | Automation Warrior",
+  description:
+    "Hire your first AI employee. Done-for-you AI agents that answer leads, chase invoices, and keep your CRM updated — from $497/mo. No contracts, cancel anytime.",
   alternates: {
     canonical: "https://www.automationwarrior.ai",
   },

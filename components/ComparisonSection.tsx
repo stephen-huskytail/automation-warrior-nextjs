@@ -18,21 +18,21 @@ export default function ComparisonSection() {
           <div className="comparison-inner">
             <div className="content-box-680">
               <div className="sub-heading">Comparison</div>
-              <h2 className="heading-h2">We&apos;re builders, not just consultants.</h2>
+              <h2 className="heading-h2">Your next hire doesn&apos;t need a desk.</h2>
             </div>
 
             <div className="comparison-column">
-              {/* Traditional consulting */}
+              {/* Hiring another employee */}
               <div className="comparison-item-box">
-                <h3 className="comparison-heading">Traditional consulting</h3>
+                <h3 className="comparison-heading">Hiring another employee</h3>
                 <div className="comparison-content-box">
                   <ul className="comparison-list">
                     {[
-                      "Experienced with advice, not action",
-                      "Slow waterfall-style project management",
-                      "High fees due to large overhead",
-                      "Lack understanding of cutting-edge techniques",
-                      "Senior partners pitch, junior staff deliver",
+                      "$4,000+/month before taxes, benefits, and overhead",
+                      "Weeks of interviews, months of ramp-up",
+                      "Works 40 hours, takes vacations and sick days",
+                      "One person, one set of skills",
+                      "Walks out the door with everything they learned",
                     ].map((text, i) => (
                       <li key={i} className="comparison-list-item">
                         <Image src="/images/ej3g3mms4emam353ft.svg" alt="X" width={20} height={20} className="comparison-icon" />
@@ -56,11 +56,11 @@ export default function ComparisonSection() {
                 <div className="comparison-content-box">
                   <ul className="comparison-list">
                     {[
-                      "Experienced delivering solutions for businesses",
-                      "Build, test and iterate rapidly",
-                      "Competitive pricing",
-                      "Deep understanding of AI capabilities",
-                      "Our team scopes and delivers projects directly",
+                      "From $497/month, flat — no benefits, no overhead",
+                      "Trained on your business and working within days",
+                      "On duty 24/7 — nights, weekends, holidays",
+                      "Learns your whole playbook and keeps getting better",
+                      "Documented workflows your business keeps forever",
                     ].map((text, i) => (
                       <li key={i} className="comparison-list-item">
                         <Image src="/images/752zw0so6jymam35h6a.svg" alt="✓" width={20} height={20} className="comparison-icon" />

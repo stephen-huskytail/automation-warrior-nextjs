@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Book a Free AI Strategy Call | Automation Warrior",
+  description:
+    "30 minutes to map out where an AI agent can unlock capacity in your business. No pressure, no commitment.",
+  alternates: {
+    canonical: "https://www.automationwarrior.ai/strategy",
+  },
+};
 
 export default function StrategyPage() {
   return (

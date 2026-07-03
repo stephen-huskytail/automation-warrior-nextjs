@@ -2,12 +2,12 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import LogoMarquee from "@/components/LogoMarquee";
 import ApproachSection from "@/components/ApproachSection";
-import AboutSection from "@/components/AboutSection";
-import ResultsSection from "@/components/ResultsSection";
 import ServicesSection from "@/components/ServicesSection";
+import WeekOneSection from "@/components/WeekOneSection";
+import ResultsSection from "@/components/ResultsSection";
 import ComparisonSection from "@/components/ComparisonSection";
-import ProcessSection from "@/components/ProcessSection";
 import TeamSection from "@/components/TeamSection";
+import HomeFaqSection from "@/components/HomeFaqSection";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -22,12 +22,12 @@ export default function Home() {
           <Hero />
           <LogoMarquee />
           <ApproachSection />
-          <AboutSection />
-          <ResultsSection />
           <ServicesSection />
+          <WeekOneSection />
+          <ResultsSection />
           <ComparisonSection />
-          <ProcessSection />
           <TeamSection />
+          <HomeFaqSection />
           <CtaSection />
         </div>
         <Footer />
