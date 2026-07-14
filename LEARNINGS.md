@@ -61,6 +61,8 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 |------|------|
 | 2026-06-05 | kartra-vs-gohighlevel |
 | 2026-06-19 | kartra-vs-kajabi |
+| 2026-07-05 | kartra-vs-clickfunnels |
+| 2026-07-14 | kartra-pricing |
 
 ### Make.com
 | Date | Slug |
@@ -102,7 +104,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-09
-- **Category:** Ontraport
-- **Slug:** ontraport-pricing
-- **Next category in rotation:** Kartra
+- **Date:** 2026-07-14
+- **Category:** Kartra
+- **Slug:** kartra-pricing
+- **Next category in rotation:** Make.com
