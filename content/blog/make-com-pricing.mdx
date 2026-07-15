@@ -1,0 +1,196 @@
+---
+title: "Make.com Pricing 2026: Plans, Credits and Real Costs"
+description: "Make.com pricing in 2026 explained: compare Free, Core, Pro, Teams, credit limits, hidden usage costs, and the best plan for your automation needs."
+date: "2026-07-15"
+slug: "make-com-pricing"
+tags: ["Make.com", "Pricing", "Workflow Automation", "No-Code"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/make-com-pricing.jpg"
+image_alt: "Make.com pricing credits flowing through four red automation plan tiers on a dark cinematic dashboard"
+schema_type: "Article"
+---
+
+Make.com pricing starts at $0, while paid plans currently begin at $12 per month for 10,000 credits. That headline is simple. Estimating your real bill is not, because Make now uses credits, workflow volume can multiply quickly, and AI features do not always consume credits at the same fixed rate as ordinary app modules.
+
+I checked Make's current pricing page and credit documentation on July 15, 2026. This guide separates the published plan prices from the usage math so you can choose a plan based on the workflows you expect to run—not just the lowest monthly number.
+
+> **Quick Summary**
+>
+> - **Free:** $0 with up to 1,000 credits per month and two active scenarios
+> - **Core:** $12 per month for 10,000 credits, unlimited active scenarios, one-minute scheduling, and API access
+> - **Pro:** $21 per month for 10,000 credits, plus priority execution, custom variables, and full-text log search
+> - **Teams:** $38 per month for 10,000 credits, plus team roles and shared scenario templates
+> - **Enterprise:** Custom pricing with stronger security, support, governance, and overage protection
+> - Most non-AI modules use one credit per operation, but AI, file-processing, and code features can use credits dynamically
+
+## Make.com Pricing Plans at a Glance
+
+The table below reflects Make's published monthly prices at the 10,000-credit level. Higher credit allowances change the subscription price, and annual billing is advertised as saving 15% or more.
+
+| Plan | Published monthly price | Included credits | Best fit |
+|------|--------------------------:|-----------------:|----------|
+| Free | $0 | 1,000/month | Learning and light personal workflows |
+| Core | $12/month | 10,000/month | Small businesses running dependable automations |
+| Pro | $21/month | 10,000/month | Production workflows that need faster execution and better debugging |
+| Teams | $38/month | 10,000/month | Multiple builders sharing governance and templates |
+| Enterprise | Custom | Custom | Security-sensitive or high-scale organizations |
+
+Prices and plan details can change, so confirm the selector on [Make's official pricing page](https://www.make.com/en/pricing) before purchasing. The more important decision is how many credits your scenarios will consume.
+
+## How Make.com Credits Affect Your Real Cost
+
+Credits replaced operations as Make's billing unit. For most non-AI app modules, one operation equals one credit. Reading a record, writing a spreadsheet row, updating a CRM contact, or sending a message usually consumes one credit when that module runs.
+
+A basic estimate is:
+
+**Monthly credits = records processed × credit-using module runs per record × run frequency**
+
+Suppose a lead workflow receives 500 submissions each month. It creates a CRM contact, writes a spreadsheet row, sends an email, and posts an internal notification. Those four action modules can use roughly 2,000 credits, before counting any trigger checks, searches, retries, iterators, or additional branches.
+
+The math becomes less intuitive when bundles multiply. A search module may use one credit to return ten records, but the next action can run once for each record and use ten credits. An iterator can split one array into several bundles, causing every downstream action to run several times.
+
+Make's official documentation also identifies exceptions:
+
+- Routers, filters, and error-handler modules do not consume credits
+- Most non-AI modules use one credit per operation
+- Make Code uses two credits per second of execution time
+- Make's built-in AI provider can consume credits based on operations and tokens
+- Some AI, file, page, and processing-time features use dynamic credit rates
+- A custom AI-provider connection on a paid plan can keep Make usage operation-based, while the AI provider bills token usage separately
+
+That last point matters. A scenario that looks like five modules on the canvas may have a materially different cost depending on whether one module processes thousands of AI tokens or a large document. Review Make's [current credit rules](https://help.make.com/credits) and [feature-level usage guide](https://help.make.com/how-features-use-credits) when AI or document processing is central to the workflow.
+
+## Free Plan — Best for Learning
+
+Make's Free plan has no time limit and includes up to 1,000 credits per month. It provides the visual workflow builder, routers, filters, access to thousands of apps, customer support, and two active scenarios.
+
+The main constraints are a 15-minute minimum interval for scheduled runs, a five-minute maximum scenario execution time, smaller data-transfer and file-size limits, and seven days of execution-log storage.
+
+**Choose Free if:** you are learning the platform, prototyping a low-volume workflow, or automating a personal process where a 15-minute schedule is acceptable.
+
+**Avoid relying on Free if:** the workflow affects lead response, customer delivery, billing, or another process where delays and limited diagnostics create business risk.
+
+## Core Plan — The Practical Starting Point
+
+Core is $12 per month at 10,000 credits. It removes the two-scenario ceiling, enables one-minute scheduling, raises execution and file limits, extends detailed logs to 30 days, increases data transfer, and provides access to the Make API.
+
+This is the strongest value for a small business that has already proven its first automations. The upgrade buys operational reliability and room to grow, not just more credits.
+
+Core is often enough for workflows such as:
+
+- Form submission to CRM and email notification
+- Appointment reminders and follow-up tasks
+- Invoice or payment status alerts
+- New-order routing between e-commerce and fulfillment tools
+- Scheduled reporting that combines a few business systems
+
+**Choose Core if:** one-minute scheduling, unlimited active scenarios, and 10,000 monthly credits cover your expected volume.
+
+## Pro Plan — Better for Production Workflows
+
+Pro costs $21 per month at the 10,000-credit level. It adds priority scenario execution, custom variables, and full-text execution-log search.
+
+Those features are not exciting in a product comparison, but they become valuable when automations are part of daily operations. Custom variables make it easier to manage shared values across scenarios. Full-text log search reduces troubleshooting time. Priority execution helps during periods when platform demand is high.
+
+The extra $9 per month over Core is easy to justify if one failed or slow workflow can delay sales follow-up, reporting, or customer service.
+
+**Choose Pro if:** your scenarios are business-critical, you need stronger debugging, or several workflows depend on shared configuration.
+
+## Teams Plan — Pay for Coordination
+
+Teams costs $38 per month at 10,000 credits. It includes Pro features plus team roles and the ability to create and share scenario templates.
+
+The reason to choose Teams is governance. When several people build automations, shared templates can reduce inconsistent designs, while roles help control who can change connections and production scenarios.
+
+Do not upgrade solely because you have several employees. If one operator owns automation and everyone else only receives the output, Pro may be sufficient. Teams is useful when multiple people actively build, review, or maintain scenarios.
+
+**Choose Teams if:** collaboration, reusable standards, and access control are more valuable than the $17 monthly difference from Pro.
+
+## Enterprise — Security and Scale
+
+Enterprise uses custom pricing. Make lists custom functions, enterprise app integrations, 24/7 support, Value Engineering access, overage protection, advanced security features, longer log storage, and higher platform limits.
+
+Enterprise should solve a documented requirement. Examples include single sign-on, strict access controls, on-premises connectivity, enterprise-specific apps, advanced auditability, or a need to keep workflows running when normal credit limits are reached.
+
+**Choose Enterprise if:** security, compliance, governance, support response, or scale requirements cannot be met by Teams. Request a proposal and compare it against the cost of building and maintaining the same controls internally.
+
+## Hidden Costs to Include in the Decision
+
+Make's subscription is only one part of the total operating cost.
+
+### Extra credits and overages
+
+If you run out of credits, scenarios can stop until credits are added. Make says paid users can upgrade, purchase extra credits, or enable automatic purchasing on eligible plans. Budget against a realistic high-volume month rather than the average alone.
+
+### AI-provider charges
+
+A custom OpenAI, Anthropic, or Gemini connection can create a second bill. Make charges for the workflow operation, while the model provider charges for tokens. Built-in AI features may instead use Make credits dynamically.
+
+### Poorly designed scenarios
+
+Polling too frequently, repeating searches, processing unnecessary bundles, and allowing retries to loop can waste credits. A well-designed workflow can cost less than a messy workflow that produces the same business result.
+
+### Maintenance time
+
+Someone must monitor errors, update expired connections, respond to changed app APIs, and test scenario edits. A cheap automation that fails silently is more expensive than a slightly higher plan with usable logs and clear ownership.
+
+## Honest Pros and Cons of Make.com Pricing
+
+**Pros**
+
+- A permanent free plan provides a genuine learning path
+- Core and Pro are affordable entry points for capable visual automation
+- Credit tiers let usage scale without forcing an immediate enterprise contract
+- Routers, filters, and error handlers do not consume credits
+- Annual billing can reduce subscription cost after the platform is proven
+
+**Cons**
+
+- Credit consumption can be hard to predict when bundles multiply
+- AI and advanced features may use dynamic rates
+- Unused credits expire at the end of the billing term
+- Running out of credits can pause scenarios unless you add capacity
+- High-volume workflows may require comparison with execution-based or self-hosted alternatives
+
+For alternatives, compare [Make.com vs Zapier](/blog/make-vs-zapier), review the [n8n self-hosting setup](/blog/n8n-self-hosted-setup), and see the broader [business automation guide](/blog/business-automation-guide).
+
+## Which Make.com Plan Should You Choose?
+
+Use this decision framework:
+
+- **Free:** You are learning or testing one or two low-volume scenarios
+- **Core:** You need reliable one-minute scheduling and unlimited active scenarios
+- **Pro:** Production workflows require priority execution, shared variables, and searchable logs
+- **Teams:** Multiple builders need roles and reusable templates
+- **Enterprise:** Security, governance, support, or infrastructure requirements drive the purchase
+
+Before subscribing, map one real scenario. Count how often it runs, how many bundles it processes, and how many downstream modules execute for each bundle. Then add room for retries and growth. That estimate will tell you more than a generic plan recommendation.
+
+## Frequently Asked Questions
+
+### How much does Make.com cost per month?
+
+Make currently offers Free at $0, Core at $12, Pro at $21, and Teams at $38 per month at the 10,000-credit selection. Enterprise pricing is custom, and prices rise when you select more monthly credits.
+
+### What is a credit in Make.com?
+
+A credit is Make's billing unit. Most ordinary app modules use one credit per operation. Some AI and advanced features use credits based on tokens, file size, page count, processing time, or other usage factors.
+
+### Is Make.com free forever?
+
+The Free plan has no stated time limit. It includes up to 1,000 monthly credits, two active scenarios, and a 15-minute minimum interval for scheduled runs.
+
+### What happens when Make.com credits run out?
+
+Make says scenarios stop running until credits are available again, although incoming webhooks may queue within the account's storage allowance. Paid users can upgrade, buy extra credits, or use automatic extra-credit purchasing where available.
+
+### Is Core or Pro the better value?
+
+Core is better when you mainly need more scenarios, one-minute scheduling, and API access. Pro is worth the additional cost when faster execution, custom variables, and searchable logs reduce operational risk or troubleshooting time.
+
+## Final Verdict
+
+Make.com pricing is compelling for small and midsize automation workloads, but the plan name matters less than the credit model behind your scenarios. Free is excellent for learning. Core is the practical starting point for real business automation. Pro is the stronger default when workflows become operationally important, while Teams and Enterprise should be justified by collaboration, governance, or security requirements.
+
+Estimate usage before you buy, monitor actual credit consumption after launch, and optimize workflows before automatically moving to a larger tier. If you want help mapping automation volume to the right platform and plan, [book a strategy call](/strategy).
