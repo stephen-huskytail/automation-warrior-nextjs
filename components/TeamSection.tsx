@@ -24,11 +24,11 @@ const teamMembers: {
     text: "Drives internal efficiency, optimizes systems, and ensures smooth execution across all AI initiatives at Automation Warrior.",
   },
   {
-    name: "Viktor",
-    job: "Our own AI Operations Agent",
-    image: "/images/VA-1.jpg",
+    name: "Hermes",
+    job: "AI Employee",
+    image: "/images/Hermes-1.jpg",
     linkedin: null,
-    text: "The same kind of agent we sell, working on our own team — lead follow-up, reporting, content, and CRM, 24/7. We use what we build.",
+    text: "Hermes is a purpose-built AI agent designed to support the Automation Warrior team. From lead follow-up and reporting to content coordination and CRM updates, Hermes works 24/7 alongside the human team.",
   },
   {
     name: "Rhodora Villadegracia",
