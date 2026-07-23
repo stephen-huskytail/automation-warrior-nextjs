@@ -97,6 +97,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 |------|------|
 | 2026-06-10 | business-automation-guide |
 | 2026-06-29 | automated-lead-followup-system |
+| 2026-07-23 | small-business-workflow-automation |
 
 ## Draft Posts (not yet published)
 | Slug | Category |
@@ -108,7 +109,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-22
-- **Category:** Hermes AI
-- **Slug:** hermes-agent-business-automation
-- **Next category in rotation:** Automation Tips
+- **Date:** 2026-07-23
+- **Category:** Automation Tips
+- **Slug:** small-business-workflow-automation
+- **Next category in rotation:** GoHighLevel
