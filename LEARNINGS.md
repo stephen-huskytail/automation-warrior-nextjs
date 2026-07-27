@@ -50,6 +50,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-03 | what-is-agi |
 | 2026-06-15 | claude-ai-review |
 | 2026-07-07 | claude-vs-chatgpt |
+| 2026-07-27 | claude-code-automation-business |
 
 ### Ontraport
 | Date | Slug |
@@ -112,7 +113,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-26
-- **Category:** n8n
-- **Slug:** n8n-error-handling-workflow-recovery
-- **Next category in rotation:** AI/AGI/Claude
+- **Date:** 2026-07-27
+- **Category:** AI/AGI/Claude
+- **Slug:** claude-code-automation-business
+- **Next category in rotation:** Ontraport
