@@ -58,6 +58,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-04 | ontraport-review |
 | 2026-06-17 | ontraport-vs-gohighlevel |
 | 2026-07-09 | ontraport-pricing |
+| 2026-07-28 | ontraport-lead-scoring |
 
 ### Kartra
 | Date | Slug |
@@ -113,7 +114,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-27
-- **Category:** AI/AGI/Claude
-- **Slug:** claude-code-automation-business
-- **Next category in rotation:** Ontraport
+- **Date:** 2026-07-28
+- **Category:** Ontraport
+- **Slug:** ontraport-lead-scoring
+- **Next category in rotation:** Kartra
