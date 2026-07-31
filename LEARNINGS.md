@@ -83,6 +83,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-07 | chatgpt-for-business |
 | 2026-06-23 | chatgpt-api-guide |
 | 2026-07-17 | openai-pricing |
+| 2026-07-31 | custom-gpts-for-business |
 
 ### Zapier
 | Date | Slug |
@@ -116,7 +117,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-30
-- **Category:** Make.com
-- **Slug:** make-error-handling-reliable-automations
-- **Next category in rotation:** OpenAI
+- **Date:** 2026-07-31
+- **Category:** OpenAI
+- **Slug:** custom-gpts-for-business
+- **Next category in rotation:** Zapier
