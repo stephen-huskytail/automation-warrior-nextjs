@@ -91,6 +91,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-08 | zapier-review |
 | 2026-06-25 | zapier-pricing-guide |
 | 2026-07-20 | zapier-agents-guide |
+| 2026-08-01 | zapier-tables-guide |
 
 ### Hermes AI
 | Date | Slug |
@@ -117,7 +118,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-07-31
-- **Category:** OpenAI
-- **Slug:** custom-gpts-for-business
-- **Next category in rotation:** Zapier
+- **Date:** 2026-08-01
+- **Category:** Zapier
+- **Slug:** zapier-tables-guide
+- **Next category in rotation:** Hermes AI
