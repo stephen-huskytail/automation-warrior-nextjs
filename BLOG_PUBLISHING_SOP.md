@@ -20,7 +20,7 @@ A local checkout, a historical Multica run, or a green outer scheduler status is
 
 ## Control-plane rules
 
-- The recovery controller runs **daily at 17:30 UTC**. It may publish only when `origin/main` and the live site show that the next 48-hour slot is due and missing.
+- The recovery controller runs **daily at the scheduler-local time that resolves to 17:30 UTC**. It may publish only when `origin/main` and the live site show that the next 48-hour slot is due and missing. Before each DST boundary or scheduler-host change, read back `next_run_at` with its UTC offset and correct the expression. At the current `-07:00` offset, `30 10 * * *` resolves to 17:30 UTC.
 - Do not use a day-of-month `*/2` schedule as a 48-hour controller. It can reset at month boundaries and can drift from the actual publication ledger.
 - Before every run, the controller must `git fetch origin main`; it must never use a local branch or working tree as the publication baseline.
 - The controller's working directory must be the canonical checkout: `/home/sgardne0926/work/repos/automation-warrior-nextjs` (or a clean isolated worktree created from `origin/main`).
