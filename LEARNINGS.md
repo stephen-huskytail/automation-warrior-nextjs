@@ -2,6 +2,10 @@
 
 Tracks all published blog posts by category and date. Check this file before every run to avoid duplicate slugs.
 
+## Publication Control
+
+Follow [`BLOG_PUBLISHING_SOP.md`](BLOG_PUBLISHING_SOP.md) for the authoritative remote/live dedupe, 48-hour cadence controller, recovery, and release-verification procedure. A local checkout or scheduler status alone is not publication proof.
+
 ## Affiliate Link Policy (2026-07-03)
 
 - **Never paste raw affiliate URLs in posts.** Always link through the central redirect: `/go/<tool>`. Tracking codes live in one place: `app/go/[slug]/route.ts`.
