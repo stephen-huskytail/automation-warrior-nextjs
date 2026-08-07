@@ -39,6 +39,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-11 | gohighlevel-crm-tutorial |
 | 2026-07-01 | gohighlevel-email-marketing |
 | 2026-07-25 | gohighlevel-missed-call-text-back |
+| 2026-08-07 | gohighlevel-calendar-setup |
 
 ### n8n
 | Date | Slug |
@@ -124,7 +125,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-08-05
-- **Category:** Automation Tips
-- **Slug:** human-in-the-loop-automation
-- **Next category in rotation:** GoHighLevel
+- **Date:** 2026-08-07
+- **Category:** GoHighLevel
+- **Slug:** gohighlevel-calendar-setup
+- **Next category in rotation:** n8n
