@@ -48,6 +48,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-13 | n8n-self-hosted-setup |
 | 2026-07-03 | n8n-ai-agent-workflows |
 | 2026-07-26 | n8n-error-handling-workflow-recovery |
+| 2026-08-09 | n8n-webhook-security |
 
 ### AI/AGI/Claude
 | Date | Slug |
@@ -125,7 +126,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-08-07
-- **Category:** GoHighLevel
-- **Slug:** gohighlevel-calendar-setup
-- **Next category in rotation:** n8n
+- **Date:** 2026-08-09
+- **Category:** n8n
+- **Slug:** n8n-webhook-security
+- **Next category in rotation:** AI/AGI/Claude
