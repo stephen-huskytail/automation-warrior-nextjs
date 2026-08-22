@@ -112,6 +112,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-06-27 | hermes-ai-vs-chatgpt |
 | 2026-07-22 | hermes-agent-business-automation |
 | 2026-08-03 | hermes-agent-cron-jobs |
+| 2026-08-22 | hermes-agent-skills-guide |
 
 ### Automation Tips
 | Date | Slug |
@@ -132,7 +133,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-08-20
-- **Category:** Zapier
-- **Slug:** zapier-paths-guide
-- **Next category in rotation:** Hermes AI
+- **Date:** 2026-08-22
+- **Category:** Hermes AI
+- **Slug:** hermes-agent-skills-guide
+- **Next category in rotation:** Automation Tips

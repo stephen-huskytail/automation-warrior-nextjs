@@ -1,0 +1,518 @@
+---
+title: "Hermes Agent Skills: Build Reusable AI Workflows"
+description: "Learn how Hermes Agent skills turn proven procedures into reusable AI workflows with focused instructions, references, safety gates, and verification."
+date: "2026-08-22"
+slug: "hermes-agent-skills-guide"
+tags: ["Hermes Agent", "AI Skills", "AI Workflows", "Business Automation", "Agent Operations"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/hermes-agent-skills-guide.jpg"
+image_alt: "Hermes Agent skills library connecting reusable workflow modules to verified automation paths"
+schema_type: "Article"
+---
+
+**Hermes Agent skills** turn a proven procedure into reusable operating knowledge. Instead of pasting the same long prompt every time, you can give Hermes a focused playbook that explains when to use a workflow, which steps to follow, what can go wrong, and how to verify the result.
+
+That does not make every task automatic. A skill is guidance, not a guarantee. It works best when the process already has a clear source of truth, bounded permissions, an observable result, and an owner for exceptions. Used that way, skills help an AI agent repeat good operational judgment without loading an entire knowledge base into every conversation.
+
+> **Quick Summary**
+>
+> - Hermes Agent skills are on-demand knowledge documents for specific tasks.[1]
+> - Skills use progressive disclosure: a compact index is available first, full instructions load when needed, and supporting references load only when relevant.[1]
+> - Use a skill for procedural knowledge—how to perform and verify work. Use memory for compact durable facts, and tools for actual system access.[2]
+> - A useful skill defines trigger conditions, procedure, boundaries, pitfalls, and completion evidence.
+> - Installed skills can be invoked as slash commands or loaded through natural conversation.[1][2]
+> - Keep authoritative business data in the proper system of record; do not turn a skill into a stale copy of a CRM, price sheet, or approval ledger.
+> - Treat third-party skills as executable operating instructions: inspect the source, review bundled scripts, and grant only the tools and credentials the workflow needs.
+> - Update a skill when a real run exposes a missing step or stale instruction. Unmaintained procedures become operational risk.
+
+## Table of Contents
+
+- [What Hermes Agent Skills Are](#what-hermes-agent-skills-are)
+- [Skills vs Prompts, Memory, and Tools](#skills-vs-prompts-memory-and-tools)
+- [How Progressive Disclosure Works](#how-progressive-disclosure-works)
+- [What a Reliable Skill Should Contain](#what-a-reliable-skill-should-contain)
+- [How to Use Hermes Agent Skills](#how-to-use-hermes-agent-skills)
+- [How to Create a Reusable Skill](#how-to-create-a-reusable-skill)
+- [Example: Turn a Weekly Report Into a Skill](#example-turn-a-weekly-report-into-a-skill)
+- [Safety and Governance](#safety-and-governance)
+- [Testing and Maintenance](#testing-and-maintenance)
+- [Honest Limitations](#honest-limitations)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## What Hermes Agent Skills Are
+
+The official Hermes documentation describes skills as on-demand knowledge documents that the agent can load when needed.[1] A skill usually lives in a directory with a required `SKILL.md` file and optional supporting material such as references, templates, scripts, examples, or assets.
+
+The distinction matters. A one-time prompt tells the agent what to do now. A skill captures a reusable method for a class of work.
+
+Strong skill candidates include:
+
+- publishing a verified website release;
+- preparing a weekly operating report from named sources;
+- reviewing a pull request under a team's security rules;
+- converting a client document while preserving layout and accessibility;
+- triaging an inbox without sending messages automatically;
+- recovering a failed scheduled workflow without duplicating side effects.
+
+Each example has repeatable steps, predictable evidence, and known failure modes. Those are the ingredients of useful procedural knowledge.
+
+A weak skill is merely a broad persona or aspiration: “Be an excellent marketer,” “manage operations,” or “make this better.” Those instructions do not define a trigger, source, boundary, or completion test. The agent may sound capable while producing inconsistent work.
+
+A stronger skill says:
+
+1. use this procedure when a specific condition is true;
+2. inspect these authoritative sources first;
+3. perform these bounded actions in order;
+4. stop at these approval or risk boundaries;
+5. verify these exact outcomes before reporting completion.
+
+That structure makes the skill reviewable by a person and usable by the agent.
+
+## Skills vs Prompts, Memory, and Tools
+
+Skills are one layer in an agent workflow. They do not replace prompts, memory, tools, or systems of record.
+
+### A prompt defines the current assignment
+
+The prompt supplies the task-specific context: the client, date range, target record, requested output, and any one-time constraints. Even when a skill is loaded, the prompt still needs to identify the work to perform.
+
+Use the prompt for details that change from run to run. Do not create a new skill for every report date or article slug.
+
+### A skill defines the reusable procedure
+
+The skill explains how this class of work should be handled. It can name the normal sequence, validation rules, output format, common pitfalls, and escalation path.
+
+The official day-to-day skills guide describes skills as procedural knowledge—how to do things—while memory is factual knowledge about what things are.[2]
+
+### Memory stores compact durable facts
+
+Memory can retain a preference, timezone, standard naming convention, or stable working context. It should stay compact because memory may be injected broadly across sessions.
+
+Do not store a long deployment runbook in memory. That belongs in a skill. Do not store a customer's current balance or an approval decision only in a skill. That belongs in the business system that owns the record.
+
+### Tools provide capabilities
+
+Tools let the agent read a file, search the web, use a browser, run a command, query a CRM, or create an artifact. A skill can tell Hermes when and how to use those tools, but the skill does not create access by itself.
+
+If a workflow needs a browser or a specific API and that capability is unavailable, the correct outcome is a visible blocker—not an invented result.
+
+### Systems of record hold current state
+
+Current customers belong in the CRM. Publication state belongs in the remote repository and live website. Approved prices belong in the maintained pricing source. A skill should point to those sources and explain how to reconcile them; it should not duplicate volatile data that will quietly go stale.
+
+If you are still deciding whether a process is suitable for an agent, start with an [AI automation audit](/blog/ai-automation-audit). Clarify the workflow before turning it into reusable instructions.
+
+## How Progressive Disclosure Works
+
+A large skill library can contain far more material than any single task needs. Hermes addresses that with progressive disclosure.[1]
+
+The official skills reference describes three practical levels:
+
+1. a compact skill list with names and descriptions;
+2. the full main skill document when a matching procedure is needed;
+3. a specific supporting file when the task requires deeper detail.[1]
+
+That architecture keeps specialized knowledge available without loading every runbook, template, and troubleshooting note into every request.
+
+Consider a client-operations skill with separate references for social calendars, meeting follow-up, lead enrichment, and approval documents. A request to prepare a meeting brief may need the main workflow and one meeting reference. It does not need the lead-generation API notes or a PDF template.
+
+Progressive disclosure improves focus, but only if the skill is organized well.
+
+### Keep the main skill as a decision map
+
+The main `SKILL.md` should help the agent answer:
+
+- Does this skill apply?
+- Which subflow matches the request?
+- What are the universal rules?
+- Which supporting reference should load next?
+- What evidence is required at the end?
+
+### Move deep detail into references
+
+Provider-specific commands, long checklists, client exceptions, schema definitions, and dated incident patterns belong in focused reference files. Load them only when the current task matches.
+
+### Put deterministic mechanics in scripts
+
+If the same inputs should always produce the same mechanical result, a tested script is safer than asking the model to improvise. The skill can instruct the agent when to run the script, what arguments are allowed, and how to interpret its exit status.
+
+### Use templates for stable output contracts
+
+A report layout, approval sheet, issue format, or handoff packet can live as a template. That reduces formatting drift while leaving the task-specific analysis to the agent.
+
+The result is not “more context.” It is the right context at the right point in the workflow.
+
+## What a Reliable Skill Should Contain
+
+The Hermes skills reference provides a standard `SKILL.md` shape with metadata and sections such as when to use, procedure, pitfalls, and verification.[1] For operational work, seven elements make that structure dependable.
+
+### 1. A precise trigger
+
+The description should make the use case recognizable from the skill index. “Use when auditing a live form's lead-delivery path” is stronger than “help with websites.”
+
+Include both positive and negative scope. State when the skill applies and when another workflow should be used instead.
+
+### 2. Authoritative sources
+
+Name the sources that decide current state, in priority order. For example:
+
+1. current production API or remote repository;
+2. live user-facing surface;
+3. maintained operating ledger;
+4. local cache or previous report as supporting evidence only.
+
+This prevents a polished answer from being built on stale local information.
+
+### 3. A bounded procedure
+
+Write the steps in dependency order. Discovery should happen before mutation. Validation should happen before release. Read-back should happen after an external write.
+
+Use decision points where the workflow branches. If source A and source B disagree, say whether the agent should reconcile, escalate, or stop.
+
+### 4. Permission and approval boundaries
+
+Separate what the agent may inspect, draft, change, publish, or delete. A skill should never grant itself more authority than the user or system policy provides.
+
+For high-impact work, make the approval gate explicit. A content skill can prepare a draft without authorizing publication. A finance skill can analyze transactions without posting journal entries.
+
+### 5. Known failure modes
+
+Record the errors a real operator would want to avoid:
+
+- stale local checkout;
+- duplicate creation after retry;
+- wrong customer record;
+- scheduler success mistaken for delivery success;
+- hidden login wall;
+- a file that exists but renders incorrectly;
+- changed API fields;
+- unavailable credentials or provider access.
+
+A good pitfall section tells the agent what evidence distinguishes similar-looking failures.
+
+### 6. Verification evidence
+
+Match proof to the claim. A build exit code proves a build, not a live page. An API `200` proves a response, not that the intended record was changed correctly. A generated image file proves existence, not visual quality.
+
+Verification can include:
+
+- command and exit code;
+- exact record ID and read-back;
+- remote commit SHA parity;
+- canonical URL and HTTP status;
+- rendered browser inspection;
+- row count and duplicate check;
+- attachment names and recipient read-back.
+
+The [Hermes Agent cron jobs guide](/blog/hermes-agent-cron-jobs) applies the same rule to scheduled work: scheduler status is telemetry, not proof of the final business outcome.
+
+### 7. A clear blocked state
+
+When a required source or permission is missing, define what the agent should report. Name the first failed gate, the evidence observed, and the release condition.
+
+“Could not complete” is vague. “Blocked: production API authentication failed; no writes attempted; release condition is a valid read-only token for the named account” is actionable.
+
+## How to Use Hermes Agent Skills
+
+Hermes makes installed skills available as slash commands. The official documentation shows that you can invoke one directly, stack several leading skill commands when the task genuinely spans them, or ask for a skill through natural conversation.[1][2]
+
+### List and find skills
+
+From the command line, the documented starting point is:
+
+```bash
+hermes skills list
+```
+
+Inside a chat session, `/skills` opens the available catalog. Search by the actual task—GitHub review, document conversion, inbox triage, or cron troubleshooting—rather than by a vague job title.[2]
+
+### Invoke a specific skill
+
+An installed skill can be called as a slash command:
+
+```text
+/github-pr-workflow create a pull request for the authentication fix
+```
+
+The skill name loads the reusable procedure; the rest of the message supplies the current assignment.
+
+### Stack only compatible procedures
+
+Hermes supports chaining multiple installed skills at the start of one message, with a documented limit of five leading skill commands.[1] That can be useful when the work truly needs separate procedures—for example, a repository release plus verification.
+
+Do not stack skills merely to add context. Overlapping instructions can create contradictory ownership, approval, or formatting rules. Prefer one umbrella skill with a clear decision map when several procedures are repeatedly used together.
+
+### Inspect before installing
+
+Hermes provides commands to browse, search, inspect, install, update, and remove skills. Review a third-party skill before enabling it, especially if it includes scripts, external links, setup requirements, or broad mutation instructions.[3]
+
+A skill is not harmless because it is written in Markdown. It tells an agent what actions to take.
+
+## How to Create a Reusable Skill
+
+The fastest route is not to write a massive manual before the workflow has run once. Start from a successful, verified procedure and extract only what should repeat.
+
+### Step 1: Choose one operational outcome
+
+Define a sentence that can be tested:
+
+> Prepare a weekly client-delivery exception report from the project tracker and CRM, then return only current blockers with source links.
+
+That is narrow enough to design. “Manage client success” is not.
+
+### Step 2: Record the observed workflow
+
+Capture what actually happened during a successful run:
+
+- sources inspected;
+- order of operations;
+- decisions made;
+- permissions used;
+- mistakes or dead ends encountered;
+- verification that proved completion.
+
+Do not promote an untested idea into a durable skill as if it were established procedure.
+
+### Step 3: Write minimal metadata
+
+Use a unique, descriptive name and a concise description that states the trigger. Add platform or tool requirements only when they are real requirements.[1]
+
+A compact starting point looks like this:
+
+```markdown
+---
+name: weekly-client-exception-report
+description: Use when producing a source-backed weekly client blocker report.
+version: 1.0.0
+---
+```
+
+### Step 4: Add the operating sections
+
+At minimum, include:
+
+- **When to Use**
+- **Procedure**
+- **Pitfalls**
+- **Verification**
+
+For client or production work, also include sources of truth, approval boundaries, and blocked-output language.
+
+### Step 5: Split supporting material deliberately
+
+Add a reference file only when it earns its place. Good candidates include provider-specific API notes, a long validation matrix, or a detailed incident recovery path. Use templates for stable deliverables and scripts for deterministic mechanics.
+
+The official skills system supports directories for references, templates, scripts, examples, and assets.[1]
+
+### Step 6: Test both the normal and failure paths
+
+Run the skill on a representative task. Then test a missing-source or conflicting-state case. Confirm that it stops safely instead of filling gaps with assumptions.
+
+### Step 7: Revise from evidence
+
+If the run reveals a missing preflight, wrong command, weak output contract, or incomplete verification step, update the skill immediately. The day-to-day skills guide explicitly warns that skills become liabilities when they go stale.[2]
+
+Hermes also documents `/learn` as a way to turn a described workflow or reference source into a reusable skill.[1] Treat that as an authoring accelerator, not an exemption from review. The resulting procedure still needs scope, security, and verification checks.
+
+## Example: Turn a Weekly Report Into a Skill
+
+Suppose a team prepares the same weekly automation-health report every Monday.
+
+A weak prompt might say:
+
+> Check our automations and tell me what is wrong.
+
+That leaves the source list, thresholds, ownership, and output to interpretation.
+
+A reusable skill would define the workflow more precisely.
+
+### Trigger
+
+Use every Monday when preparing the automation exception report for the operations owner.
+
+### Sources
+
+1. production workflow run history for the last seven days;
+2. current scheduler configuration;
+3. destination-system read-backs for high-impact jobs;
+4. last week's report only for comparison, never as current-state proof.
+
+### Procedure
+
+1. Confirm the date window and timezone.
+2. Inventory only active workflows in scope.
+3. Separate execution failures from delivery failures.
+4. Check duplicate, stale, and missing-output conditions.
+5. Verify the newest state before repeating an old blocker.
+6. Assign an owner only when the evidence identifies one.
+7. Return changed or actionable exceptions; remain quiet when nothing changed.
+
+### Boundaries
+
+- Do not rerun customer-facing automations merely to test them.
+- Do not change credentials, billing, or production schedules.
+- Do not close an incident from scheduler status alone.
+
+### Verification
+
+For every reported issue, include the workflow name, last relevant run time, observed state, final-system evidence, and release condition.
+
+This skill does not make the report infallible. It makes the operating standard explicit enough to test, improve, and review.
+
+For broader implementation guidance, see [Hermes Agent for business automation](/blog/hermes-agent-business-automation).
+
+## Safety and Governance
+
+Skills can improve consistency, but they also make instructions easier to reuse at scale. That increases the value of review.
+
+### Treat skill installation like procedure adoption
+
+Before installing a third-party skill:
+
+- inspect the complete `SKILL.md`;
+- review referenced scripts and files;
+- identify required environment variables and tools;
+- check whether it can write, delete, publish, or message;
+- confirm the source and update path;
+- test in a low-risk environment first.
+
+Hermes documents security scanning and quarantine metadata for hub and URL installations, including source and content-hash tracking.[1] Those controls reduce risk, but they do not decide whether a procedure is appropriate for your business.
+
+### Apply least privilege
+
+A research skill does not need deletion rights. A draft-writing skill does not need automatic publishing. A report skill may need read access to a CRM but not stage-change authority.
+
+Match the toolset to the workflow, then narrow credentials inside the connected system when possible.
+
+### Separate procedure from authority
+
+A skill can document a publishing sequence without granting publication approval. It can explain how to create a CRM note without authorizing changes to every record. Authority must come from the current user, approved policy, and system permissions.
+
+### Keep secrets out of skill content
+
+Store credentials in the configured secret or environment system, not in `SKILL.md`, scripts, examples, or prompts. A skill may name the variable it requires without including its value.
+
+### Preserve current-state ownership
+
+If the process depends on customer status, approval, inventory, price, or deployment state, read the owning system during the run. Do not bake volatile facts into reusable instructions.
+
+## Testing and Maintenance
+
+A skill should have a lifecycle, not just an installation date.
+
+### Test the trigger
+
+Give Hermes one request that clearly matches the skill and one that does not. Confirm the procedure loads in the right situation without expanding into unrelated work.
+
+### Test the happy path
+
+Use safe, representative data. Confirm every required artifact, destination, and read-back—not just the wording of the final response.
+
+### Test failures and ambiguity
+
+At minimum, test:
+
+- required source unavailable;
+- conflicting source facts;
+- missing credential or tool;
+- duplicate result already present;
+- external write returns an uncertain outcome;
+- verification surface is unavailable.
+
+The skill should stop or narrow the claim appropriately.
+
+### Review instruction collisions
+
+When multiple skills can apply, check for contradictory rules about source priority, approval, ownership, or delivery. Consolidate repeated rules into an umbrella when the combination is stable.
+
+### Version meaningful changes
+
+Update the version or change record when a new rule changes behavior, permissions, or verification. A typo fix and a new production authority boundary are not equivalent changes.
+
+### Retire obsolete procedures
+
+If a provider, system, or workflow is no longer used, archive or remove the skill from active discovery. An outdated procedure can be worse than no procedure because it carries the appearance of institutional knowledge.
+
+A useful maintenance question is:
+
+> If a new operator followed this skill today, would the sources, commands, permissions, and completion evidence still be correct?
+
+If the answer is uncertain, the skill needs review before the next production run.
+
+## Honest Limitations
+
+Hermes Agent skills are instructions, not deterministic programs. A model still interprets the procedure, chooses tools, and responds to incomplete or unexpected inputs. Clear steps reduce ambiguity but do not eliminate it.
+
+Skills can also become stale. APIs change, repositories move, team roles evolve, and approval boundaries tighten. A detailed skill that no one maintains can repeat obsolete instructions more confidently than a one-time prompt.
+
+Progressive disclosure reduces unnecessary context, but it cannot repair poor organization. If the main skill does not route to the right reference—or if several overlapping skills disagree—the agent may load the wrong procedure.
+
+Scripts inside a skill can provide deterministic mechanics, but they introduce normal software risks: dependency drift, unsafe inputs, platform differences, and credential exposure. Review and test them like any other operational code.
+
+Finally, a skill cannot provide a missing capability or permission. If the required tool, source, login, or authority is unavailable, the agent must report that boundary. It should not substitute a plausible-looking answer for real execution.
+
+## E-E-A-T and Responsible Implementation
+
+This is a source-backed operating guide based on the current Hermes Agent documentation, not a claim that every profile, platform, or custom installation has identical settings. The live Hermes documentation and the commands exposed by the installed version are the technical sources of truth.
+
+The responsible implementation standard is straightforward: begin with a verified workflow, keep the scope narrow, reference authoritative systems, grant minimum permissions, test normal and blocked paths, and require evidence before claiming completion.
+
+A strong skill does not make an agent sound more certain. It helps the agent know when to act, when to verify, and when to stop.
+
+## Frequently Asked Questions
+
+### What is a Hermes Agent skill?
+
+A Hermes Agent skill is an on-demand knowledge document that teaches the agent how to handle a specific kind of task. It can include main instructions plus supporting references, templates, scripts, examples, and assets.[1]
+
+### How are skills different from prompts?
+
+A prompt describes the current assignment. A skill provides the reusable procedure for a class of assignments. The prompt might name this week's report and date range; the skill defines the sources, steps, boundaries, and verification rules used every week.
+
+### How are skills different from memory?
+
+Skills store procedural knowledge—how to do and verify work. Memory stores compact durable facts and preferences. Long runbooks belong in skills; current business records belong in their systems of record.[2]
+
+### Do Hermes Agent skills load in every conversation?
+
+No. Hermes uses progressive disclosure. A compact index is available first, the main skill loads when needed, and supporting references can load only for the relevant subtask.[1]
+
+### Can I create my own Hermes skill?
+
+Yes. The documented structure starts with a directory containing `SKILL.md`. You can add references, templates, scripts, examples, and assets when they support the workflow.[1] Hermes also documents `/learn` for turning sources or a described procedure into a skill, subject to normal review.[1]
+
+### Can I use more than one skill at a time?
+
+Yes. Hermes supports stacking multiple installed skill commands at the start of a message, up to five.[1] Use that only when the procedures are compatible. Repeated combinations are often better represented by one umbrella skill with a decision map.
+
+### Are third-party skills safe to install?
+
+They should be reviewed before use. Hermes documents scanner, quarantine, source, and hash controls for installs, but a skill can still contain procedures or scripts that are inappropriate for your environment.[1] Inspect the files, required tools, permissions, and external actions before enabling production use.
+
+### Should a skill contain API keys or passwords?
+
+No. Keep secrets in the configured credential, environment, or secret-management system. The skill can declare which variable or connection it requires without storing the value in its instructions or scripts.
+
+### When should I update a skill?
+
+Update it when a real run exposes a missing step, stale command, new failure mode, changed approval boundary, or better verification method. Review high-impact skills on a regular schedule even when no incident has occurred.
+
+### Can a skill make an AI workflow fully autonomous?
+
+A skill can make a bounded workflow more repeatable, but autonomy depends on permissions, source quality, risk, test coverage, and approval policy. High-impact external actions may still require a human or separately authorized release gate.
+
+## Final Takeaway
+
+Hermes Agent skills are most valuable when they preserve a procedure that has already earned trust. Build each skill around one recognizable trigger, a small set of authoritative sources, a bounded sequence, explicit risk limits, known failure modes, and proof of the final result.
+
+Do not use skills to make vague work look automated. Use them to make good operating practice easier to repeat—and easier to inspect when something changes.
+
+If you want help choosing a safe first agent workflow, [book an automation strategy call](/strategy). We will map the source, decision, permissions, approval boundary, and verification path before turning the procedure into durable automation.
+
+## Sources
+
+[1] https://hermes-agent.nousresearch.com/docs/user-guide/features/skills — Hermes Agent: Skills System
+[2] https://hermes-agent.nousresearch.com/docs/guides/work-with-skills — Hermes Agent: Working with Skills
+[3] https://hermes-agent.nousresearch.com/docs/reference/cli-commands — Hermes Agent: CLI Commands Reference
+[4] https://hermes-agent.nousresearch.com/docs/reference/skills-catalog — Hermes Agent: Bundled Skills Catalog
