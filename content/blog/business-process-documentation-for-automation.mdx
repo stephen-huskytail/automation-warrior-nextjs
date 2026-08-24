@@ -1,0 +1,601 @@
+---
+title: "Business Process Documentation for Automation: A Practical Guide"
+description: "Learn how to document a business process for automation with clear triggers, owners, decisions, exceptions, controls, tests, and completion evidence."
+date: "2026-08-24"
+slug: "business-process-documentation-for-automation"
+tags: ["Business Process Documentation", "Workflow Automation", "Process Mapping", "Automation Strategy", "Operations"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/business-process-documentation-for-automation.jpg"
+image_alt: "Business process documentation flowing through a validation hub into an automated workflow with approvals and exception paths"
+schema_type: "Article"
+---
+
+**Business process documentation for automation** should explain more than the happy path. A useful document identifies what starts the work, which records are authoritative, who owns each decision, what happens when information is missing, and how the business proves that the intended outcome actually occurred.
+
+That level of detail matters because automation does not repair an unclear process. It executes the rules and assumptions it is given—often faster and at a larger scale than a person would. If the source of truth, exception path, or completion test is vague, the automated version will inherit the ambiguity.
+
+The goal is not to create a perfect diagram before anyone builds. It is to produce a decision-ready operating specification: clear enough for the process owner, implementation team, and reviewer to agree on what the workflow may do and where it must stop.
+
+> **Quick Summary**
+>
+> - Document the business outcome before choosing an automation platform.
+> - Define the trigger, required inputs, authoritative records, decisions, actions, owner, exceptions, and proof of completion.
+> - Map the current process first; design the future automated process separately.
+> - Treat retries, duplicate events, missing data, outages, and human approvals as normal workflow branches—not afterthoughts.
+> - Use a simple process map for shared understanding and a structured specification for implementation detail.
+> - Test the documented normal path, exception paths, and rollback before expanding automation.
+> - Keep the document versioned and assign an owner so it changes with the real process.
+
+## Table of Contents
+
+- [What Business Process Documentation for Automation Must Do](#what-business-process-documentation-for-automation-must-do)
+- [Why a Flowchart Alone Is Not Enough](#why-a-flowchart-alone-is-not-enough)
+- [The 12 Fields Every Automation Process Document Needs](#the-12-fields-every-automation-process-document-needs)
+- [How to Document a Business Process for Automation](#how-to-document-a-business-process-for-automation)
+- [A Practical Business Process Documentation Template](#a-practical-business-process-documentation-template)
+- [Example: Documenting Lead Intake Before Automation](#example-documenting-lead-intake-before-automation)
+- [How to Map Exceptions, Approvals, and Recovery](#how-to-map-exceptions-approvals-and-recovery)
+- [How to Validate the Document Before Building](#how-to-validate-the-document-before-building)
+- [Common Process Documentation Mistakes](#common-process-documentation-mistakes)
+- [E-E-A-T and Source Discipline](#e-e-a-t-and-source-discipline)
+- [Honest Limitations](#honest-limitations)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## What Business Process Documentation for Automation Must Do
+
+A process document becomes useful for automation when it answers five operating questions:
+
+1. **What outcome is the business trying to produce?**
+2. **Which facts and rules may the workflow trust?**
+3. **Which steps are deterministic, and which require judgment?**
+4. **What must happen when the normal path cannot continue?**
+5. **What evidence proves the work is complete?**
+
+Those questions turn a narrative such as “follow up with new leads” into a bounded workflow. The trigger might be a validated website form. The authoritative contact record might be the CRM. A deterministic rule might assign a territory from a verified postal code. A judgment step might require a salesperson to review a complex service request. Completion might mean that the CRM record, acknowledgement message, assigned task, and response deadline all exist and can be read back.
+
+The document should be understandable by the person who owns the business process, not only by the person configuring the software. The Object Management Group's official [Business Process Model and Notation specification](https://www.omg.org/spec/BPMN/2.0.2/) provides a standardized notation for representing business processes.[1] A team does not need to use every BPMN symbol to benefit from the core idea: events, activities, decisions, and flows should have distinct meanings.
+
+For a smaller workflow, a clear diagram with a short data and control table may be enough. For a high-impact process, the document may also need permissions, audit requirements, service levels, test cases, and rollback instructions.
+
+If the business is still deciding what to automate, begin with an [AI automation audit](/blog/ai-automation-audit). Process documentation works best after the outcome and bottleneck are known.
+
+## Why a Flowchart Alone Is Not Enough
+
+A flowchart is valuable because it makes sequence and branching visible. It can show that a new request enters the workflow, passes through validation, reaches a decision, and produces one of several outcomes.
+
+But a diagram rarely captures all the detail an automated system needs.
+
+A box labeled “check the customer” does not explain:
+
+- which system contains the customer record;
+- which field establishes identity;
+- what to do when two records match;
+- how recently the record must have been updated;
+- who may resolve a conflict;
+- whether the workflow can create a new record;
+- what happens if the source system is unavailable.
+
+A box labeled “send follow-up” does not identify the approved template, sender identity, eligibility rule, stop condition, consent requirement, or evidence of delivery.
+
+Use the visual map to create shared understanding. Pair it with a structured specification that captures data, decisions, controls, and evidence. The two artifacts serve different purposes:
+
+| Artifact | Best use |
+|---|---|
+| Process map | Sequence, handoffs, decisions, loops, and exception branches |
+| Structured process specification | Fields, rules, owners, permissions, service levels, test cases, and evidence |
+| Runbook | Operating, monitoring, recovery, and escalation after launch |
+| Change log | Why the process changed, who approved it, and which version is active |
+
+Do not combine the current manual process and the proposed automated process in one confusing diagram. Map the current state first. Then create a future-state version that shows which steps will be automated, which remain human-owned, and where controls are added.
+
+Microsoft's official process mining documentation describes using event data from systems of record to visualize processes, compare actual paths, investigate inefficiencies, and monitor key performance indicators.[2] That is useful after a process generates reliable event data. Before implementation, interviews, record samples, and direct observation are still needed to document what people actually do—including the workarounds that the formal SOP may omit.
+
+## The 12 Fields Every Automation Process Document Needs
+
+A reliable process specification can be concise, but it should cover these 12 fields.
+
+### 1. Business outcome
+
+Write the result in business language, not tool language.
+
+Weak: “Create a Zap.”
+
+Stronger: “Acknowledge every valid consultation request, create one CRM record, assign an owner, and start a one-business-hour response timer.”
+
+The outcome should be measurable and independently observable.
+
+### 2. Scope and exclusions
+
+State where the process begins and ends. List requests, customers, channels, or conditions that are intentionally out of scope.
+
+An exclusion is not a failure. It is a routing rule. For example, an automation may handle new domestic consultation requests while sending existing customers, international requests, and billing questions to separate queues.
+
+### 3. Trigger
+
+Identify the exact event that starts the process:
+
+- a form submission;
+- a webhook event;
+- a status change;
+- an approved file;
+- a scheduled time;
+- a person selecting an action.
+
+Also state whether the trigger can be delivered more than once. Webhooks and scheduled jobs can retry, so the workflow should assume duplicate events are possible.
+
+### 4. Required inputs
+
+List every field needed to continue and its validation rule. Separate required data from useful optional context.
+
+For a lead form, required inputs might include name, a valid contact method, consent status, service interest, and a source timestamp. A company size estimate may be helpful without being authoritative enough to block acknowledgement.
+
+### 5. Source of truth
+
+Name the authoritative system for each important fact. Avoid saying “check the database” when several systems hold similar records.
+
+| Fact | Authoritative source | Conflict rule |
+|---|---|---|
+| Customer identity | CRM contact record | Stop if two active records match |
+| Appointment time | Scheduling platform | Scheduling record wins over copied calendar text |
+| Contract scope | Signed agreement | Do not infer scope from sales notes |
+| Payment status | Accounting or payment system | Do not treat CRM notes as payment proof |
+
+If no source is authoritative, the process is not ready for unattended automation.
+
+### 6. Decision rules
+
+Write each deterministic decision as an explicit condition and outcome.
+
+Example:
+
+> If the request includes a valid email, the service is available in the submitted location, and no active CRM contact has the same normalized email, create one contact and assign the location owner. Otherwise, stop and route the exception.
+
+Avoid vague instructions such as “use best judgment” inside an automated step. If judgment is required, name the human role that owns it.
+
+### 7. Actions and side effects
+
+List every system the workflow may change and the exact kind of change allowed. Reading a record, drafting a message, sending a message, creating a task, updating a stage, and deleting a file are different levels of authority.
+
+Use minimum permissions. A workflow that only prepares a draft does not need permission to send it. A report does not need permission to edit the source records it summarizes.
+
+### 8. Owner and approval boundary
+
+Name the role responsible for the process and the role authorized to approve high-impact actions. Do not assign an exception to “the team.”
+
+Human review belongs immediately before material external commitments, financial changes, destructive actions, or decisions based on incomplete evidence. The [human-in-the-loop automation guide](/blog/human-in-the-loop-automation) provides a practical model for placing those gates.
+
+### 9. Exceptions and stop conditions
+
+Document what the workflow must do when:
+
+- a required field is missing;
+- two sources conflict;
+- no rule matches;
+- a destination is unavailable;
+- a request falls outside policy;
+- the same event may already have been processed;
+- approval does not arrive before the deadline.
+
+“Notify someone” is incomplete. Name the destination, owner, required evidence, deadline, and safe state while the exception is unresolved.
+
+### 10. Service level and timing
+
+Define when the process must begin, when it must finish, and how long each human gate may wait. Use a real timezone and business-calendar rule when timing matters.
+
+A scheduled controller that runs successfully at the wrong wall-clock time has not met the business requirement. Timing should be verified from the scheduler and the final system, not inferred from a label.
+
+### 11. Completion evidence
+
+Specify what proves the outcome, not merely that the workflow code ran.
+
+Useful evidence can include:
+
+- the final record ID and current status;
+- a sent-message ID and recipient read-back;
+- a published URL and HTTP response;
+- the assigned task, owner, and deadline;
+- a payment-provider confirmation;
+- a content hash or remote commit SHA;
+- an audit-log entry linked to the source event.
+
+The [Hermes Agent cron jobs guide](/blog/hermes-agent-cron-jobs) explains this distinction for scheduled work: execution status is telemetry, not proof of the business result.
+
+### 12. Rollback and recovery
+
+Define how to stop the workflow, reverse a safe change, resume a failed item, and prevent a retry from duplicating completed work.
+
+Some actions cannot be fully reversed. A sent email cannot be unsent, and a public claim may be cached. Those actions need stronger preflight and approval controls than a reversible draft or internal task.
+
+## How to Document a Business Process for Automation
+
+### Step 1: Choose one bounded process
+
+Do not start with “customer onboarding” if it contains sales handoff, contracts, payment, provisioning, training, support, and renewal. Choose one complete outcome, such as “turn an approved agreement into an assigned onboarding project.”
+
+A bounded process is easier to observe, test, and improve.
+
+### Step 2: Interview the people who perform and receive the work
+
+Talk with the person who starts the process, the person who handles exceptions, and the person who depends on the final result. Ask them to walk through a recent normal case and a recent difficult case.
+
+Useful questions include:
+
+- What tells you to begin?
+- Which fields do you check first?
+- Where do you look when records disagree?
+- Which decision takes the most judgment?
+- What goes wrong repeatedly?
+- How do you know the work is truly finished?
+- What do you do when a system is unavailable?
+
+Capture real examples without placing sensitive customer data in the process document.
+
+### Step 3: Map the current state
+
+Write the steps as they happen today, including manual copying, side conversations, spreadsheets, and unofficial checks. Do not clean up the process while documenting it.
+
+The current-state map should reveal delay, rework, duplicate entry, missing ownership, and hidden decisions. Those findings help determine whether the process should be simplified before it is automated.
+
+### Step 4: Identify authoritative records and decision points
+
+Mark every step that reads or changes a meaningful fact. Name the source system and conflict policy. Then classify each decision as:
+
+- deterministic rule;
+- human judgment;
+- policy decision not yet defined;
+- data-quality problem.
+
+Only the first category is immediately ready for rule-based automation. Human judgment can be supported with a review gate. Undefined policy and poor data need business resolution first.
+
+### Step 5: Design the future state
+
+Create a separate future-state map. Remove unnecessary handoffs, standardize inputs, and keep the workflow as small as possible.
+
+Show:
+
+- the automated normal path;
+- human approval points;
+- exception queues;
+- retry boundaries;
+- the final evidence check.
+
+Do not assume every current step must survive. A copied spreadsheet may exist only because two systems were never connected.
+
+### Step 6: Write testable acceptance criteria
+
+Turn the future-state map into observable statements.
+
+Examples:
+
+- Given one valid new request, the workflow creates exactly one CRM contact.
+- Given the same event twice, the second run does not create another contact or message.
+- Given a missing consent value, no marketing sequence starts and an exception is assigned.
+- Given an unavailable CRM, the event remains recoverable and no external acknowledgement claims that setup is complete.
+- Given an approved request, the final CRM record, task, owner, and deadline can be read back.
+
+Acceptance criteria should cover failure and recovery, not only success.
+
+### Step 7: Review with the process owner
+
+The implementation team can confirm technical feasibility, but the process owner must confirm policy, responsibility, timing, and acceptable risk.
+
+Resolve disagreements in the document before building. A tool configuration is a poor place to discover that sales and operations use different definitions of “qualified.”
+
+### Step 8: Version the specification
+
+Record the version, owner, approval date, and systems affected. Link the active automation to the specific process-document version it implements.
+
+When a form field, API, policy, owner, or service level changes, update the process document and tests together. Do not let the live workflow become the only record of how the business operates.
+
+## A Practical Business Process Documentation Template
+
+Use this compact template for a first automation candidate.
+
+```text
+Process name:
+Business outcome:
+Process owner:
+Version and approval date:
+
+Start boundary:
+End boundary:
+In scope:
+Out of scope:
+
+Trigger:
+Can the trigger repeat? Yes / No / Unknown
+Idempotency key:
+
+Required inputs:
+Optional context:
+Authoritative source for each important field:
+Conflict policy:
+
+Normal path:
+1.
+2.
+3.
+
+Decision rules:
+- If ... then ...
+- If ... then ...
+
+Human approval points:
+- Decision:
+- Authorized role:
+- Evidence shown:
+- Timeout and backup owner:
+
+Exceptions and safe states:
+- Missing data:
+- Duplicate event:
+- Source conflict:
+- Destination outage:
+- Out-of-policy request:
+
+Allowed system changes:
+Forbidden changes:
+
+Service level and timezone:
+Completion evidence:
+Monitoring signal:
+Recovery procedure:
+Rollback procedure:
+
+Test cases:
+- Normal case
+- Boundary case
+- Missing input
+- Duplicate event
+- Rejected approval
+- Timeout
+- Destination outage
+- Recovery and read-back
+```
+
+The template is deliberately tool-neutral. Once the business contract is clear, it can be implemented in an all-in-one platform, an integration tool, custom code, or a combination.
+
+## Example: Documenting Lead Intake Before Automation
+
+Consider a service business that wants to respond faster to website leads.
+
+### Business outcome
+
+Every valid new consultation request should receive an acknowledgement, create or update one CRM contact under a documented deduplication rule, receive an owner, and start a response timer.
+
+### Trigger
+
+A validated submission from the production consultation form.
+
+### Required inputs
+
+- name;
+- at least one valid contact method;
+- requested service;
+- consent value;
+- submission timestamp;
+- source page or campaign identifier when available.
+
+### Sources of truth
+
+- CRM: contact identity, owner, pipeline state;
+- production form record: original request and consent evidence;
+- service-area table: current geographic eligibility;
+- scheduling platform: booked appointment status.
+
+### Normal path
+
+1. Validate the form signature and required fields.
+2. Normalize email and phone values without discarding the original submission.
+3. Search the CRM using documented matching rules.
+4. Create one contact or attach the request to one verified existing contact.
+5. Assign the correct owner.
+6. Send an approved acknowledgement if consent and eligibility rules allow it.
+7. Create a response task with a deadline.
+8. Read back the contact, message, owner, and task.
+
+### Exception paths
+
+- Two active CRM matches: stop and assign identity review.
+- Missing consent: create the permitted internal record but do not start marketing follow-up.
+- Service unavailable: route to the approved decline or referral process.
+- CRM unavailable: preserve the signed event for retry; do not claim CRM setup succeeded.
+- Duplicate event: return the existing outcome and do not send another acknowledgement.
+
+### Completion evidence
+
+The workflow records the source event ID, CRM contact ID, assigned owner, message ID, task ID, deadline, and final read-back time.
+
+This specification is more actionable than “connect the form to the CRM.” It defines what a correct connection means.
+
+For a broader set of small-business examples, see [small business workflow automation](/blog/small-business-workflow-automation).
+
+## How to Map Exceptions, Approvals, and Recovery
+
+Exceptions are not edge decoration. They are part of the process.
+
+Use three questions for every automated action:
+
+1. What can prevent this step from starting?
+2. What can fail while it runs?
+3. How will the next attempt know whether it already succeeded?
+
+### Use stable identifiers
+
+Choose an idempotency key that represents the business event: provider event ID, order ID, form submission ID, account-plus-date key, content slug, or another stable identifier. Store it with the outcome.
+
+A retry should check that key before creating another external effect.
+
+### Separate retryable failures from business exceptions
+
+A temporary API timeout may be retryable. A conflicting customer identity is not. Retrying ambiguity only repeats the same uncertainty.
+
+Classify failures:
+
+- **Retry automatically:** temporary network error, rate limit with approved backoff, short provider outage.
+- **Require human resolution:** conflicting records, policy exception, disputed amount, unclear consent.
+- **Stop permanently:** invalid signature, forbidden request, unsupported action.
+
+### Give approvals a safe timeout
+
+Every approval needs an authorized role, deadline, backup owner, and safe outcome when nobody responds. Silence should not become approval.
+
+The review request should include the original evidence, proposed action, applicable rule, impact, and approve/edit/reject options. A reviewer should not have to reconstruct the entire case.
+
+### Keep recovery observable
+
+A recovery path should state:
+
+- where failed items wait;
+- who owns the queue;
+- how retries are limited;
+- how a recovered item is verified;
+- when an incident must be escalated;
+- how duplicate prevention is preserved.
+
+The same principle applies whether the workflow runs in custom code or a visual automation platform. Product-specific error handling can help, but it does not define the business's exception policy. For an implementation example, see [Make error handling for reliable automations](/blog/make-error-handling-reliable-automations).
+
+## How to Validate the Document Before Building
+
+A process document is ready for implementation when another qualified person can use it to predict the workflow's behavior.
+
+Run a tabletop review with sample cases.
+
+### Walk the normal case
+
+Use one realistic, non-sensitive example. At each step, confirm the required field, source, rule, write, owner, and evidence.
+
+### Walk at least five failure cases
+
+Include:
+
+- missing required data;
+- duplicate trigger;
+- conflicting source records;
+- denied or expired approval;
+- destination outage.
+
+Add a boundary case, such as a value exactly at a threshold or a request arriving near a service-level cutoff.
+
+### Verify every internal and external dependency
+
+Confirm that the named source exists, the intended field is available, the process owner is current, and the workflow has a legitimate access path. Do not design around a report, API, or permission that has not been checked.
+
+### Confirm least privilege
+
+Review every side effect. Remove write permissions the workflow does not need. Separate preparation from approval and approval from final execution when impact is high.
+
+### Define monitoring before launch
+
+Choose signals that reveal the business outcome:
+
+- valid triggers received;
+- completion rate;
+- exception count and age;
+- duplicate suppression count;
+- response time;
+- final-system verification failures.
+
+A green automation dashboard can coexist with missed customer outcomes if monitoring stops at the tool boundary.
+
+## Common Process Documentation Mistakes
+
+### Writing the ideal process instead of the real one
+
+If the current map omits spreadsheets, inbox checks, and side conversations, the future design may remove a handoff that nobody realized was carrying important context.
+
+### Naming tools instead of outcomes
+
+“Use AI,” “send to Slack,” or “build in Zapier” describes a method. It does not define success.
+
+### Leaving sources ambiguous
+
+When multiple systems contain similar data, “look up the customer” is not safe enough for automation. Name the authoritative record and conflict rule.
+
+### Treating exceptions as implementation details
+
+The business must decide what happens when evidence is missing or policy does not apply. The builder should not invent that decision inside a workflow branch.
+
+### Using human approval without ownership
+
+An approval step with no named role, deadline, or safe timeout becomes an unmonitored queue.
+
+### Proving execution instead of completion
+
+A successful API response or workflow run is one piece of evidence. Read the result back from the system that owns the outcome.
+
+### Failing to maintain the document
+
+A process specification becomes misleading when the form, fields, policy, or owner changes. Assign a document owner and review high-impact processes on a defined cadence.
+
+## E-E-A-T and Source Discipline
+
+This guide is a process-design framework, not a claim that every business should use the same tools, notation, or approval thresholds.
+
+- **Experience:** Base the current-state map on recent real cases and the people who perform the work.
+- **Expertise:** Involve qualified owners for legal, financial, security, clinical, or other specialized decisions.
+- **Authoritativeness:** Use named systems of record, approved policies, and current official product documentation.
+- **Trust:** Preserve source evidence, decision rules, version history, approval records, and final read-back.
+
+The NIST [AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) is a voluntary framework organized around Govern, Map, Measure, and Manage functions.[3] Although it is broader than process documentation, that sequence is useful for AI-assisted workflows: establish responsibility, understand the operating context, measure performance and risk, and manage the system over time.
+
+When a product capability can change, verify it against the current official documentation before implementation. Do not copy a feature, limit, or price from an old article into a durable process specification.
+
+## Honest Limitations
+
+Documentation does not guarantee that a process is correct. People may describe the formal procedure rather than the real one. Sample cases may miss rare but costly exceptions. A diagram can create false confidence if the source data, permissions, or policies have not been verified.
+
+More detail is not always better. A document that tries to reproduce every screen and click becomes expensive to maintain. Focus on the business contract: inputs, sources, decisions, authority, exceptions, timing, evidence, and recovery. Put tool-specific operating detail in a separate runbook.
+
+Process mining can reveal paths present in event data, but it cannot show work that was never recorded. Interviews and observation can reveal hidden steps, but they may be incomplete or biased. Use multiple sources when the process is material.
+
+Finally, some processes should remain manual or only partially automated. Low-frequency, high-impact decisions may not justify the cost and risk of full automation. Documentation can still improve ownership and consistency even when no software is added.
+
+## Frequently Asked Questions
+
+### What is business process documentation for automation?
+
+It is a structured description of a business workflow that defines the outcome, trigger, inputs, systems of record, decision rules, actions, owners, exceptions, controls, timing, and proof of completion needed to implement automation safely.
+
+### What should I document before automating a process?
+
+At minimum, document the current process, desired outcome, scope, trigger, required data, source of truth, deterministic rules, human decisions, allowed system changes, exception paths, service level, completion evidence, and recovery procedure.
+
+### Do I need BPMN to document an automation workflow?
+
+No. BPMN provides a standardized notation and can be valuable for complex or cross-functional processes.[1] A smaller workflow may only need a clear flowchart plus a structured specification. Consistent meaning is more important than using every available symbol.
+
+### Should I document the current process or the future process?
+
+Document both, separately. The current-state map reveals actual handoffs, delays, workarounds, and hidden decisions. The future-state map shows the simplified automated path, retained human ownership, new controls, and evidence requirements.
+
+### Who should own the process document?
+
+The business process owner should own the policy, outcome, and operating rules. The implementation owner can maintain technical details, while qualified reviewers approve specialized risk boundaries. One named role should be responsible for keeping the active version current.
+
+### How detailed should process documentation be?
+
+Detailed enough that a qualified person can predict what the workflow will do in a normal case, an exception, a duplicate event, and a failure. Avoid brittle screen-by-screen instructions in the core specification unless they are necessary for a manual step.
+
+### How do I know a process is ready for automation?
+
+The outcome and scope are bounded; authoritative data sources are named; deterministic rules are explicit; human decisions have owners; exceptions have safe paths; required access is available; acceptance tests are observable; and completion can be verified in the final system.
+
+### What is the difference between a process document and a runbook?
+
+The process document defines what the business workflow must accomplish and under which rules. The runbook explains how to operate, monitor, troubleshoot, recover, and escalate the implemented system.
+
+## Final Takeaway
+
+Good business process documentation for automation is an operating contract. It connects the business outcome to authoritative data, explicit rules, human responsibility, safe failure paths, and evidence of completion.
+
+Start with one bounded process. Map what really happens today, design the future state separately, and test normal, duplicate, exception, and outage cases before launch. The document should make ambiguity visible before software turns it into repeated behavior.
+
+If you want help turning a manual process into a controlled automation plan, [book an automation strategy call](/strategy). We will map the source of truth, decision points, approval boundaries, recovery path, and completion evidence before selecting the implementation stack.
+
+## Sources
+
+[1] https://www.omg.org/spec/BPMN/2.0.2/ — Object Management Group, Business Process Model and Notation 2.0.2
+[2] https://learn.microsoft.com/en-us/power-automate/process-mining-overview — Microsoft Learn, Overview of process mining in Power Automate
+[3] https://www.nist.gov/itl/ai-risk-management-framework — NIST, AI Risk Management Framework
