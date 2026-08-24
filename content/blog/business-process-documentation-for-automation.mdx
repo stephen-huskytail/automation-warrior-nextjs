@@ -95,7 +95,7 @@ Microsoft's official process mining documentation describes using event data fro
 
 A reliable process specification can be concise, but it should cover these 12 fields.
 
-### 1. Business outcome
+**1. Business outcome**
 
 Write the result in business language, not tool language.
 
@@ -105,13 +105,13 @@ Stronger: “Acknowledge every valid consultation request, create one CRM record
 
 The outcome should be measurable and independently observable.
 
-### 2. Scope and exclusions
+**2. Scope and exclusions**
 
 State where the process begins and ends. List requests, customers, channels, or conditions that are intentionally out of scope.
 
 An exclusion is not a failure. It is a routing rule. For example, an automation may handle new domestic consultation requests while sending existing customers, international requests, and billing questions to separate queues.
 
-### 3. Trigger
+**3. Trigger**
 
 Identify the exact event that starts the process:
 
@@ -124,13 +124,13 @@ Identify the exact event that starts the process:
 
 Also state whether the trigger can be delivered more than once. Webhooks and scheduled jobs can retry, so the workflow should assume duplicate events are possible.
 
-### 4. Required inputs
+**4. Required inputs**
 
 List every field needed to continue and its validation rule. Separate required data from useful optional context.
 
 For a lead form, required inputs might include name, a valid contact method, consent status, service interest, and a source timestamp. A company size estimate may be helpful without being authoritative enough to block acknowledgement.
 
-### 5. Source of truth
+**5. Source of truth**
 
 Name the authoritative system for each important fact. Avoid saying “check the database” when several systems hold similar records.
 
@@ -143,7 +143,7 @@ Name the authoritative system for each important fact. Avoid saying “check the
 
 If no source is authoritative, the process is not ready for unattended automation.
 
-### 6. Decision rules
+**6. Decision rules**
 
 Write each deterministic decision as an explicit condition and outcome.
 
@@ -153,19 +153,19 @@ Example:
 
 Avoid vague instructions such as “use best judgment” inside an automated step. If judgment is required, name the human role that owns it.
 
-### 7. Actions and side effects
+**7. Actions and side effects**
 
 List every system the workflow may change and the exact kind of change allowed. Reading a record, drafting a message, sending a message, creating a task, updating a stage, and deleting a file are different levels of authority.
 
 Use minimum permissions. A workflow that only prepares a draft does not need permission to send it. A report does not need permission to edit the source records it summarizes.
 
-### 8. Owner and approval boundary
+**8. Owner and approval boundary**
 
 Name the role responsible for the process and the role authorized to approve high-impact actions. Do not assign an exception to “the team.”
 
 Human review belongs immediately before material external commitments, financial changes, destructive actions, or decisions based on incomplete evidence. The [human-in-the-loop automation guide](/blog/human-in-the-loop-automation) provides a practical model for placing those gates.
 
-### 9. Exceptions and stop conditions
+**9. Exceptions and stop conditions**
 
 Document what the workflow must do when:
 
@@ -179,13 +179,13 @@ Document what the workflow must do when:
 
 “Notify someone” is incomplete. Name the destination, owner, required evidence, deadline, and safe state while the exception is unresolved.
 
-### 10. Service level and timing
+**10. Service level and timing**
 
 Define when the process must begin, when it must finish, and how long each human gate may wait. Use a real timezone and business-calendar rule when timing matters.
 
 A scheduled controller that runs successfully at the wrong wall-clock time has not met the business requirement. Timing should be verified from the scheduler and the final system, not inferred from a label.
 
-### 11. Completion evidence
+**11. Completion evidence**
 
 Specify what proves the outcome, not merely that the workflow code ran.
 
@@ -201,7 +201,7 @@ Useful evidence can include:
 
 The [Hermes Agent cron jobs guide](/blog/hermes-agent-cron-jobs) explains this distinction for scheduled work: execution status is telemetry, not proof of the business result.
 
-### 12. Rollback and recovery
+**12. Rollback and recovery**
 
 Define how to stop the workflow, reverse a safe change, resume a failed item, and prevent a retry from duplicating completed work.
 
@@ -209,13 +209,13 @@ Some actions cannot be fully reversed. A sent email cannot be unsent, and a publ
 
 ## How to Document a Business Process for Automation
 
-### Step 1: Choose one bounded process
+**Step 1: Choose one bounded process**
 
 Do not start with “customer onboarding” if it contains sales handoff, contracts, payment, provisioning, training, support, and renewal. Choose one complete outcome, such as “turn an approved agreement into an assigned onboarding project.”
 
 A bounded process is easier to observe, test, and improve.
 
-### Step 2: Interview the people who perform and receive the work
+**Step 2: Interview the people who perform and receive the work**
 
 Talk with the person who starts the process, the person who handles exceptions, and the person who depends on the final result. Ask them to walk through a recent normal case and a recent difficult case.
 
@@ -231,13 +231,13 @@ Useful questions include:
 
 Capture real examples without placing sensitive customer data in the process document.
 
-### Step 3: Map the current state
+**Step 3: Map the current state**
 
 Write the steps as they happen today, including manual copying, side conversations, spreadsheets, and unofficial checks. Do not clean up the process while documenting it.
 
 The current-state map should reveal delay, rework, duplicate entry, missing ownership, and hidden decisions. Those findings help determine whether the process should be simplified before it is automated.
 
-### Step 4: Identify authoritative records and decision points
+**Step 4: Identify authoritative records and decision points**
 
 Mark every step that reads or changes a meaningful fact. Name the source system and conflict policy. Then classify each decision as:
 
@@ -248,7 +248,7 @@ Mark every step that reads or changes a meaningful fact. Name the source system 
 
 Only the first category is immediately ready for rule-based automation. Human judgment can be supported with a review gate. Undefined policy and poor data need business resolution first.
 
-### Step 5: Design the future state
+**Step 5: Design the future state**
 
 Create a separate future-state map. Remove unnecessary handoffs, standardize inputs, and keep the workflow as small as possible.
 
@@ -262,7 +262,7 @@ Show:
 
 Do not assume every current step must survive. A copied spreadsheet may exist only because two systems were never connected.
 
-### Step 6: Write testable acceptance criteria
+**Step 6: Write testable acceptance criteria**
 
 Turn the future-state map into observable statements.
 
@@ -276,13 +276,13 @@ Examples:
 
 Acceptance criteria should cover failure and recovery, not only success.
 
-### Step 7: Review with the process owner
+**Step 7: Review with the process owner**
 
 The implementation team can confirm technical feasibility, but the process owner must confirm policy, responsibility, timing, and acceptable risk.
 
 Resolve disagreements in the document before building. A tool configuration is a poor place to discover that sales and operations use different definitions of “qualified.”
 
-### Step 8: Version the specification
+**Step 8: Version the specification**
 
 Record the version, owner, approval date, and systems affected. Link the active automation to the specific process-document version it implements.
 
@@ -360,15 +360,15 @@ The template is deliberately tool-neutral. Once the business contract is clear, 
 
 Consider a service business that wants to respond faster to website leads.
 
-### Business outcome
+**Business outcome**
 
 Every valid new consultation request should receive an acknowledgement, create or update one CRM contact under a documented deduplication rule, receive an owner, and start a response timer.
 
-### Trigger
+**Trigger**
 
 A validated submission from the production consultation form.
 
-### Required inputs
+**Required inputs**
 
 - name;
 - at least one valid contact method;
@@ -377,14 +377,14 @@ A validated submission from the production consultation form.
 - submission timestamp;
 - source page or campaign identifier when available.
 
-### Sources of truth
+**Sources of truth**
 
 - CRM: contact identity, owner, pipeline state;
 - production form record: original request and consent evidence;
 - service-area table: current geographic eligibility;
 - scheduling platform: booked appointment status.
 
-### Normal path
+**Normal path**
 
 1. Validate the form signature and required fields.
 2. Normalize email and phone values without discarding the original submission.
@@ -395,7 +395,7 @@ A validated submission from the production consultation form.
 7. Create a response task with a deadline.
 8. Read back the contact, message, owner, and task.
 
-### Exception paths
+**Exception paths**
 
 - Two active CRM matches: stop and assign identity review.
 - Missing consent: create the permitted internal record but do not start marketing follow-up.
@@ -403,7 +403,7 @@ A validated submission from the production consultation form.
 - CRM unavailable: preserve the signed event for retry; do not claim CRM setup succeeded.
 - Duplicate event: return the existing outcome and do not send another acknowledgement.
 
-### Completion evidence
+**Completion evidence**
 
 The workflow records the source event ID, CRM contact ID, assigned owner, message ID, task ID, deadline, and final read-back time.
 
@@ -421,13 +421,13 @@ Use three questions for every automated action:
 2. What can fail while it runs?
 3. How will the next attempt know whether it already succeeded?
 
-### Use stable identifiers
+**Use stable identifiers**
 
 Choose an idempotency key that represents the business event: provider event ID, order ID, form submission ID, account-plus-date key, content slug, or another stable identifier. Store it with the outcome.
 
 A retry should check that key before creating another external effect.
 
-### Separate retryable failures from business exceptions
+**Separate retryable failures from business exceptions**
 
 A temporary API timeout may be retryable. A conflicting customer identity is not. Retrying ambiguity only repeats the same uncertainty.
 
@@ -437,13 +437,13 @@ Classify failures:
 - **Require human resolution:** conflicting records, policy exception, disputed amount, unclear consent.
 - **Stop permanently:** invalid signature, forbidden request, unsupported action.
 
-### Give approvals a safe timeout
+**Give approvals a safe timeout**
 
 Every approval needs an authorized role, deadline, backup owner, and safe outcome when nobody responds. Silence should not become approval.
 
 The review request should include the original evidence, proposed action, applicable rule, impact, and approve/edit/reject options. A reviewer should not have to reconstruct the entire case.
 
-### Keep recovery observable
+**Keep recovery observable**
 
 A recovery path should state:
 
@@ -462,11 +462,11 @@ A process document is ready for implementation when another qualified person can
 
 Run a tabletop review with sample cases.
 
-### Walk the normal case
+**Walk the normal case**
 
 Use one realistic, non-sensitive example. At each step, confirm the required field, source, rule, write, owner, and evidence.
 
-### Walk at least five failure cases
+**Walk at least five failure cases**
 
 Include:
 
@@ -478,15 +478,15 @@ Include:
 
 Add a boundary case, such as a value exactly at a threshold or a request arriving near a service-level cutoff.
 
-### Verify every internal and external dependency
+**Verify every internal and external dependency**
 
 Confirm that the named source exists, the intended field is available, the process owner is current, and the workflow has a legitimate access path. Do not design around a report, API, or permission that has not been checked.
 
-### Confirm least privilege
+**Confirm least privilege**
 
 Review every side effect. Remove write permissions the workflow does not need. Separate preparation from approval and approval from final execution when impact is high.
 
-### Define monitoring before launch
+**Define monitoring before launch**
 
 Choose signals that reveal the business outcome:
 
@@ -501,31 +501,31 @@ A green automation dashboard can coexist with missed customer outcomes if monito
 
 ## Common Process Documentation Mistakes
 
-### Writing the ideal process instead of the real one
+**Writing the ideal process instead of the real one**
 
 If the current map omits spreadsheets, inbox checks, and side conversations, the future design may remove a handoff that nobody realized was carrying important context.
 
-### Naming tools instead of outcomes
+**Naming tools instead of outcomes**
 
 “Use AI,” “send to Slack,” or “build in Zapier” describes a method. It does not define success.
 
-### Leaving sources ambiguous
+**Leaving sources ambiguous**
 
 When multiple systems contain similar data, “look up the customer” is not safe enough for automation. Name the authoritative record and conflict rule.
 
-### Treating exceptions as implementation details
+**Treating exceptions as implementation details**
 
 The business must decide what happens when evidence is missing or policy does not apply. The builder should not invent that decision inside a workflow branch.
 
-### Using human approval without ownership
+**Using human approval without ownership**
 
 An approval step with no named role, deadline, or safe timeout becomes an unmonitored queue.
 
-### Proving execution instead of completion
+**Proving execution instead of completion**
 
 A successful API response or workflow run is one piece of evidence. Read the result back from the system that owns the outcome.
 
-### Failing to maintain the document
+**Failing to maintain the document**
 
 A process specification becomes misleading when the form, fields, policy, or owner changes. Assign a document owner and review high-impact processes on a defined cadence.
 
