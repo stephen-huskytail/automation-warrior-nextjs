@@ -40,6 +40,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-07-01 | gohighlevel-email-marketing |
 | 2026-07-25 | gohighlevel-missed-call-text-back |
 | 2026-08-07 | gohighlevel-calendar-setup |
+| 2026-08-26 | gohighlevel-lead-source-tracking |
 
 ### n8n
 | Date | Slug |
@@ -134,7 +135,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-08-24
-- **Category:** Automation Tips
-- **Slug:** business-process-documentation-for-automation
-- **Next category in rotation:** GoHighLevel
+- **Date:** 2026-08-26
+- **Category:** GoHighLevel
+- **Slug:** gohighlevel-lead-source-tracking
+- **Next category in rotation:** n8n
