@@ -1,0 +1,413 @@
+---
+title: "n8n Queue Mode: How to Scale Self-Hosted Workflows with Workers and Redis"
+description: "Learn how n8n queue mode works, when to enable it, how to configure workers and Redis, and how to manage concurrency and execution data for high-volume self-hosted deployments."
+date: "2026-08-28"
+slug: "n8n-queue-mode-scaling"
+tags: ["n8n", "Workflow Automation", "Self-Hosted", "Scaling", "Redis"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/n8n-queue-mode-scaling.jpg"
+image_alt: "n8n queue mode architecture diagram showing a main instance passing workflow executions through Redis to a pool of worker nodes"
+schema_type: "Article"
+---
+
+**n8n queue mode** is the deployment architecture that separates the job of receiving workflow triggers from the job of executing them. Instead of a single n8n process doing both, a main instance handles triggers and hands off work to a pool of worker instances through Redis. The result is a setup that can be scaled horizontally by adding more workers whenever execution volume grows.
+
+If you run n8n at any meaningful scale — many active webhooks, scheduled workflows processing large volumes of records, or workflows that call slow external APIs — a single-process installation will eventually hit resource limits. Queue mode is how you move past that ceiling without replacing n8n with a heavier platform.
+
+This guide explains how queue mode works, what it requires, how to configure concurrency and execution data, and where the architecture has real limitations.
+
+> **Quick Summary**
+>
+> - Queue mode requires PostgreSQL, Redis, and at least one worker process alongside the main n8n instance.
+> - The main instance handles triggers; workers execute workflows; Redis is the message broker between them.
+> - Running a distributed queue setup over SQLite is not supported; n8n recommends PostgreSQL for queue mode.
+> - Filesystem binary data storage is unsupported in queue mode; database mode is the broadly available alternative, and S3 storage is available on Business and Enterprise plans.
+> - Concurrency can be controlled globally with `N8N_CONCURRENCY_PRODUCTION_LIMIT` and per-worker with the `--concurrency` flag.
+> - Execution data grows fast at scale — configure pruning before your database fills up.
+> - Queue mode adds infrastructure complexity and can introduce overhead and latency; low-volume single-user setups rarely need it.
+
+## Table of Contents
+
+- [What n8n Queue Mode Actually Does](#what-n8n-queue-mode-actually-does)
+- [When Queue Mode Is Worth the Complexity](#when-queue-mode-is-worth-the-complexity)
+- [When Queue Mode Is Unnecessary](#when-queue-mode-is-unnecessary)
+- [What You Need Before Enabling Queue Mode](#what-you-need-before-enabling-queue-mode)
+- [How to Enable Queue Mode Step by Step](#how-to-enable-queue-mode-step-by-step)
+- [Configure and Start Worker Processes](#configure-and-start-worker-processes)
+- [Optional: Separate Webhook Processors](#optional-separate-webhook-processors)
+- [Control Concurrency](#control-concurrency)
+- [Handle Binary Data in Queue Mode](#handle-binary-data-in-queue-mode)
+- [Manage Execution Data and Pruning](#manage-execution-data-and-pruning)
+- [Multi-Main Setup for High Availability](#multi-main-setup-for-high-availability)
+- [Monitoring and Health Checks](#monitoring-and-health-checks)
+- [Honest Limitations](#honest-limitations)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## What n8n Queue Mode Actually Does
+
+In the default single-process mode, one n8n instance handles everything: it listens for webhook calls, fires scheduled triggers, manages the editor UI, and executes workflows. That works well at low volume, but a single Node.js process has finite concurrency, and heavy workflow executions compete with UI responsiveness and webhook reception.
+
+Queue mode splits those responsibilities:
+
+1. **The main instance** manages the editor UI, receives webhook requests, and fires scheduled triggers. When a workflow execution is due, the main instance generates an execution ID and places it on a Redis queue rather than executing the workflow itself.
+
+2. **Redis** acts as the message broker. It holds the queue of pending execution IDs and makes them available to the next worker that is free to pick one up.
+
+3. **Worker instances** are n8n processes started with the `worker` command. Each worker pulls an execution ID from Redis, retrieves the full workflow definition from the shared database, runs the execution, writes results back to the database, and signals Redis that the job is done.
+
+4. **Redis notifies the main instance** when a job completes, so the UI can reflect the result.
+
+This architecture means you can add or remove workers independently of the main process. If a burst of webhooks arrives at the same time, additional workers can absorb more of the load.
+
+The requirement that all processes share the same PostgreSQL database is what makes this coordination possible. Redis is only the queue broker — the actual workflow data, credentials, and execution records live in the database that every process can read.
+
+According to the official n8n documentation, when running in queue mode all production workflow executions are processed by worker processes. For webhooks, the HTTP request is received by the main or webhook instance, but the actual workflow execution is passed to a worker. This relay can add some overhead and latency compared to single-process mode.
+
+## When Queue Mode Is Worth the Complexity
+
+Queue mode is worth setting up when your self-hosted n8n installation runs into concrete problems that a single process cannot solve:
+
+**High webhook concurrency.** In regular mode, n8n can run concurrent executions, but too many simultaneous production executions can thrash the event loop and reduce responsiveness. Queue mode moves production execution load to worker processes, keeping the main instance available to receive triggers and serve the editor.
+
+**Long-running executions affecting responsiveness.** In regular mode, many simultaneous long-running executions can reduce the responsiveness of the main process to new triggers and editor interactions. In queue mode, those executions run on worker processes and leave the main instance free to respond to the editor and new triggers.
+
+**Predictable horizontal scaling.** When volume grows, you add another worker container or instance. When volume drops, you remove one. The architecture supports this without coordinating restarts of the main process.
+
+**Team environments with parallel editors.** If multiple people use the n8n editor at the same time while production workflows fire continuously, separating main from workers keeps the UI responsive under execution load.
+
+## When Queue Mode Is Unnecessary
+
+Not every self-hosted n8n installation needs queue mode, and adding it to a low-volume setup creates real infrastructure burden with little benefit:
+
+- **Personal or single-user instances** running a small number of daily automations will not see meaningful gains. A well-tuned single-process installation can handle reasonable concurrency without queue infrastructure.
+- **Workflows that run infrequently** — nightly reports, daily syncs, or occasional form submissions — do not need horizontal scaling.
+- **Teams without Redis operational experience** will find that managing a Redis instance, monitoring it for memory pressure, and handling Redis unavailability adds more operational risk than the scaling benefit justifies at low volume.
+- **SQLite users** need to migrate to PostgreSQL before queue mode is viable. If that migration is not planned, queue mode is out of reach.
+
+The n8n concurrency control feature (covered below) provides a lighter alternative for single-process installations that need to cap parallel executions without the full queue infrastructure.
+
+## What You Need Before Enabling Queue Mode
+
+Queue mode has prerequisites that cannot be worked around:
+
+**PostgreSQL.** n8n does not recommend running queue mode with SQLite, and the distributed queue setup over SQLite is not supported. The shared database must be PostgreSQL. If you currently run n8n on SQLite, migrate your workflows and credentials to a PostgreSQL database first. n8n's CLI export and import commands handle this migration. See [n8n self-hosted setup](/blog/n8n-self-hosted-setup) for more on the database requirements.
+
+**Redis.** Redis is the message broker. A minimal setup runs Redis as a Docker container on the same host as the main instance. Production setups run Redis on dedicated infrastructure with persistence configured. Redis must be reachable by all n8n processes — main, workers, and webhook processors — with the same connection details.
+
+**Keep versions aligned across all processes.** The official n8n documentation for multi-main setup states that all main and worker processes should run the same n8n version. As an operational recommendation, keep all processes on the same version to avoid unexpected behavior in a coordinated queue setup.
+
+**A shared encryption key.** n8n automatically generates an encryption key on first startup. In queue mode, every worker must use the same key as the main instance so it can decrypt credentials from the shared database. Set `N8N_ENCRYPTION_KEY` to the same value on every process.
+
+## How to Enable Queue Mode Step by Step
+
+### 1. Start Redis
+
+Run Redis as a Docker container:
+
+```bash
+docker run --name n8n-redis -p 6379:6379 -d redis
+```
+
+Redis runs on `localhost` port `6379` by default with no password. For production, configure authentication and persistence according to your Redis documentation.
+
+### 2. Set the executions mode on the main instance
+
+```bash
+export EXECUTIONS_MODE=queue
+export N8N_ENCRYPTION_KEY=<your_key>
+export QUEUE_BULL_REDIS_HOST=localhost
+export QUEUE_BULL_REDIS_PORT=6379
+```
+
+If Redis requires a password:
+
+```bash
+export QUEUE_BULL_REDIS_PASSWORD=<your_redis_password>
+```
+
+The timeout threshold determines how long n8n waits if Redis is unavailable before exiting:
+
+```bash
+export QUEUE_BULL_REDIS_TIMEOUT_THRESHOLD=10000
+```
+
+This defaults to 10,000 milliseconds (10 seconds).
+
+### 3. Start the main instance
+
+Start n8n normally. It will connect to Redis and operate in queue mode, passing executions to the queue rather than running them itself.
+
+## Configure and Start Worker Processes
+
+Workers are n8n instances started with the `worker` subcommand instead of the normal start. They require the same environment variables as the main instance — `EXECUTIONS_MODE=queue`, `N8N_ENCRYPTION_KEY`, and all Redis and database connection settings. Without the shared encryption key and database credentials, workers cannot access stored credentials or persist execution results.
+
+### Docker
+
+```bash
+docker run --name n8n-worker-1 \
+  -e EXECUTIONS_MODE=queue \
+  -e N8N_ENCRYPTION_KEY=<your_key> \
+  -e QUEUE_BULL_REDIS_HOST=<your_redis_host> \
+  -e DB_TYPE=postgresdb \
+  -e DB_POSTGRESDB_HOST=<your_db_host> \
+  -e DB_POSTGRESDB_DATABASE=n8n \
+  -e DB_POSTGRESDB_USER=<your_db_user> \
+  -e DB_POSTGRESDB_PASSWORD=<your_db_password> \
+  n8nio/n8n worker
+```
+
+### From source
+
+```bash
+./packages/cli/bin/n8n worker
+```
+
+You can run multiple worker processes. Each one independently pulls jobs from the Redis queue. Adding another worker increases the potential parallel execution capacity, subject to limits at the shared database, Redis, and any external services your workflows call.
+
+### Worker concurrency flag
+
+By default, each worker handles multiple simultaneous executions. Control this with the `--concurrency` flag:
+
+```bash
+n8nio/n8n worker --concurrency=5
+```
+
+If `N8N_CONCURRENCY_PRODUCTION_LIMIT` is set to a value other than `-1`, queue mode uses that value for concurrency control instead of the flag.
+
+### Worker health checks
+
+Each worker exposes optional health check endpoints. Enable them with:
+
+```bash
+export QUEUE_HEALTH_CHECK_ACTIVE=true
+```
+
+This exposes `/healthz` (whether the worker is up) and `/healthz/readiness` (whether the worker's database and Redis connections are ready) on each worker process. These endpoints are useful for load balancer health checks and container orchestration readiness probes.
+
+### Graceful shutdown
+
+When a worker receives a shutdown signal, it completes its current jobs before exiting. The default graceful shutdown window is 30 seconds:
+
+```bash
+export N8N_GRACEFUL_SHUTDOWN_TIMEOUT=30
+```
+
+Increase this if your workflows regularly take longer than 30 seconds to complete.
+
+## Optional: Separate Webhook Processors
+
+In the default queue mode setup, the main instance still handles incoming webhook requests. For very high webhook volume, you can run dedicated webhook processor processes that only handle HTTP reception and queue the resulting executions — offloading that work entirely from the main instance.
+
+Webhook processors are started with the `webhook` subcommand. Per the official n8n documentation, webhook processor processes rely on Redis and need `EXECUTIONS_MODE` set, and must be configured following the same worker setup instructions — meaning they require the same shared environment variables as workers: `EXECUTIONS_MODE=queue`, `N8N_ENCRYPTION_KEY`, and all Redis and database connection settings. The official command is:
+
+```bash
+# From source
+./packages/cli/bin/n8n webhook
+
+# Docker — supply all shared settings, not just EXECUTIONS_MODE
+docker run --name n8n-webhook-1 -p 5678:5678 \
+  -e EXECUTIONS_MODE=queue \
+  -e N8N_ENCRYPTION_KEY=<your_key> \
+  -e QUEUE_BULL_REDIS_HOST=<your_redis_host> \
+  -e DB_TYPE=postgresdb \
+  -e DB_POSTGRESDB_HOST=<your_db_host> \
+  -e DB_POSTGRESDB_DATABASE=n8n \
+  -e DB_POSTGRESDB_USER=<your_db_user> \
+  -e DB_POSTGRESDB_PASSWORD=<your_db_password> \
+  n8nio/n8n webhook
+```
+
+Multiple webhook processors can run in parallel. Put them behind a load balancer that routes `/webhook/*` and `/webhook-waiting/*` paths to the webhook processor pool, and all other paths to the main instance.
+
+**n8n specifically recommends not adding the main instance to the webhook processor load balancer pool.** Doing so risks degraded UI performance as the main process receives heavy webhook load alongside editor and API requests.
+
+To stop the main instance from processing production webhooks when you have webhook processors running:
+
+```bash
+export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=true
+```
+
+### Large webhook responses in queue mode
+
+In queue mode, when a workflow sends a response via the **Respond to Webhook** node, that response travels from the worker back to the main or webhook instance through Redis. The default maximum size for this relay is 64 MiB, controlled by `N8N_WEBHOOK_RESPONSE_RELAY_SIZE_MAX`. Redis holds approximately 1.5× this value per in-flight response, so budget Redis memory accordingly if you expect large webhook responses.
+
+## Control Concurrency
+
+### Concurrency control in regular mode
+
+If you are not running queue mode but still want to prevent too many simultaneous executions from thrashing a single-process n8n installation, concurrency control is available in regular mode:
+
+```bash
+export N8N_CONCURRENCY_PRODUCTION_LIMIT=20
+```
+
+This applies only to production executions (those triggered by webhooks or trigger nodes). Manual executions, sub-workflow executions, error executions, and CLI-started executions are not counted against the limit. Executions that exceed the limit are queued in FIFO order and processed as capacity frees up.
+
+This is a lighter alternative to full queue mode when you want execution throttling without the Redis and worker infrastructure.
+
+### Concurrency control in queue mode
+
+In queue mode, `N8N_CONCURRENCY_PRODUCTION_LIMIT` controls how many jobs each worker runs simultaneously, taking precedence over the `--concurrency` flag when set to a value other than `-1`. Set it consistently across all worker processes to achieve predictable total parallel capacity.
+
+When you enable concurrency control, the number of active executions and the configured limit appear at the top of a project's or workflow's executions tab in the n8n UI.
+
+## Handle Binary Data in Queue Mode
+
+Binary data is any file-type data — images, documents, spreadsheets — produced or consumed by a workflow execution.
+
+By default, n8n keeps binary data in memory. In a single-process installation you can also switch to filesystem storage, which writes data to disk rather than holding it in memory. **Filesystem binary data storage is not supported in queue mode** — workers and the main instance run as separate processes and cannot share a local filesystem path. If your workflows currently use filesystem storage, you must change the binary data mode before enabling queue mode.
+
+The supported options for binary data in queue mode are:
+
+- **Database storage** (`N8N_DEFAULT_BINARY_DATA_MODE=database`): binary data is stored in the PostgreSQL database alongside execution records. This is the broadly available option and works without additional licensing. It can grow the database quickly if workflows handle many large files.
+- **S3 external storage**: n8n supports using an S3-compatible object store for binary data in queue mode. This is available on **self-hosted Business and Enterprise plans only** — it is not available on Community or Pro plans, and not available on n8n Cloud. A valid license key must be activated before enabling S3 mode; n8n will not start in `s3` binary data mode without one.
+
+Set the binary data mode before enabling queue mode:
+
+```bash
+export N8N_DEFAULT_BINARY_DATA_MODE=database
+```
+
+## Manage Execution Data and Pruning
+
+Every workflow execution generates a record in the database. At high volume, this data accumulates quickly and can consume significant storage. n8n provides environment variables to control what is saved and how long it is kept.
+
+### Reduce what gets saved
+
+By default, n8n saves all execution data. For production queue mode installations, save only what you need for debugging:
+
+```bash
+# Save executions that end in error
+export EXECUTIONS_DATA_SAVE_ON_ERROR=all
+
+# Don't save successful executions
+export EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+
+# Don't save in-progress node data
+export EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
+
+# Don't save manual executions
+export EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
+```
+
+These settings can also be overridden per workflow in the workflow settings panel.
+
+### Enable pruning
+
+n8n enables pruning by default but with conservative defaults. Tune the pruning settings for your storage constraints:
+
+```bash
+# Enable pruning
+export EXECUTIONS_DATA_PRUNE=true
+
+# Delete executions older than 7 days (default is 14 days / 336 hours)
+export EXECUTIONS_DATA_MAX_AGE=168
+
+# Cap total stored executions at 50,000 (default is 10,000)
+export EXECUTIONS_DATA_PRUNE_MAX_COUNT=50000
+```
+
+Pruning runs on a schedule. n8n first marks records for soft deletion, then permanently removes them. Executions with `new`, `running`, or `waiting` status are never pruned. Executions that have been annotated (tagged or rated in the UI) are also excluded from pruning.
+
+**SQLite note:** If you are on SQLite in regular (non-queue) mode, pruned data is not automatically freed from disk. Run the SQLite `VACUUM` operation or set `DB_SQLITE_VACUUM_ON_STARTUP=true` to reclaim space.
+
+## Multi-Main Setup for High Availability
+
+For deployments where the main instance itself is a single point of failure, n8n supports a multi-main configuration. Multiple main instances run simultaneously behind a load balancer with sticky sessions enabled. One main acts as the leader and handles trigger responsibilities; if it goes down, another takes over.
+
+To enable multi-main:
+
+```bash
+export N8N_MULTI_MAIN_SETUP_ENABLED=true
+```
+
+Requirements for multi-main:
+- All main processes run in queue mode and connect to the same PostgreSQL and Redis instances.
+- All main and worker processes run the same n8n version.
+- A load balancer with session persistence (sticky sessions) routes editor traffic to the same main instance per user session.
+
+Two optional settings control leader election timing:
+
+| Config file key | Environment variable | Default | Description |
+|---|---|---|---|
+| `multiMainSetup.ttl` | `N8N_MULTI_MAIN_SETUP_KEY_TTL` | 10 | Leader key TTL in seconds |
+| `multiMainSetup.interval` | `N8N_MULTI_MAIN_SETUP_CHECK_INTERVAL` | 3 | Leader check interval in seconds |
+
+Multi-main is an advanced configuration. Test leader failover behavior in a staging environment before relying on it in production.
+
+## Monitoring and Health Checks
+
+### Main instance health
+
+The main instance exposes a `/healthz` endpoint when `QUEUE_HEALTH_CHECK_ACTIVE=true`.
+
+### Worker health
+
+Each worker exposes `/healthz` and `/healthz/readiness` endpoints when `QUEUE_HEALTH_CHECK_ACTIVE=true`. Use these endpoints in your container orchestration platform's readiness and liveness probe configuration.
+
+### Prometheus metrics
+
+Workers expose a `/metrics` endpoint for Prometheus scraping. Enable it by following n8n's environment variable documentation for Prometheus metrics.
+
+### Worker visibility in the UI
+
+The **Settings > Workers** view shows running workers and their performance metrics, but this feature is available only on n8n Enterprise (self-hosted) and n8n Cloud Enterprise plans. On Community and Pro plans, monitor workers through logs and the health endpoints.
+
+### Execution queue monitoring
+
+Watch the application logs for events about executions being added to or released from the queue. In a future n8n version, concurrency control and queue status will be visible in the UI.
+
+## Honest Limitations
+
+Queue mode solves specific scaling problems but introduces real complexity:
+
+**It requires operational expertise in Redis.** Redis availability directly affects n8n's ability to pass work to workers. A Redis failure stops new executions from being queued. Teams unfamiliar with Redis configuration, memory management, and failure modes will face a steeper operational curve.
+
+**PostgreSQL is required; SQLite is not supported for the distributed setup.** n8n does not recommend queue mode with SQLite, and the distributed queue setup over SQLite is explicitly unsupported. If your existing n8n data is in SQLite, you must migrate it to PostgreSQL before queue mode is usable. This is not a quick configuration change.
+
+**Filesystem binary data storage is unsupported in queue mode.** If your workflows produce files, you need to switch to database binary storage — or S3 storage if your plan includes it — before enabling queue mode. S3 binary storage requires a Business or Enterprise license.
+
+**Queue mode adds overhead and latency for webhook workflows.** Per the official n8n documentation, production webhook executions in queue mode are passed from the main or webhook instance to a worker through Redis. This relay can add overhead and latency compared to single-process mode, which matters for time-sensitive webhook responses.
+
+**Large webhook responses have a size ceiling.** The default 64 MiB relay limit for webhook responses means workflows that return large payloads through the Respond to Webhook node may fail in queue mode. This limit can be increased, but each increase raises Redis memory requirements proportionally.
+
+**The worker visibility feature requires Enterprise.** Operators on Community or Pro plans cannot use the built-in UI to monitor worker status and will need to rely on logs and health endpoints.
+
+**Concurrency control is not a replacement for queue mode** at very high volume. The `N8N_CONCURRENCY_PRODUCTION_LIMIT` variable in regular mode queues excess executions in memory on a single process. It handles bursts gracefully but does not add horizontal capacity.
+
+This guide is based on the official n8n documentation for queue mode, concurrency control, execution data management, binary data handling, and external storage. Configuration options evolve with n8n releases — always verify settings against the [official n8n scaling documentation](https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/enable-queue-mode/) for your installed version.
+
+## Frequently Asked Questions
+
+### Does n8n queue mode work with SQLite?
+
+n8n does not recommend running queue mode with SQLite, and the distributed queue setup across multiple processes over SQLite is not supported. You should use PostgreSQL as the database for the main instance, all workers, and all webhook processors. If you are currently on SQLite, migrate using n8n's CLI export and import commands before enabling queue mode.
+
+### How many workers do I need?
+
+There is no fixed formula. Start with one worker and monitor execution queue depth and latency. Add a worker when executions are consistently waiting longer than acceptable. Each worker increases potential parallel capacity, subject to limits at the shared database, Redis, and any external APIs your workflows call.
+
+### Can I run a worker on a different server from the main instance?
+
+Yes. Workers only need network access to Redis and the PostgreSQL database. They do not need to reach the main n8n instance directly. This lets you distribute workers across multiple machines or cloud instances.
+
+### What should I do if a worker becomes unavailable?
+
+Use health checks (`QUEUE_HEALTH_CHECK_ACTIVE=true`) to detect worker availability, and configure process supervisors or container restart policies to recover failed processes. For Docker Compose and Kubernetes, restart policies ensure workers are brought back automatically. Consult the n8n community and official documentation for current guidance on execution recovery behavior, as it can change between releases.
+
+### Is queue mode available on n8n Cloud?
+
+n8n Cloud manages its own execution architecture, and cloud concurrency works differently from self-hosted queue mode. The queue mode configuration described here applies to self-hosted n8n only. Refer to the [n8n Cloud concurrency documentation](https://docs.n8n.io/deploy/use-n8n-cloud/understand-concurrency) for cloud-specific behavior.
+
+### What is the difference between concurrency control and queue mode?
+
+Concurrency control (`N8N_CONCURRENCY_PRODUCTION_LIMIT`) limits how many executions run simultaneously on a single n8n process and queues excess executions in memory. Queue mode distributes executions across multiple separate worker processes using Redis as the broker. Use concurrency control to throttle a single-process installation; use queue mode when you need horizontal scaling across multiple processes or machines.
+
+### Does queue mode affect manual workflow executions?
+
+No. Manual executions triggered from the n8n editor are not subject to queue mode routing or concurrency control limits. They run in the main process and are useful for testing without interfering with the production queue.
+
+---
+
+*For hands-on help setting up self-hosted n8n, see our guide to [n8n self-hosted setup](/blog/n8n-self-hosted-setup). For building production-grade workflows with error handling, see [n8n error handling and workflow recovery](/blog/n8n-error-handling-workflow-recovery).*
