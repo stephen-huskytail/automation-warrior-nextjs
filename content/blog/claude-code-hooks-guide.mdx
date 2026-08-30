@@ -1,0 +1,284 @@
+---
+title: "Claude Code Hooks: Automate Quality and Safety Checks"
+description: "Learn how Claude Code hooks add deterministic formatting, tests, command checks, notifications, and stop gates to safer AI-assisted development."
+date: "2026-08-30"
+slug: "claude-code-hooks-guide"
+tags: ["Claude", "Claude Code", "AI Automation", "Developer Tools", "Quality Assurance"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/claude-code-hooks-guide.jpg"
+image_alt: "Claude Code hooks workflow with connected validation, testing, blocking, notification, and completion gates"
+schema_type: "Article"
+---
+
+**Claude Code hooks** let you run defined actions at specific points in Claude Code's lifecycle. A hook can format a file after an edit, inspect a command before it runs, execute a test when a task appears finished, notify you when the agent needs input, or inject project context at the start of a session.
+
+That makes hooks different from another sentence in a prompt. A prompt asks the model to remember a rule. A command hook attaches executable behavior to an event, giving a team a more deterministic control around an otherwise model-directed workflow. The right goal is not to automate every decision. It is to automate the checks that should happen the same way every time, while leaving judgment and consequential approvals with people.
+
+> **Quick Summary**
+>
+> - Claude Code hooks run on lifecycle events such as `SessionStart`, `PreToolUse`, `PostToolUse`, `Notification`, and `Stop`.
+> - Command hooks are the best fit for deterministic checks; HTTP, MCP tool, prompt, and agent hook types support broader integrations and judgment-based review.
+> - Use project-level hooks for rules the team should share and local settings for personal notifications or machine-specific behavior.
+> - A `PreToolUse` hook can inspect or block an action before it runs; a `PostToolUse` hook can validate or format after a successful tool call.
+> - Hooks are not an operating-system sandbox or a substitute for permissions, branch protection, tests, and human approval.
+> - Start with one observable, low-risk hook, test both its success and failure paths, and keep an emergency disable path documented.
+
+## Table of Contents
+
+- [What Are Claude Code Hooks?](#what-are-claude-code-hooks)
+- [How the Claude Code Hook Lifecycle Works](#how-the-claude-code-hook-lifecycle-works)
+- [Five Practical Claude Code Hook Patterns](#five-practical-claude-code-hook-patterns)
+- [Where to Configure Hooks](#where-to-configure-hooks)
+- [A Safe Project Hook Structure](#a-safe-project-hook-structure)
+- [Hooks vs. Permissions, Skills, Subagents, and MCP](#hooks-vs-permissions-skills-subagents-and-mcp)
+- [Security and Reliability Rules](#security-and-reliability-rules)
+- [How to Roll Out Hooks to a Team](#how-to-roll-out-hooks-to-a-team)
+- [Honest Limitations](#honest-limitations)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## What Are Claude Code Hooks?
+
+Anthropic defines hooks as user-configured handlers that run automatically at named points in Claude Code's lifecycle. Depending on the hook type, the handler can be a shell command, an HTTP endpoint, a connected MCP tool, a single-turn model prompt, or a tool-using subagent.[1][2]
+
+For command hooks, Claude Code sends event data as JSON on standard input. Your script reads that input, applies a narrow rule, and returns an exit status or structured JSON response. That design lets the hook inspect the actual tool name, proposed arguments, working directory, session information, or result associated with the event instead of guessing from the conversation.
+
+The practical distinction is **deterministic control versus model judgment**:
+
+- Use a **command hook** for rules a script can decide reliably: validate JSON, run a formatter, reject a prohibited file path, check a branch name, or require a test command to exit successfully.
+- Use a **prompt or agent hook** when the question needs interpretation: whether a change appears to satisfy a policy, whether a response includes enough evidence, or whether a multi-file update is internally consistent.
+- Use an **HTTP or MCP tool hook** when the result belongs in another system, such as sending a structured event to an internal service or calling a tool on an already connected MCP server.
+
+Model-based hooks are useful, but they are not deterministic. They also consume model capacity and introduce another judgment layer. Put objective rules in scripts whenever possible.
+
+## How the Claude Code Hook Lifecycle Works
+
+The official hook reference groups common events by cadence.[2]
+
+### Session events
+
+`SessionStart` and `SessionEnd` fire around a Claude Code session. A start hook can load environment context, report repository state, or confirm that required local tools are available. An end hook can record a bounded session result or perform non-destructive cleanup.
+
+### Turn events
+
+`UserPromptSubmit`, `Stop`, and `StopFailure` run around a conversational turn. A prompt-submission hook can add relevant context before Claude works. A Stop hook can run a final verification and block the turn from ending when a required check fails.
+
+### Tool events
+
+`PreToolUse`, `PermissionRequest`, `PostToolUse`, and `PostToolUseFailure` run around tool calls. These are the most useful events for quality and safety automation:
+
+- **`PreToolUse`** sees the proposed action before execution and can block or adjust supported inputs.
+- **`PermissionRequest`** can participate when a tool needs an explicit permission decision.
+- **`PostToolUse`** runs after a tool succeeds, making it useful for formatting, validation, or evidence capture.
+- **`PostToolUseFailure`** records or reacts to a failed tool call without pretending the action completed.
+
+Claude Code also documents events for notifications, subagents, worktrees, configuration changes, file changes, compaction, and other lifecycle points. Do not enable hooks simply because an event exists. Each hook should have a named operational purpose, an owner, and a testable result.
+
+## Five Practical Claude Code Hook Patterns
+
+### 1. Format files immediately after edits
+
+A `PostToolUse` hook matched to file-writing tools can run the repository's existing formatter after Claude edits a supported file. This reduces noisy style-only diffs and gives the agent immediate feedback when the formatter rejects malformed syntax.
+
+Keep the matcher narrow. A TypeScript project might format only `.ts`, `.tsx`, `.json`, and `.mdx` paths rather than running a full-repository formatter after every write. The handler should also verify that the target path belongs to the current project before passing it to another command.
+
+### 2. Check risky commands before execution
+
+A `PreToolUse` hook can inspect a proposed shell command and block a clearly prohibited operation. Examples include force-pushing a protected branch, deleting outside an approved temporary directory, or applying a production migration from a development workflow.
+
+This is a useful defense-in-depth control, not a complete shell security boundary. Anthropic notes that hook filters are best-effort and recommends using the permission system for hard allow-or-deny enforcement.[2] Keep operating-system permissions, repository rules, and API scopes in place.
+
+### 3. Require verification before Claude stops
+
+A Stop hook can run a focused check before a turn ends. For a small project, that might be a targeted test command. For a content repository, it might validate frontmatter, internal links, and the production build.
+
+The key is scope. A hook that launches a 20-minute test suite after every response will slow the workflow and may encourage people to disable it. Match the check to the work: fast targeted tests during iteration, then the full build or suite at an explicit release boundary.
+
+Claude Code also prevents an endlessly blocking Stop hook from trapping a session forever. The official guide documents a consecutive-block cap and exposes `stop_hook_active` so a handler can detect that it already triggered a continuation.[1] A reliable Stop hook must handle that state instead of blindly rerunning itself.
+
+### 4. Notify a person when attention is required
+
+A `Notification` hook can call a native desktop notification command or an approved internal notification service. This is valuable for longer agent runs because the operator does not need to watch the terminal continuously.
+
+Notifications should be exception-oriented. “Permission required,” “verification failed,” and “run complete with evidence” are useful. Posting every successful file read or command creates alert fatigue and hides the events that need action.
+
+### 5. Load bounded context at session start
+
+A `SessionStart` hook can check the current branch, confirm a clean or intentionally dirty worktree, identify the package manager, and surface the project-specific verification commands. This helps prevent a session from starting with stale assumptions.
+
+Do not use a start hook to print secrets, dump an entire environment, or inject thousands of lines of generic documentation. Context is limited, and Anthropic's Claude Code best-practices guide recommends giving the agent concise, specific context plus a verification path.[4]
+
+## Where to Configure Hooks
+
+Hook location determines scope.[1]
+
+| Location | Best use | Shareable? |
+|---|---|---|
+| `~/.claude/settings.json` | Personal hooks across projects | No |
+| `.claude/settings.json` | Project rules the team should use | Yes |
+| `.claude/settings.local.json` | Machine- or developer-specific project behavior | No |
+| Managed policy settings | Organization-wide controls | Admin-controlled |
+| Plugin configuration | Packaged reusable extensions | Yes |
+| Skill or subagent frontmatter | Behavior scoped to that skill or subagent | Yes |
+
+Use project settings for checks that belong to the repository, but avoid committing machine-specific absolute paths. Reference scripts inside the repository so everyone can inspect, version, and test the same logic. Use local settings for desktop notifications, personal tools, and host-specific commands.
+
+Claude Code's `/hooks` browser shows configured hooks by event and source. It is a useful read-back check after changing settings. The guide also documents `disableAllHooks` as the configuration switch for disabling hooks when troubleshooting, subject to settings precedence and managed-policy rules.[1]
+
+## A Safe Project Hook Structure
+
+A maintainable project hook should call a reviewed script rather than embedding a long shell pipeline inside JSON. For example:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/validate_changed_file.py",
+            "timeout": 30,
+            "statusMessage": "Validating the changed file"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/check_command.py",
+            "timeout": 10,
+            "statusMessage": "Checking the proposed command"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+The scripts should:
+
+1. Read the event JSON from standard input.
+2. Validate required fields before using them.
+3. Resolve paths and reject traversal outside the repository.
+4. Avoid shell interpolation of untrusted strings.
+5. Return one documented allow, block, or informational result.
+6. Log metadata without credentials or sensitive file contents.
+7. Exit quickly and fail in a known direction when dependencies are missing.
+
+Test the script directly with positive and negative JSON fixtures before relying on it inside Claude Code. Then use `/hooks` to confirm the expected event, matcher, source file, and command are active.
+
+## Hooks vs. Permissions, Skills, Subagents, and MCP
+
+These features solve different problems.
+
+| Control | Primary job |
+|---|---|
+| Hooks | Run behavior automatically at lifecycle events |
+| Permissions | Define which tools and actions are allowed or require approval |
+| Skills | Supply reusable instructions and executable workflow knowledge |
+| Subagents | Isolate a delegated task in a separate context |
+| MCP | Connect Claude to external tools and data through a standard interface |
+
+A mature workflow may use all five. A skill can describe the release procedure. Permissions can restrict shell and network access. A hook can enforce the build gate. A subagent can independently review the diff. MCP can expose the issue tracker or test service.
+
+Do not collapse those responsibilities into one giant hook. The [Claude MCP guide](/blog/claude-mcp-guide) explains the external-tool layer, while the broader [Claude Code automation guide](/blog/claude-code-automation-business) covers bounded tasks, permissions, and acceptance evidence.
+
+## Security and Reliability Rules
+
+Hooks execute real actions, so they deserve the same review as other automation code.
+
+### Treat hook input as untrusted
+
+Tool arguments, file paths, repository content, and external service responses can contain unexpected characters or malicious instructions. Parse JSON with a real parser. Pass arguments as an array when possible. Do not concatenate an event field into a shell command.
+
+### Keep secrets out of settings and logs
+
+A committed `.claude/settings.json` belongs in source control; credentials do not. Retrieve a narrowly scoped credential from the approved secret mechanism only when the hook needs it, and do not print its value in success or error output.
+
+### Prefer allowlists over blocklists
+
+It is easier to define “format these extensions under this directory” than to predict every path that should be denied. The same applies to commands and external destinations.
+
+### Set timeouts and control concurrency
+
+The hook reference documents per-handler timeouts and notes that matching hooks can run in parallel.[2] Two handlers touching the same file or writing the same status record can race. Keep hooks independent, serialize shared writes inside the script, or consolidate the logic behind one handler.
+
+### Separate checks from consequential actions
+
+A hook can verify that a deployment is ready, but it should not silently approve billing, DNS, destructive data changes, or customer communication. Use a human approval boundary for consequential work. The same principle applies to [human-in-the-loop automation](/blog/human-in-the-loop-automation): automation should prepare evidence and stop at the decision that needs accountable judgment.
+
+## How to Roll Out Hooks to a Team
+
+Use a staged rollout instead of committing a large hook policy all at once.
+
+1. **Choose one recurring failure.** Formatting drift, missing tests, or unclear completion is easier to evaluate than a broad “make the agent safe” goal.
+2. **Define the exact event.** Decide whether the check belongs before a tool, after a tool, at session start, or at stop.
+3. **Write the check as a standalone script.** Make it runnable without Claude Code.
+4. **Create positive and negative fixtures.** Prove that valid input passes and the targeted failure is caught.
+5. **Run it locally in personal or local project settings.** Observe performance and false positives.
+6. **Document the owner and disable path.** A broken hook should not strand the team.
+7. **Commit the project setting only after review.** Include the script, tests, and concise setup notes.
+8. **Measure the outcome.** Track whether the original failure decreases, not just whether the hook fires.
+
+This is ordinary process engineering applied to an AI coding environment. If the underlying workflow is unclear, document it before automating it; the [business process documentation guide](/blog/business-process-documentation-for-automation) provides a practical starting point.
+
+## Honest Limitations
+
+Claude Code hooks do not make an agent infallible. A formatter can normalize syntax while preserving a logic bug. A test hook can pass when the test suite lacks the relevant case. A command blocklist can miss a new variation. An external HTTP hook can fail because the service is unavailable.
+
+Hooks also run with real environment access. A poorly written command hook can expose secrets, modify the wrong path, or slow every interaction. Prompt and agent hooks add model cost and still produce probabilistic judgments. HTTP and MCP tool hooks add network and service dependencies.
+
+Finally, hooks are a Claude Code feature, not a universal policy engine for every process in the company. Keep branch protection, least-privilege credentials, backups, deployment controls, and accountable human ownership outside the agent session.
+
+## Frequently Asked Questions
+
+### What are Claude Code hooks?
+
+Claude Code hooks are configured handlers that run automatically when named lifecycle events occur. They can execute commands, call HTTP endpoints or MCP tools, or use model-based evaluation depending on the hook type.
+
+### What is the difference between `PreToolUse` and `PostToolUse`?
+
+`PreToolUse` runs before a tool action and can inspect or block it. `PostToolUse` runs after a successful tool action and is better for formatting, validation, or recording the result.
+
+### Can Claude Code hooks block a dangerous command?
+
+A `PreToolUse` hook can block a matched tool action, but Anthropic describes hook filtering as best-effort. Use Claude Code permissions, operating-system controls, branch protection, and API scopes for hard security boundaries.
+
+### Where should a team store project hooks?
+
+Store shared project hooks in `.claude/settings.json` and keep the scripts they call inside the repository. Put machine-specific or personal hooks in `.claude/settings.local.json` or the user's global settings.
+
+### Do hooks replace tests?
+
+No. A hook decides when a test or validation runs. The quality of the result still depends on the check itself and whether it covers the real requirement.
+
+### Are prompt and agent hooks deterministic?
+
+No. They use a model to evaluate a condition and are appropriate when judgment is required. Use command hooks for objective rules that can be decided by code.
+
+### Can hooks call external services?
+
+Yes. Claude Code supports HTTP hooks and MCP tool hooks, in addition to command, prompt, and agent handlers. Treat external calls as integration code: authenticate safely, set timeouts, handle retries carefully, and avoid duplicate writes.
+
+## Final Takeaway
+
+Claude Code hooks are most valuable when they turn a repeated expectation into an observable control: format after an edit, inspect before a risky action, verify before stopping, and notify only when a person needs to decide.
+
+Start with one narrow hook, test both sides of its decision, and keep the real security boundary outside the prompt. If you want help turning an existing development or operations workflow into a bounded automation with clear verification gates, [book a strategy call](/book-a-call).
+
+## Sources
+
+[1] [Anthropic: Automate actions with hooks](https://code.claude.com/docs/en/hooks-guide)
+
+[2] [Anthropic: Hooks reference](https://code.claude.com/docs/en/hooks)
+
+[3] [Anthropic: Claude Code settings](https://code.claude.com/docs/en/settings)
+
+[4] [Anthropic: Best practices for Claude Code](https://code.claude.com/docs/en/best-practices)

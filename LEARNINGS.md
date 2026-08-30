@@ -60,6 +60,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-07-07 | claude-vs-chatgpt |
 | 2026-07-27 | claude-code-automation-business |
 | 2026-08-10 | claude-mcp-guide |
+| 2026-08-30 | claude-code-hooks-guide |
 
 ### Ontraport
 | Date | Slug |
@@ -136,7 +137,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-08-28
-- **Category:** n8n
-- **Slug:** n8n-queue-mode-scaling
-- **Next category in rotation:** AI/AGI/Claude
+- **Date:** 2026-08-30
+- **Category:** AI/AGI/Claude
+- **Slug:** claude-code-hooks-guide
+- **Next category in rotation:** Ontraport
