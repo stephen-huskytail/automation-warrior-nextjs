@@ -1,0 +1,401 @@
+---
+title: "Make Webhooks: A Practical Guide to Reliable Real-Time Automations"
+description: "Learn how to build reliable Make webhooks with authentication, payload validation, idempotency, ordered processing, queue planning, responses, recovery, and safe testing."
+date: "2026-09-05"
+slug: "make-webhooks-guide"
+tags: ["Make.com", "Webhooks", "Workflow Automation", "API Security", "No-Code"]
+author: "Stephen Gardner"
+draft: false
+featured_image: "/images/blog/make-webhooks-guide.png"
+image_alt: "Make webhook automation with a secure intake signal, validation shield, processing queue, and reliable workflow routes"
+schema_type: "Article"
+---
+
+**Make webhooks** let an outside application trigger a scenario as soon as an event arrives. That can make an automation feel immediate: a form submission enters the CRM, an order starts fulfillment, or an internal alert reaches the right team without waiting for a polling schedule.
+
+The speed is useful. It also changes the failure model. An incoming request may be duplicated, malformed, out of order, too large, unauthenticated, or accepted before the downstream work is complete. A reliable Make webhook therefore needs more than a generated URL and a connected module. It needs an explicit request contract, access controls, duplicate protection, queue planning, observable responses, recovery rules, and controlled testing.
+
+This guide is based on Make’s current public Help Center and app documentation. It explains a practical operating pattern without claiming hands-on access to every Make plan, organization, app connection, or interface variation.
+
+> **Quick Summary**
+>
+> - Use a webhook when an external system can push an event and low-latency processing matters.
+> - Treat the webhook URL as sensitive and add API-key authentication or IP restrictions where the sender supports them.
+> - Define and validate the expected data structure instead of trusting the first sample payload.
+> - Use a stable source event ID to make downstream actions idempotent.
+> - Choose parallel or ordered processing from the business rule, not convenience.
+> - Size the processing schedule and queue for bursts, outages, and retry traffic.
+> - Return a response that tells the caller what was accepted—without implying unverified downstream success.
+> - Enable an appropriate recovery path and test duplicates, bad payloads, timeouts, queue pressure, and replays before launch.
+
+## Table of Contents
+
+- [What Make Webhooks Do](#what-make-webhooks-do)
+- [Define the Event Contract First](#define-the-event-contract-first)
+- [Create a Custom Webhook in Make](#create-a-custom-webhook-in-make)
+- [Authenticate Requests Before Processing](#authenticate-requests-before-processing)
+- [Validate and Normalize the Payload](#validate-and-normalize-the-payload)
+- [Make the Workflow Idempotent](#make-the-workflow-idempotent)
+- [Choose Parallel or Ordered Processing](#choose-parallel-or-ordered-processing)
+- [Plan for Queue Pressure and Bursts](#plan-for-queue-pressure-and-bursts)
+- [Design an Accurate Webhook Response](#design-an-accurate-webhook-response)
+- [Build Error Handling and Recovery](#build-error-handling-and-recovery)
+- [Protect Logs and Sensitive Data](#protect-logs-and-sensitive-data)
+- [Test the Complete Webhook Lifecycle](#test-the-complete-webhook-lifecycle)
+- [Common Make Webhook Mistakes](#common-make-webhook-mistakes)
+- [Honest Limitations](#honest-limitations)
+- [E-E-A-T and Responsible Implementation](#e-e-a-t-and-responsible-implementation)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## What Make Webhooks Do
+
+Make describes webhooks as HTTPS endpoints that receive data from an external application or another scenario and trigger scenario execution. App-specific instant triggers listen for events from a supported app. Custom webhooks create a unique URL that another service can call.[1][2]
+
+By default, an instant webhook starts processing when Make receives the request. That differs from a polling trigger, which asks a source for new data on a schedule. Make also allows webhook processing to be scheduled; in that mode, incoming requests wait in the webhook’s queue until the schedule runs.[1]
+
+A webhook is a strong fit when:
+
+- the source application can send an event reliably;
+- the business process benefits from near-real-time intake;
+- the event has a stable identifier;
+- the sender can retry failed requests safely;
+- the receiver can authenticate and validate the request;
+- the team has a defined owner for failures and replays.
+
+Polling may be safer when the source cannot authenticate outbound webhooks, does not provide event IDs, cannot retry, or exposes a more reliable “changes since” API. A hybrid can also work: use webhooks for speed and a scheduled reconciliation to find missed events.
+
+If you are still learning scenarios, modules, mapping, and bundles, begin with the [Make.com tutorial for beginners](/blog/make-com-tutorial-for-beginners). A webhook changes how a scenario starts; it does not remove the need to understand the complete data path.
+
+## Define the Event Contract First
+
+Before creating a webhook, write down the event contract. This turns an informal integration into something the sender, Make scenario, and downstream system can all test.
+
+Document:
+
+- **Event name:** for example, `lead.created` or `invoice.approved`.
+- **Source:** the application and environment that sends it.
+- **Event ID:** a stable, unique identifier for one occurrence.
+- **Entity ID:** the customer, order, ticket, or other record involved.
+- **Timestamp:** when the source says the event occurred, including time zone or UTC offset.
+- **Version:** the payload schema version.
+- **Authentication:** API key, source signature, IP restriction, or an approved gateway.
+- **Required fields:** values that must exist before processing.
+- **Optional fields:** values that may be absent without breaking the event.
+- **Response contract:** which status and body mean accepted, rejected, or retriable.
+- **Retry policy:** when the sender retries and how long it keeps trying.
+- **Ordering rule:** whether events for the same entity must be processed sequentially.
+- **Data classification:** which fields contain personal, confidential, financial, or regulated information.
+- **Owner:** who investigates failed or uncertain outcomes.
+
+Keep transport acceptance separate from business completion. Receiving `order.created` does not prove inventory was reserved, fulfillment began, or a customer message was delivered. Give each important downstream stage its own observable state.
+
+For a complex process, map the event and its owner before building. The [business process documentation guide](/blog/business-process-documentation-for-automation) provides a practical structure for triggers, decisions, exceptions, controls, and completion evidence.
+
+## Create a Custom Webhook in Make
+
+Make’s current Webhooks app documentation describes this basic setup:[2]
+
+1. Add **Webhooks > Custom webhook** as the first module in a scenario.
+2. Select **Add** next to the webhook field.
+3. Give the webhook a unique operational name.
+4. Configure authentication and advanced settings as required.
+5. Save the webhook and securely provide its generated URL to the authorized sender.
+6. Define the data structure explicitly, or send a controlled sample request to expose fields for mapping.
+7. Add the validation, deduplication, routing, downstream, response, and recovery modules.
+8. Save and activate the scenario only after controlled tests pass.
+
+Make states that each scenario uses its own webhook; the same webhook cannot be shared across multiple scenarios.[2] That boundary can be helpful. Name webhooks by environment and event—for example, `production_crm_lead_created_v1`—so operators do not accidentally connect a test sender to a production scenario.
+
+Do not paste a production webhook URL into public documentation, screenshots, chat channels, client-side code, or source control. Store it in the sending system’s approved secret or integration configuration. Use separate test and production endpoints so a sample payload cannot create real customer or financial activity.
+
+## Authenticate Requests Before Processing
+
+A unique URL is not a complete trust model. Anyone who obtains it may be able to send requests unless another control rejects them.
+
+Make’s Custom webhook settings currently support API-key authentication. You can attach one or more keys and require callers to send a key in the `x-make-apikey` request header. Make also documents IP restrictions using individual addresses or CIDR ranges.[2]
+
+Use the strongest control the source can support:
+
+- **API key:** useful when the sending system can set a custom request header.
+- **IP allowlist:** useful when the sender publishes stable outbound addresses, but fragile if those addresses change.
+- **Provider signature:** when a vendor signs the raw body, verify that signature before normalizing or trusting the payload. This may require a verified gateway or code-capable step outside a simple Make mapping.
+- **Gateway authentication:** place an approved API gateway or server endpoint in front of Make when the sender needs HMAC verification, timestamp checks, replay protection, mutual TLS, or more advanced rate controls.
+
+Do not copy an API key into scenario names, notes, sample bundles, error messages, or alerts. Rotate keys through a controlled cutover: add the replacement, update the sender, verify accepted traffic, then remove the old key.
+
+Authentication answers “is this caller allowed?” It does not answer “is this payload complete, safe, new, or authorized to produce this business action?” Continue with validation and idempotency before any consequential write.
+
+## Validate and Normalize the Payload
+
+Make recommends defining the webhook data structure. An explicitly selected data structure can validate incoming data and reject requests that do not match with HTTP 400. By contrast, letting Make infer fields from a sample call helps mapping but does not create the same validation boundary.[2]
+
+Define required types and fields from the documented event contract—not from one convenient example. Test missing, null, empty, oversized, and unexpected values. Keep the schema version in the payload or request metadata so a sender change does not silently alter existing mappings.
+
+Make currently supports query string, form data, and JSON inputs. Its documentation warns that when duplicate values arrive in the query string and the body, query-string values take precedence.[2] Avoid sending the same field in multiple formats. If a third-party sender does it anyway, normalize from an explicit allowlist and reject ambiguous security-sensitive fields.
+
+The Custom webhook module can also expose request headers and the HTTP method through advanced settings.[2] Use those fields to enforce the contract where appropriate. For example, reject an unexpected method and record only the non-secret request metadata needed for investigation.
+
+Make’s documented maximum webhook payload size is 5 MB, regardless of subscription tier.[2] Do not use a webhook body as a general file-transfer channel. For larger files, send an authorized reference and have the workflow retrieve the asset from its source after authenticating the event and validating access.
+
+A practical normalization stage should:
+
+1. confirm authentication or a prior gateway verdict;
+2. check the expected HTTP method and content type;
+3. validate the schema version;
+4. require the event ID, event name, timestamp, and entity reference;
+5. parse only expected fields;
+6. normalize dates, booleans, identifiers, and controlled labels;
+7. reject values outside business limits;
+8. remove secrets and unnecessary personal data before logging or storage;
+9. produce a compact internal record for downstream modules.
+
+## Make the Workflow Idempotent
+
+Webhook senders commonly retry when they receive a timeout or retriable error. A person may also replay an event during recovery. If the workflow creates a CRM contact, sends an email, changes an order, or posts a message on every delivery, a valid retry can become a duplicate side effect.
+
+Use the source event ID as an idempotency key. A basic pattern is:
+
+1. authenticate and validate the request;
+2. build a stable key from the source and event ID;
+3. check a durable record before the protected side effect;
+4. if the event is already complete, return the documented replay result without repeating the action;
+5. if the event is new, record an initial state;
+6. perform the downstream action with the same idempotency key when supported;
+7. save the downstream record ID and final state;
+8. route uncertain outcomes to review instead of retrying blindly.
+
+A [Make data store](/blog/make-data-stores-guide) can hold compact event state close to the scenario. Do not treat the check-and-write sequence as a universal transaction. Two parallel executions can race, and a downstream action may succeed immediately before the state update fails. Prefer destination-native idempotency keys or a stronger transactional boundary for financial, fulfillment, inventory, legal, or other high-impact work.
+
+Also distinguish an **event ID** from an **entity ID**. One customer or order can legitimately produce several events. Deduplicating by entity alone can suppress real updates; deduplicating by an unstable timestamp or email address can let duplicates through.
+
+## Choose Parallel or Ordered Processing
+
+Make says instant webhook scenarios process requests in parallel by default. If **Process data in order** is enabled in Scenario settings, Make waits for the previous execution before starting the next one.[1][4]
+
+Parallel processing is usually appropriate when events are independent and downstream systems can handle concurrent requests. It reduces latency during bursts, but it can expose races when several events modify the same record.
+
+Ordered processing is useful when sequence changes meaning. Examples include:
+
+- `subscription.started` must be applied before `subscription.canceled`;
+- inventory adjustments for the same item must not race;
+- a document revision must not overwrite a newer version;
+- a customer status transition must follow allowed prior states.
+
+Global ordered processing can create a bottleneck because one slow or incomplete execution may hold later work. Make’s Scenario settings documentation says that with ordered processing enabled, new runs pause until incomplete executions are resolved.[4] If only events for the same entity require ordering, consider partitioning upstream, using a transactional destination, or routing through infrastructure that supports per-key ordering rather than serializing every customer behind one queue.
+
+Do not infer chronological truth from arrival order alone. Networks retry, providers delay, and source systems can deliver older events later. Compare source sequence numbers, revision numbers, or trustworthy timestamps when the provider supplies them, and define how to handle stale events.
+
+## Plan for Queue Pressure and Bursts
+
+When webhook processing is scheduled rather than immediate, requests accumulate in the webhook queue. Make processes queued requests according to the schedule and the configured maximum result or cycle settings.[1]
+
+Capacity planning needs three numbers:
+
+- expected normal arrival rate;
+- realistic peak or retry-burst rate;
+- sustainable processing rate through the slowest downstream dependency.
+
+Make currently documents a queue allowance tied to licensed usage: up to 667 items per 10,000 monthly credits, with a maximum of 10,000 items in a webhook queue. When the queue is full, Make rejects incoming data above the limit.[1] It also documents an incoming rate limit of up to 300 webhook requests per ten-second interval; excess traffic receives HTTP 429.[1]
+
+Those values can change, and account limits are not a resilience plan. Monitor queue depth, oldest-item age, rejected requests, scenario duration, downstream rate limits, and retry volume. The sender should use bounded exponential backoff with jitter for retriable failures and should not retry permanent validation errors.
+
+For scheduled processing, do the throughput math. If 500 requests can arrive per hour but the schedule processes only two items each hour, the queue will grow even though every run is technically successful. Increase the batch/cycle limit, run more frequently, reduce per-event work, or place a properly governed queue in front of Make.
+
+Keep a reconciliation path for missed events. A webhook is a delivery mechanism, not proof that every source record arrived. A periodic read-only comparison—such as source orders versus processed event IDs—can expose silent gaps without duplicating the live action.
+
+## Design an Accurate Webhook Response
+
+Without a Webhook response module, Make documents these default responses:[1]
+
+- `200 Accepted` when a request is accepted into the queue;
+- `400 Queue is full` when the queue cannot accept more work;
+- `429 Too many requests` when the rate-limit check fails.
+
+A `200 Accepted` confirms transport acceptance. It does not necessarily prove that the CRM write, email, file operation, or other downstream business outcome succeeded. Document that distinction with the sender.
+
+Use the **Webhook response** module when the caller needs a specific status, content type, response body, or redirect. Return only non-sensitive fields, such as a request correlation ID and a precise status like `accepted_for_processing`.
+
+Make’s app documentation currently states that the response timeout is 180 seconds; if a custom response is not available in that period, Make returns `200 Accepted`.[2] Do not design a caller around waiting nearly three minutes for a long scenario. For durable work, acknowledge receipt after the event is safely accepted, process asynchronously, and expose completion through a separate status or callback contract.
+
+Placement matters. Make warns that if the response module is in the middle of a scenario and a later module fails, the scenario may not deactivate and the operator may not receive the expected error notification. Placing the response last improves error visibility, but it can also make the caller wait on downstream work.[1] Choose deliberately:
+
+- **Synchronous response:** use only for short, bounded work when the caller truly needs the computed result.
+- **Asynchronous acceptance:** acknowledge intake after a durable acceptance boundary, then track downstream states separately.
+- **Gateway response:** let a fronting service authenticate, validate, persist, and acknowledge the event before handing it to Make.
+
+Never return customer data, credentials, internal stack details, or raw downstream errors in a public webhook response.
+
+## Build Error Handling and Recovery
+
+A reliable webhook must distinguish at least four outcomes:
+
+1. **Rejected:** the caller or payload failed authentication or validation; do not retry without correction.
+2. **Accepted:** the event crossed the documented intake boundary.
+3. **Completed:** every required downstream result was verified.
+4. **Uncertain:** a timeout or partial failure makes it unsafe to repeat the action automatically.
+
+Make describes incomplete executions as a safety feature that stores unfinished runs for retry or manual resolution. The feature is disabled by default and must be enabled in Scenario settings.[3] Decide whether it fits the data and operational risk. If a retry can repeat a consequential side effect, pair recovery with an idempotency check and downstream read-back.
+
+Make’s Scenario settings also distinguish rollback behavior, committing after each module, and how variable values behave during retries.[4] These choices affect whether earlier work remains committed after a later failure. Do not change them globally to silence errors. Map the intended transaction boundary and test failure after each consequential module.
+
+Use the [Make error-handling guide](/blog/make-error-handling-reliable-automations) to design retry, rollback, ignore, break, and review paths. The critical rule is simple: if the workflow cannot prove whether an external action succeeded, investigate the destination by source reference before retrying.
+
+Create an operational alert that includes:
+
+- scenario and environment;
+- non-secret event/correlation ID;
+- failure stage;
+- known versus uncertain outcome;
+- retry count and next retry time;
+- source and downstream record references;
+- owner and required decision.
+
+An alert without an owner or safe next action is only a record of failure.
+
+## Protect Logs and Sensitive Data
+
+Make’s Scenario settings say execution logs normally retain processed data for troubleshooting. **Keep data confidential** removes payload detail from execution logs, but it also limits investigation options.[4] Use data classification to decide what the scenario may receive and retain; do not send unnecessary sensitive fields merely because a confidential-log option exists.
+
+Make separately notes that incoming webhook data is stored in the webhook queue even when the data-confidential setting is enabled, and is deleted from the queue after processing.[1] Queue behavior, execution logs, downstream storage, and alerts are different data surfaces. Review each one.
+
+Make currently documents webhook log retention of three days for most organizations and 30 days for Enterprise organizations.[1] Do not rely on that interface as the only audit trail for a consequential process. Store the minimum approved evidence in the rightful system of record, using stable references rather than copied full payloads.
+
+Operational safeguards include:
+
+- collect only fields needed for the workflow;
+- keep secrets out of payloads, query strings, logs, data stores, and alerts;
+- restrict scenario and webhook administration to authorized roles;
+- separate test and production endpoints and connections;
+- redact personal data from routine notifications;
+- define retention and deletion rules;
+- inventory who can replay or manually resolve events;
+- review inactive endpoints and rotate credentials.
+
+Make states that a webhook not connected to any scenario for more than five days is automatically deactivated and returns `410 Gone`.[1] Treat a detached or retired webhook as a controlled change: remove it from the sender, confirm traffic stopped, retain the required audit record, and rotate any associated key.
+
+## Test the Complete Webhook Lifecycle
+
+Use controlled, non-production records. Do not point a live sender at the production endpoint until the test endpoint and recovery path pass.
+
+### Minimum test matrix
+
+- **Valid first event:** accepted once and produces the expected downstream record.
+- **Exact replay:** does not repeat the protected side effect.
+- **Same entity, new event:** processes as a legitimate new occurrence.
+- **Missing authentication:** rejected before parsing or writing business data.
+- **Wrong API key or source verdict:** rejected without exposing details.
+- **Missing required field:** returns the documented permanent error.
+- **Wrong field type or unsupported schema version:** rejected or quarantined explicitly.
+- **Duplicate field in query and body:** follows the declared normalization rule or fails closed.
+- **Oversized payload:** is rejected without partial processing.
+- **Parallel race:** concurrent events do not corrupt or duplicate state.
+- **Out-of-order event:** stale data does not overwrite newer state.
+- **Downstream rate limit:** retries with the documented delay and cap.
+- **Downstream timeout after possible success:** performs read-back before retry.
+- **Queue pressure:** monitoring and sender backoff activate before overflow.
+- **Recovery replay:** resumes safely from the intended checkpoint.
+- **Response timeout:** the caller and scenario agree on whether `Accepted` means queued or complete.
+- **Confidential-data check:** logs, queue, alerts, and storage contain only approved fields.
+- **Reconciliation:** a missed-event comparison identifies an intentionally omitted test event.
+
+For each case, capture expected status, observed status, source event ID, scenario execution, downstream reference, side-effect count, and owner. Delete or clearly mark test records after verification.
+
+A browser showing `Accepted` is not end-to-end proof. Inspect the scenario execution and the authoritative destination. If the workflow promised a CRM lead, verify the exact CRM record. If it promised a file, verify the final file. If it promised a message, verify the sent message and its intended recipient.
+
+## Common Make Webhook Mistakes
+
+**Treating the URL as authentication.** A leaked endpoint can accept untrusted traffic.
+
+**Learning fields from one sample and calling that validation.** Optional, missing, null, or changed fields fail later in the scenario.
+
+**Returning success before defining what succeeded.** The sender interprets queue acceptance as completed business work.
+
+**Using an entity ID as an event ID.** Legitimate updates are suppressed or retries create duplicates.
+
+**Ignoring parallel execution.** Two events race to update the same CRM, order, or state record.
+
+**Turning on global ordering without capacity planning.** One slow or incomplete run blocks unrelated events.
+
+**Scheduling too small a batch.** The queue grows even though the scenario keeps reporting successful runs.
+
+**Retrying an uncertain outcome blindly.** A timeout after downstream success repeats the customer-facing or financial action.
+
+**Logging the full payload everywhere.** Personal data and secrets spread into alerts, data stores, and execution history.
+
+**Testing only the happy path.** Authentication failures, malformed payloads, replays, rate limits, and recovery remain unknown until production.
+
+## Honest Limitations
+
+Make webhooks provide a convenient low-code intake path, but they do not automatically provide exactly-once delivery, a universal transaction, per-entity ordering, durable long-term audit storage, or advanced signature verification for every provider.
+
+A high-volume or high-consequence integration may need an API gateway, durable message queue, transactional database, dead-letter workflow, provider-native signature verification, dedicated observability, and a reconciliation service. Financial, inventory, fulfillment, healthcare, legal, identity, or regulated events should not depend on a URL-and-mapping design alone.
+
+Make’s documented queue, rate, payload, and retention limits can change. Verify the current Help Center and your organization’s plan before designing close to a boundary. Also test the sender’s real retry and signature behavior; provider documentation and observed production behavior can differ.
+
+For many small-business workflows, Make can still be a strong fit when the event contract is clear, volume is understood, side effects are idempotent, and a human owns exceptions. The goal is not maximum infrastructure. It is the smallest system that can prove safe intake, processing, recovery, and completion.
+
+If you need help deciding whether Make should receive events directly or sit behind a more durable boundary, [book an automation strategy call](/strategy). We can map the event contract, risk, volume, source of truth, and recovery path before production traffic is connected.
+
+## E-E-A-T and Responsible Implementation
+
+This article is a source-backed implementation guide. It does not claim hands-on testing inside every Make plan, scenario configuration, app connection, webhook sender, or downstream system. Make’s current public Help Center and Webhooks app documentation are the sources for platform behavior described here. Your organization’s approved architecture, live account settings, provider contract, test evidence, privacy policy, and downstream records remain the implementation source of truth.
+
+Stephen Gardner’s operating approach is to authenticate before trust, validate before action, use stable identifiers, separate acceptance from completion, make retries idempotent, and keep an accountable owner for uncertain outcomes. Apply security, privacy, legal, accessibility, data-retention, and compliance review appropriate to the information and business action involved.
+
+## Frequently Asked Questions
+
+### What is a Make webhook?
+
+A Make webhook is an HTTPS endpoint that lets an external application or another Make scenario send data and trigger a scenario. App-specific webhooks listen for supported application events; custom webhooks provide a generated URL for other senders.[1][2]
+
+### Are Make webhooks instant?
+
+They are immediate by default: Make starts the scenario when the request arrives. You can instead schedule webhook processing, in which case requests wait in the webhook queue until the schedule runs.[1]
+
+### How do I secure a Make custom webhook?
+
+Treat the URL as sensitive. Make currently supports API-key authentication through the `x-make-apikey` header and IP restrictions in Custom webhook settings.[2] If the sender signs requests, verify the raw signature through a compatible, approved boundary before trusting the payload.
+
+### Does Make validate webhook JSON automatically?
+
+Not merely because it learned fields from a sample. Make’s documentation distinguishes sample-based field detection from selecting an explicit data structure for validation. Define the expected structure when malformed requests should be rejected at the webhook boundary.[2]
+
+### What is the maximum Make webhook payload size?
+
+Make currently documents a 5 MB maximum `Content-Length` for custom webhook payloads, regardless of plan.[2] Check the current documentation before relying on that limit.
+
+### Does a `200 Accepted` response mean the scenario completed?
+
+Not necessarily. Without a custom response module, Make returns `200 Accepted` when the request is accepted into the queue.[1] Treat that as transport acceptance unless your integration contract and downstream verification establish a stronger meaning.
+
+### Does Make process webhook requests in order?
+
+Instant webhooks are processed in parallel by default. Enable **Process data in order** when every execution must finish before the next begins, while accounting for the throughput and blocking consequences.[1][4]
+
+### How do I prevent duplicate webhook actions?
+
+Require a stable source event ID, store its processing state, use destination-native idempotency when available, and read back uncertain outcomes before retrying. Do not rely only on a temporary filter or mutable customer field.
+
+### What happens when a Make webhook queue is full?
+
+Make documents a default `400 Queue is full` response when no custom response module is used. Queue capacity depends on the licensed usage allowance, up to the documented platform maximum.[1] Monitor queue age and depth and make the sender’s retry behavior explicit.
+
+### Should I enable incomplete executions?
+
+Enable them when stored failure state and controlled retry reduce data-loss risk, but pair retries with idempotency and privacy controls. Make says incomplete executions are disabled by default.[3] Test failures around every consequential downstream action before choosing the setting.
+
+## Final Takeaway
+
+A Make webhook is reliable when the team can answer five questions with evidence: who sent the event, whether the payload is valid, whether it has already been processed, what business outcome occurred, and what happens after failure.
+
+Start with the event contract. Protect the intake boundary. Normalize only expected data. Design for duplicates, concurrency, bursts, and uncertain outcomes. Then test the entire lifecycle—from the sender’s first request through downstream read-back and recovery—before trusting the automation with production work.
+
+## Sources
+
+[1] https://help.make.com/webhooks — Make Help Center: Webhooks (accessed September 5, 2026)
+
+[2] https://apps.make.com/gateway — Make Apps Documentation: Webhooks (accessed September 5, 2026)
+
+[3] https://help.make.com/incomplete-executions — Make Help Center: Incomplete executions (accessed September 5, 2026)
+
+[4] https://help.make.com/scenario-settings — Make Help Center: Scenario settings (accessed September 5, 2026)

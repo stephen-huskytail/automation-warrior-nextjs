@@ -91,6 +91,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | 2026-07-15 | make-com-pricing |
 | 2026-07-30 | make-error-handling-reliable-automations |
 | 2026-08-16 | make-data-stores-guide |
+| 2026-09-05 | make-webhooks-guide |
 
 ### OpenAI
 | Date | Slug |
@@ -139,7 +140,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-09-03
-- **Category:** Kartra
-- **Slug:** kartra-membership-sites-guide
-- **Next category in rotation:** Make.com
+- **Date:** 2026-09-05
+- **Category:** Make.com
+- **Slug:** make-webhooks-guide
+- **Next category in rotation:** OpenAI
