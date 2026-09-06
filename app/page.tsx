@@ -40,7 +40,7 @@ export default function Home() {
       <main className="page-wrapper">
         <Header />
         <div id="scroll" className="main-wrapper">
-          <Hero />
+          <Hero oneLineTitle />
           <LogoMarquee />
           <ProblemSection />
           <PillarsSection />

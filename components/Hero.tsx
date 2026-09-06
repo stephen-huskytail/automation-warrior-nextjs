@@ -15,6 +15,8 @@ export interface HeroProps {
   primaryLabel?: string;
   /** Small line under the buttons. */
   footnote?: string;
+  /** Keep the headline on one line on desktop (homepage). */
+  oneLineTitle?: boolean;
 }
 
 const HOME_TRUST = [
@@ -33,6 +35,7 @@ export default function Hero({
   primaryHref = BOOK_URL,
   primaryLabel = "Book a Strategy Call",
   footnote,
+  oneLineTitle = false,
 }: Partial<HeroProps>) {
   return (
     <section className="banner-section">
@@ -41,7 +44,7 @@ export default function Hero({
           <div className="banner-inner">
             <div className="banner-content-box">
               {eyebrow ? <span className="sub-heading">{eyebrow}</span> : null}
-              <h1 className="heading-h1">{title}</h1>
+              <h1 className={`heading-h1${oneLineTitle ? " hero-one-line" : ""}`}>{title}</h1>
               <p className="text-paragraph">{paragraph}</p>
             </div>
             <div className="button-group">
