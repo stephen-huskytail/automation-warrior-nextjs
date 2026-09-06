@@ -1,33 +1,49 @@
 import { FAQ } from "@/components/FAQ";
 
-const items = [
+export const homeFaqItems = [
   {
-    q: "What does the agent actually do on day one?",
-    a: "During setup we train it on your business — your services, pricing, tone, and tools. From day one it answers lead inquiries, drafts follow-ups and quotes for your approval, keeps your CRM updated, and sends you a morning brief. As it learns your preferences, you approve less and delegate more.",
+    q: "Is this a chatbot?",
+    a: "No. A chatbot answers questions. An agent team does work — research, drafting, intake, scheduling, record-keeping — with roles, approval gates, and proof before anything is marked done.",
   },
   {
-    q: "How is this different from just using ChatGPT?",
-    a: "ChatGPT waits for you to type. Your agent works on its own: it's connected to your actual tools, knows your business, acts on triggers like a new lead or an unpaid invoice, and reports back weekly. It's the difference between owning a toolbox and having an employee.",
+    q: "Will AI touch our client data? We're regulated.",
+    a: "Only the way you decide it should. For HIPAA, legal, and other regulated work, we deploy local models on servers you control. Nothing leaves your walls that you didn't approve.",
   },
   {
-    q: "What tools does it work with?",
-    a: "It lives in Slack or Telegram and connects to the tools you already run your business on — GoHighLevel, Google Calendar, Gmail, and most common CRMs and booking systems. The AI Operator includes 2 integrations; the AI Operations Team includes 5.",
+    q: "What does a fractional CAIO actually do?",
+    a: "The job a full-time Chief AI Officer would do, part-time: decide where AI belongs, build the agent teams, set the security posture, and report on results. You get the executive without the executive payroll.",
   },
   {
-    q: "What happens if it makes a mistake?",
-    a: "Anything outward-facing starts in approval mode — the agent drafts, you tap approve. You decide what it's allowed to do on its own, and you can expand that as trust builds. Every action is logged in your weekly report, and human support is included in every plan.",
+    q: "How long before something is working?",
+    a: "The first pilot is typically live inside 30 to 60 days, on one workflow, with a number attached. We scale from there — not before.",
   },
   {
-    q: "Who sees my data?",
-    a: "Your data stays in your accounts — the agent connects to your tools, it doesn't copy your business into ours. We never sell your data or use it to train public AI models.",
+    q: "Do we have to replace our tools?",
+    a: "No. Agent teams connect to what you already run — CRM, email, Slack or Teams, calendars, case management — and do the work inside them.",
   },
   {
-    q: "What if I cancel?",
-    a: "No contracts — cancel anytime. And you keep the workflows, templates, and automations we built for you. If you outgrow the Operator, upgrade to the Operations Team anytime and we'll credit your setup fee.",
+    q: "How is this different from an agency?",
+    a: "An agency sells you deliverables. Stephen sits in your business as the AI expert, builds a team that keeps working after the project ends, and stays accountable for whether it does.",
+  },
+  {
+    q: "What does it cost?",
+    a: "It depends on the seat. Assessments are a fixed fee. Fractional CAIO and managed agent teams are monthly retainers scoped after a strategy call. Smaller businesses can start with an AI Operator plan at $497/month.",
   },
 ];
 
-export default function HomeFaqSection() {
+export function faqSchema(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export default function HomeFaqSection({ items = homeFaqItems }: { items?: { q: string; a: string }[] }) {
   return (
     <section id="faq" className="approach-section" data-scroll-target="">
       <div className="padding-global">

@@ -4,17 +4,17 @@ const results = [
   {
     image: "/images/EBYRh95NL0xzpSGXa9h5MnpUAk.webp",
     title: "4x Booking Volume",
-    text: "We built a fully automated CRM and booking system for a therapy company that allowed them to 4x volume.",
+    text: "Therapy practice. A fully automated CRM, intake, and booking system — after-hours included — took the front desk out of the bottleneck and 4x'd booked volume.",
   },
   {
     image: "/images/h59BDDSstZQhXCz3eSB9OmcA.webp",
     title: "3x Qualified Leads",
-    text: "We built an AI agent that autonomously qualified leads and booked in meetings for sales reps, leading to 3x more opportunities.",
+    text: "An AI agent that answers, qualifies, and books meetings for sales reps before a human touches the lead — 3x more real opportunities on the calendar.",
   },
   {
     image: "/images/2wmOPW2m5F8nj7mI2a0fQmngb8.webp",
     title: "Increased Project Profitability",
-    text: "We developed a Microsoft Teams integrated tool that wrote industry-specific meeting minutes, saving hundreds of hours per week.",
+    text: "A Microsoft Teams–integrated agent that writes industry-specific meeting minutes and tracks scope, saving hundreds of hours a week and catching overruns early.",
   },
 ];
 
@@ -29,17 +29,9 @@ export default function ResultsSection() {
           <div className="results-inner">
             <div className="content-box-680">
               <div className="sub-heading">Results</div>
-              <h2 className="heading-h2">Real business impact, real fast.</h2>
+              <h2 className="heading-h2">Built for businesses that measure.</h2>
               <p className="text-paragraph width-640">
-                <a
-                  href="https://www.mckinsey.com/industries/public-sector/our-insights/generative-ai-and-the-future-of-work-in-australia"
-                  className="text-paragraph-link"
-                  style={{ color: "#999" }}
-                >
-                  62% of existing tasks
-                </a>{" "}
-                can be automated using current technology. See how our team has helped dozens of
-                businesses like yours.
+                Every deployment ships with a number attached. Here is what a few of them looked like.
               </p>
             </div>
           </div>

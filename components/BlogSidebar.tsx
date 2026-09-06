@@ -99,7 +99,7 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
         <div className="sidebar-cta-badge">Free Strategy Call</div>
         <h3 className="sidebar-cta-heading">Want this built for you?</h3>
         <p className="sidebar-cta-body">
-          We build AI-powered automation systems that run your follow-up, booking, and outreach — 24/7.
+          We build AI agent teams that run your intake, follow-up, research, and records — 24/7, with a human approval gate on anything that matters.
         </p>
         <Link href="/strategy" className="sidebar-cta-btn">
           Book a free call →
@@ -122,7 +122,7 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
           </div>
         </div>
         <p className="sidebar-author-bio">
-          Former Google. AI automation builder. 10+ years turning complex workflows into systems that run themselves.
+          Former Google Search team. AI consultant and fractional CAIO. Builds AI agent teams for service businesses that want to scale without scaling headcount.
         </p>
         <Link href="/about" className="sidebar-author-link">
           Full bio →

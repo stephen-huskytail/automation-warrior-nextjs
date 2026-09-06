@@ -38,8 +38,9 @@ export default function BookACallPage() {
                   Let&apos;s build your AI roadmap.
                 </h1>
                 <p className="text-paragraph bac-subtext">
-                  30 minutes, no pressure. We&apos;ll map out exactly where AI
-                  automation can unlock capacity in your business.
+                  Thirty minutes. Bring the workflow that eats your team&apos;s week and
+                  Stephen will tell you whether AI belongs there, what it would take, and what
+                  it would be worth. No deck. No pitch.
                 </p>
 
                 <ul className="bac-checklist">

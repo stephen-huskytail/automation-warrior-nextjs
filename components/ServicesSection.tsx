@@ -61,16 +61,17 @@ function GradientBlob({ position }: { position: "left" | "right" | "right-blue" 
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="services-section" data-scroll-target="">
+    <section id="plans" className="services-section" data-scroll-target="">
       <div className="padding-global">
         <div className="inner-container">
           <div className="services-inner">
             <div className="content-box-680">
-              <div className="sub-heading">Pricing</div>
-              <h2 className="heading-h2">Hire your first AI employee.</h2>
+              <div className="sub-heading">Plans for smaller teams</div>
+              <h2 className="heading-h2">Smaller business? Start here.</h2>
               <p className="text-paragraph">
                 Two plans, public pricing, no custom-quote runaround. No contracts — cancel anytime
-                and keep the workflows we built for you.
+                and keep the workflows we built for you. Ready for a whole function or a fractional
+                CAIO seat? Book a strategy call instead.
               </p>
             </div>
 

@@ -1,31 +1,59 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import LogoMarquee from "@/components/LogoMarquee";
-import ApproachSection from "@/components/ApproachSection";
-import ServicesSection from "@/components/ServicesSection";
+import ProblemSection from "@/components/ProblemSection";
+import PillarsSection from "@/components/PillarsSection";
+import AgentTeamSection from "@/components/AgentTeamSection";
 import WeekOneSection from "@/components/WeekOneSection";
 import ResultsSection from "@/components/ResultsSection";
-import ComparisonSection from "@/components/ComparisonSection";
+import WaysToWorkSection from "@/components/WaysToWorkSection";
+import FitSection from "@/components/FitSection";
+import AboutShortSection from "@/components/AboutShortSection";
 import TeamSection from "@/components/TeamSection";
-import HomeFaqSection from "@/components/HomeFaqSection";
+import HomeFaqSection, { homeFaqItems, faqSchema } from "@/components/HomeFaqSection";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
+const fitItems = [
+  "Service businesses at $10M+ with processes already in place",
+  "Law firms, medical and health practices, coaching and consulting companies, professional-services firms",
+  "Regulated industries — that's where private deployment pays off",
+  "Owners who want to grow without hiring fifty more people",
+];
+
+const notFitItems = [
+  "Startups still finding their first process",
+  "Anyone shopping for a chatbot",
+  "E-commerce and D2C brands — good businesses, not this practice",
+  "Teams that want a demo instead of a deployment",
+];
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(homeFaqItems)) }}
+      />
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
         <div id="scroll" className="main-wrapper">
           <Hero />
           <LogoMarquee />
-          <ApproachSection />
-          <ServicesSection />
+          <ProblemSection />
+          <PillarsSection />
+          <AgentTeamSection />
           <WeekOneSection />
           <ResultsSection />
-          <ComparisonSection />
+          <WaysToWorkSection />
+          <FitSection
+            title="Right fit matters more than fast fit."
+            fitItems={fitItems}
+            notFitItems={notFitItems}
+          />
+          <AboutShortSection />
           <TeamSection />
           <HomeFaqSection />
           <CtaSection />

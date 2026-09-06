@@ -2,22 +2,22 @@ const tasks = [
   {
     number: "9PM",
     title: "A lead comes in after hours",
-    text: "Your agent replies in under a minute, answers their questions, and books them on your calendar while your competitors sleep.",
+    text: "The intake agent answers, qualifies, and books the consult. The CRM is already updated.",
   },
   {
     number: "7AM",
     title: "Your morning brief is waiting",
-    text: "Today's appointments, yesterday's numbers, and the three things that need your attention — in Slack before your coffee.",
+    text: "Overnight leads, open items, and the two things that need your call — in Slack or Teams before your coffee.",
   },
   {
     number: "12PM",
-    title: "Quotes and follow-ups, drafted",
-    text: "Every inquiry gets a follow-up in your voice, ready for a one-tap approve. Nothing slips through the cracks again.",
+    title: "The file is summarized, the draft is ready",
+    text: "The research agent has done the reading and the first draft. You edit; you don't start from blank.",
   },
   {
     number: "5PM",
-    title: "Your CRM is already updated",
-    text: "Calls logged, pipeline moved, unpaid invoices chased. The admin work is done — and you never opened the CRM.",
+    title: "Follow-ups sent, records updated",
+    text: "Tomorrow is queued. Your team went home at five. The agents didn't.",
   },
 ];
 
@@ -28,13 +28,14 @@ export default function WeekOneSection() {
         <div className="inner-container">
           <div className="approach-inner">
             <div className="content-box">
-              <h2 className="heading-h2">A day with your AI Operator</h2>
+              <h2 className="heading-h2">A day with your agent team</h2>
               <p className="text-paragraph width-640">
-                Not a demo, not a someday roadmap — this is what your agent handles from week one.
+                Not a demo, not a someday roadmap — this is what a working agent team handles from the first
+                month.
               </p>
             </div>
 
-            <ol className="approach-steps-grid grid-two-col" aria-label="A day with your AI Operator">
+            <ol className="approach-steps-grid grid-two-col" aria-label="A day with your agent team">
               {tasks.map((task) => (
                 <li className="approach-slider-box approach-step-card" key={task.number}>
                   <div className="approach-step-number" aria-hidden="true">
