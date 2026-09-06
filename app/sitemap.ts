@@ -1,73 +1,100 @@
 import { MetadataRoute } from "next";
-import { blog } from "@/.velite";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.automationwarrior.ai";
+const BASE = "https://www.automationwarrior.ai";
 
-  const blogEntries: MetadataRoute.Sitemap = blog
-    .filter((p) => !p.draft)
-    .map((p) => ({
-      url: `${base}/blog/${p.slug}`,
-      lastModified: new Date(p.date),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
+type VelitePost = {
+  slug?: string;
+  date?: string;
+  draft?: boolean;
+};
 
-  return [
+function safeDate(value: unknown): Date {
+  if (typeof value === "string" || value instanceof Date) {
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) return parsed;
+  }
+  return new Date();
+}
+
+async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
+  try {
+    const { blog } = await import("@/.velite");
+    if (!Array.isArray(blog)) return [];
+
+    return (blog as VelitePost[])
+      .filter((post) => post && !post.draft && typeof post.slug === "string" && post.slug.length > 0)
+      .map((post) => ({
+        url: `${BASE}/blog/${post.slug}`,
+        lastModified: safeDate(post.date),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }));
+  } catch {
+    // Velite output can be missing or throw; still emit money/legal pages.
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date();
+
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: base,
-      lastModified: new Date(),
+      url: BASE,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: `${base}/blog`,
-      lastModified: new Date(),
+      url: `${BASE}/blog`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${base}/fractional-caio`,
-      lastModified: new Date(),
+      url: `${BASE}/fractional-caio`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${base}/agent-teams`,
-      lastModified: new Date(),
+      url: `${BASE}/agent-teams`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${base}/book-a-call`,
-      lastModified: new Date(),
+      url: `${BASE}/book-a-call`,
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: `${base}/about`,
-      lastModified: new Date(),
+      url: `${BASE}/about`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${base}/affiliate-disclosure`,
-      lastModified: new Date(),
+      url: `${BASE}/affiliate-disclosure`,
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: `${base}/privacy-policy`,
-      lastModified: new Date(),
+      url: `${BASE}/privacy-policy`,
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: `${base}/terms`,
-      lastModified: new Date(),
+      url: `${BASE}/terms`,
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
-    ...blogEntries,
   ];
+
+  const blogEntries = await getBlogEntries();
+  return [...staticPages, ...blogEntries];
 }
