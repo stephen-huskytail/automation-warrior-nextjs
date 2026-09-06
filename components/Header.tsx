@@ -68,7 +68,6 @@ export default function Header() {
                 <Link href="/agent-teams" className="nav-link">Agent Teams</Link>
                 <Link href={CAIO_URL} className="nav-link">Fractional CAIO</Link>
                 <a href="#results" className="nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-                <Link href="/blog" className="nav-link">Blog</Link>
               </nav>
 
               {/* Desktop CTA */}
@@ -97,7 +96,6 @@ export default function Header() {
               <Link href={CAIO_URL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
               <a href="#results" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
               <Link href="/about" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>About</Link>
-              <Link href="/blog" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Blog</Link>
               <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
               <Link href={CAIO_URL} className="mobile-secondary-button" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
