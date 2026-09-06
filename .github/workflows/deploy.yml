@@ -10,5 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Vercel production deploy
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
         run: |
-          curl -fsS -X POST "https://api.vercel.com/v1/integrations/deploy/prj_eP54dgjZ7bUJzl7H2rGzDgzU8zv2/TbZa1mRkHf"
+          curl -fsS -X POST "$VERCEL_DEPLOY_HOOK_URL"
