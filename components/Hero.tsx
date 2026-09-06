@@ -26,7 +26,7 @@ const HOME_TRUST = [
 export default function Hero({
   eyebrow = "AI Consulting · Agent Teams · Fractional CAIO",
   title = "Scale the business. Not the payroll.",
-  paragraph = "Stephen Gardner builds AI agent teams for 8- and 9-figure service businesses — the ones that want to grow without hiring fifty more people. Former Google Search team. CMO through a $1M-to-$50M run. Now the AI expert in the room.",
+  paragraph = "Stephen Gardner builds AI agent teams for 7-, 8-, and 9-figure service businesses — the ones with their processes in place that want to grow without hiring fifty more people. Former Google Search team. CMO through a $1M-to-$50M run. Now the AI expert in the room.",
   trustItems = HOME_TRUST,
   secondaryHref = "#agent-teams",
   secondaryLabel = "See how agent teams work",

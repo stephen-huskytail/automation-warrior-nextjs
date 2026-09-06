@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
 const fitItems = [
-  "Service businesses at $10M+ with processes already in place",
+  "Service businesses at seven figures and up, with processes already in place",
   "Law firms, medical and health practices, coaching and consulting companies, professional-services firms",
   "Regulated industries — that's where private deployment pays off",
   "Owners who want to grow without hiring fifty more people",

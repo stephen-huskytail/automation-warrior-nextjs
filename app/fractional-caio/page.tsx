@@ -12,7 +12,7 @@ const BOOK_URL = "/book-a-call";
 export const metadata: Metadata = {
   title: "Fractional CAIO (Chief AI Officer) for Service Businesses | Automation Warrior",
   description:
-    "A part-time Chief AI Officer who owns your AI roadmap, builds the agent teams, and reports monthly. For 8- and 9-figure law, medical, coaching, and professional-services firms.",
+    "A part-time Chief AI Officer who owns your AI roadmap, builds the agent teams, and reports monthly. For 7- to 9-figure law, medical, coaching, and professional-services firms.",
   alternates: { canonical: "https://www.automationwarrior.ai/fractional-caio" },
   openGraph: {
     title: "Fractional CAIO for Service Businesses | Automation Warrior",
@@ -81,7 +81,7 @@ const ninety = [
 ];
 
 const fitItems = [
-  "Founders and CEOs of service businesses at $10M and up",
+  "Founders and CEOs of service businesses at seven figures and up",
   "Processes in place and a team that's stretched",
   "Law, medical and health, coaching and consulting, professional services",
   "Regulated industries are welcome — that's the specialty",
