@@ -11,7 +11,7 @@ const columns: { heading: string; links: { label: string; href: string }[] }[] =
     links: [
       { label: "Fractional CAIO", href: "/fractional-caio" },
       { label: "AI Agent Teams", href: "/agent-teams" },
-      { label: "AI Operations Assessment", href: "/#services" },
+      { label: "How it starts", href: "/#how-it-starts" },
       { label: "Book a Strategy Call", href: BOOK_URL },
     ],
   },

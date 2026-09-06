@@ -27,7 +27,7 @@ export const homeFaqItems = [
   },
   {
     q: "What does it cost?",
-    a: "It depends on the seat. Assessments are a fixed fee. Fractional CAIO and managed agent teams are monthly retainers scoped after a strategy call. Smaller businesses can start with an AI Operator plan at $497/month.",
+    a: "Every engagement starts with a fixed-fee AI Operations Assessment. From there, fractional CAIO and managed agent teams are monthly retainers scoped from what the assessment found. Smaller businesses can start with an AI Operator plan at $497/month.",
   },
 ];
 
