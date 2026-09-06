@@ -18,12 +18,12 @@ const steps = [
 
 export default function ApproachSection() {
   return (
-    <section id="clients" className="approach-section" data-scroll-target="">
+    <section id="how-plans-work" className="approach-section" data-scroll-target="">
       <div className="padding-global">
         <div className="inner-container">
           <div className="approach-inner">
             <div className="content-box">
-              <h2 className="heading-h2">How it works</h2>
+              <h2 className="heading-h2">How the plans work</h2>
               <p className="text-paragraph width-640">
                 Pick a plan, we set it up, your AI gets to work. No long build cycles, no big consulting retainer.
               </p>

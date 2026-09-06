@@ -3420,3 +3420,124 @@ ul { list-style: none; margin: 0; padding: 0; }
     padding: 100px 0 80px;
   }
 }
+
+/* ─── REPOSITIONING (Sept 2026) — additions only; existing rules untouched ── */
+.banner-content-box .sub-heading {
+  align-self: center;
+}
+
+/* Keep header nav items and buttons on one line */
+.header-nav .nav-link,
+.header-button-box .nav-link,
+.header-secondary-button,
+.header-button {
+  white-space: nowrap;
+}
+
+/* Hero trust bar — credential chips under the buttons */
+.hero-trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.hero-trust-item {
+  color: #999;
+  letter-spacing: -0.02em;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4em;
+  white-space: nowrap;
+}
+
+.hero-trust-item + .hero-trust-item::before {
+  content: "·";
+  color: #4d4d4d;
+  margin-right: 12px;
+}
+
+/* Three offer cards on the homepage (service-column is 2-col by default) */
+.service-column.three-col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1200px;
+}
+
+/* Pull quote used in the "problem" section */
+.pull-quote {
+  color: #fff;
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1.2em;
+  max-width: 720px;
+}
+
+/* Small centered helper line under a card grid */
+.section-footnote {
+  color: #999;
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4em;
+}
+
+.section-footnote a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Left-aligned paragraph block for inner pages (engagement terms etc.) */
+.text-paragraph.text-left {
+  text-align: left;
+}
+
+/* Product card "learn more" link row */
+.product-card-link {
+  color: #fff;
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media screen and (max-width: 991px) {
+  .service-column.three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .hero-trust-item {
+    white-space: normal;
+    text-align: center;
+  }
+  .hero-trust-item + .hero-trust-item::before {
+    content: none;
+  }
+  .pull-quote {
+    font-size: 26px;
+  }
+}
+
+/* Between tablet and desktop the longer nav labels need the room — drop the header phone
+   (still in the hero, mobile menu, and footer) */
+@media screen and (max-width: 1140px) and (min-width: 992px) {
+  .header-button-box > .nav-link {
+    display: none;
+  }
+}

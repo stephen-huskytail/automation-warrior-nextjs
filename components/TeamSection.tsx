@@ -11,10 +11,10 @@ const teamMembers: {
 }[] = [
   {
     name: "Stephen Gardner",
-    job: "AI Expert / CEO",
+    job: "Founder & AI Consultant",
     image: "/images/SG-1.jpg",
     linkedin: "https://www.linkedin.com/in/stephengardner76",
-    text: "Founder of Automation Warrior - Pioneers AI-driven transformation, empowering businesses to scale smarter, move faster, and lead the future of automation.",
+    text: "Former Google Search team. CMO through a $1M-to-$50M run. Builds AI agent teams for service businesses and serves as fractional CAIO for the ones that want him in the room.",
   },
   {
     name: "Myla Mercado",
@@ -28,7 +28,7 @@ const teamMembers: {
     job: "AI Employee",
     image: "/images/Hermes-1.jpg",
     linkedin: null,
-    text: "Hermes is a purpose-built AI agent designed to support the Automation Warrior team. From lead follow-up and reporting to content coordination and CRM updates, Hermes works 24/7 alongside the human team.",
+    text: "Yes, really. Hermes is the first hire on every agent team — lead follow-up, reporting, content coordination, CRM updates — working 24/7 alongside the humans.",
   },
   {
     name: "Rhodora Villadegracia",
@@ -94,11 +94,10 @@ export default function TeamSection() {
           <div className="team-inner">
             <div className="content-box-680">
               <div className="sub-heading">Team</div>
-              <h2 className="heading-h2">AI experts that speak your language.</h2>
+              <h2 className="heading-h2">The pack.</h2>
               <p className="text-paragraph">
-                The right expertise is critical, and it&apos;s built by doing. Our team has scoped and
-                deployed AI solutions across a wide range of use cases and businesses — and our own
-                AI agent works alongside us every day.
+                Stephen does the technical work. The team keeps every engagement moving — and our own
+                AI employee works alongside us every day, which is the point.
               </p>
               <a href={BOOK_URL} className="primary-button">
                 <span>Book a Strategy Call</span>

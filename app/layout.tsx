@@ -7,9 +7,17 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.automationwarrior.ai"),
-  title: "Done-For-You AI Agents for Service Businesses — from $497/mo | Automation Warrior",
+  title: "AI Consultant for Service Businesses | Automation Warrior",
   description:
-    "Hire your first AI employee. Done-for-you AI agents that answer leads, chase invoices, and keep your CRM updated — from $497/mo. No contracts, cancel anytime.",
+    "Stephen Gardner builds AI agent teams for service businesses that want to scale without scaling headcount. Former Google Search team. HIPAA-compliant private deployments.",
+  openGraph: {
+    title: "AI Consultant for Service Businesses | Automation Warrior",
+    description:
+      "AI agent teams and fractional CAIO engagements for 8- and 9-figure service businesses. Former Google Search team. CMO through a $1M-to-$50M run.",
+    url: "https://www.automationwarrior.ai",
+    siteName: "Automation Warrior",
+    type: "website",
+  },
   alternates: {
     canonical: "https://www.automationwarrior.ai",
   },
@@ -17,6 +25,25 @@ export const metadata: Metadata = {
     icon: "/images/favicon.ico",
     apple: "/images/webclip.png",
   },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Automation Warrior",
+  url: "https://www.automationwarrior.ai",
+  logo: "https://www.automationwarrior.ai/images/bgBlack_1-removebg-preview-1.png",
+  telephone: "+1-702-276-6921",
+  description:
+    "AI consulting, AI agent teams, and fractional Chief AI Officer engagements for service businesses that want to scale without scaling headcount.",
+  areaServed: "US",
+  address: { "@type": "PostalAddress", addressLocality: "Las Vegas", addressRegion: "NV", addressCountry: "US" },
+  founder: { "@type": "Person", name: "Stephen Gardner", url: "https://www.automationwarrior.ai/about" },
+  makesOffer: [
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Assessment" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fractional CAIO (Chief AI Officer)", url: "https://www.automationwarrior.ai/fractional-caio" } },
+    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Managed AI Agent Teams", url: "https://www.automationwarrior.ai/agent-teams" } },
+  ],
 };
 
 export default function RootLayout({
@@ -40,6 +67,10 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         {children}
         {/* JS is injected dynamically by CustomCursor component — no blocking */}
         <Analytics />

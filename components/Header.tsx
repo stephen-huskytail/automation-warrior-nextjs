@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BOOK_URL = "/book-a-call";
-const PLANS_HASH = "#services";
+const CAIO_URL = "/fractional-caio";
 const PHONE = "702-276-6921";
 const PHONE_TEL = "tel:7022766921";
 
@@ -64,17 +64,17 @@ export default function Header() {
 
               {/* Desktop nav */}
               <nav className="header-nav">
-                <a href="#clients" className="nav-link" onClick={(e) => handleNavClick(e, "#clients")}>How it works</a>
-                <a href="#services" className="nav-link" onClick={(e) => handleNavClick(e, "#services")}>Pricing</a>
+                <a href="#approach" className="nav-link" onClick={(e) => handleNavClick(e, "#approach")}>How it works</a>
+                <Link href="/agent-teams" className="nav-link">Agent Teams</Link>
+                <Link href={CAIO_URL} className="nav-link">Fractional CAIO</Link>
                 <a href="#results" className="nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-                <a href="#faq" className="nav-link" onClick={(e) => handleNavClick(e, "#faq")}>FAQ</a>
                 <Link href="/blog" className="nav-link">Blog</Link>
               </nav>
 
               {/* Desktop CTA */}
               <div className="header-button-box">
                 <a href={PHONE_TEL} className="nav-link" style={{ fontVariantNumeric: "tabular-nums" }}>📞 {PHONE}</a>
-                <a href={PLANS_HASH} className="header-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See pricing</a>
+                <Link href={CAIO_URL} className="header-secondary-button">Fractional CAIO</Link>
                 <a href={BOOK_URL} className="header-button">Book a call</a>
               </div>
 
@@ -92,13 +92,14 @@ export default function Header() {
 
             {/* Mobile dropdown */}
             <div className={`mobile-menu-dropdown${menuOpen ? " open" : ""}`}>
-              <a href="#clients" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#clients")}>How it works</a>
-              <a href="#services" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#services")}>Pricing</a>
+              <a href="#approach" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#approach")}>How it works</a>
+              <Link href="/agent-teams" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Agent Teams</Link>
+              <Link href={CAIO_URL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
               <a href="#results" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-              <a href="#faq" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#faq")}>FAQ</a>
+              <Link href="/about" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>About</Link>
               <Link href="/blog" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Blog</Link>
               <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
-              <a href={PLANS_HASH} className="mobile-secondary-button" onClick={(e) => handleNavClick(e, PLANS_HASH)}>See pricing</a>
+              <Link href={CAIO_URL} className="mobile-secondary-button" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
             </div>
           </div>

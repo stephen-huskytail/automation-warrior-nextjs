@@ -42,13 +42,13 @@ export default function Footer() {
                   <h4 className="footer-heading small-heading-footer">Links</h4>
                   <ul className="footer-menu-ul">
                     <li>
-                      <a href="#results" className="footer-menu-link">Results</a>
+                      <Link href="/fractional-caio" className="footer-menu-link">Fractional CAIO</Link>
                     </li>
                     <li>
-                      <a href="#services" className="footer-menu-link">Services</a>
+                      <Link href="/agent-teams" className="footer-menu-link">Agent Teams</Link>
                     </li>
                     <li>
-                      <a href="#process" className="footer-menu-link">Process</a>
+                      <Link href="/#results" className="footer-menu-link">Results</Link>
                     </li>
                     <li>
                       <Link href="/blog" className="footer-menu-link">Blog</Link>
@@ -59,7 +59,10 @@ export default function Footer() {
                   <h4 className="footer-heading small-heading-footer">Information</h4>
                   <ul className="footer-menu-ul">
                     <li>
-                      <Link href="/about" className="footer-menu-link">About</Link>
+                      <Link href="/about" className="footer-menu-link">About Stephen</Link>
+                    </li>
+                    <li>
+                      <Link href="/book-a-call" className="footer-menu-link">Book a Strategy Call</Link>
                     </li>
                     <li>
                       <Link href="/affiliate-disclosure" className="footer-menu-link">Affiliate Disclosure</Link>
