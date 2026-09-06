@@ -3599,3 +3599,26 @@ ul { list-style: none; margin: 0; padding: 0; }
     gap: 12px 20px;
   }
 }
+
+/* Homepage headline stays on one line on desktop; it may be wider than the
+   800px hero box, so it centers itself and overflows evenly on both sides */
+@media screen and (min-width: 992px) {
+  .banner-section .heading-h1.hero-one-line {
+    white-space: nowrap;
+    width: max-content;
+    max-width: none;
+    align-self: center;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1240px) {
+  .banner-section .heading-h1.hero-one-line {
+    font-size: 62px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1100px) {
+  .banner-section .heading-h1.hero-one-line {
+    font-size: 56px;
+  }
+}

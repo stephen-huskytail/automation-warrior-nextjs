@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Consultant for Service Businesses | Automation Warrior",
     description:
-      "AI agent teams and fractional CAIO engagements for 8- and 9-figure service businesses. Former Google Search team. CMO through a $1M-to-$50M run.",
+      "AI agent teams and fractional CAIO engagements for 7- to 9-figure service businesses. Former Google Search team. CMO through a $1M-to-$50M run.",
     url: "https://www.automationwarrior.ai",
     siteName: "Automation Warrior",
     type: "website",

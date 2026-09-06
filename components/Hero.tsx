@@ -15,6 +15,8 @@ export interface HeroProps {
   primaryLabel?: string;
   /** Small line under the buttons. */
   footnote?: string;
+  /** Keep the headline on one line on desktop (homepage). */
+  oneLineTitle?: boolean;
 }
 
 const HOME_TRUST = [
@@ -26,13 +28,14 @@ const HOME_TRUST = [
 export default function Hero({
   eyebrow = "AI Consulting · Agent Teams · Fractional CAIO",
   title = "Scale the business. Not the payroll.",
-  paragraph = "Stephen Gardner builds AI agent teams for 8- and 9-figure service businesses — the ones that want to grow without hiring fifty more people. Former Google Search team. CMO through a $1M-to-$50M run. Now the AI expert in the room.",
+  paragraph = "Stephen Gardner builds AI agent teams for 7-, 8-, and 9-figure service businesses — the ones with their processes in place that want to grow without hiring fifty more people. Former Google Search team. CMO through a $1M-to-$50M run. Now the AI expert in the room.",
   trustItems = HOME_TRUST,
   secondaryHref = "#agent-teams",
   secondaryLabel = "See how agent teams work",
   primaryHref = BOOK_URL,
   primaryLabel = "Book a Strategy Call",
   footnote,
+  oneLineTitle = false,
 }: Partial<HeroProps>) {
   return (
     <section className="banner-section">
@@ -41,7 +44,7 @@ export default function Hero({
           <div className="banner-inner">
             <div className="banner-content-box">
               {eyebrow ? <span className="sub-heading">{eyebrow}</span> : null}
-              <h1 className="heading-h1">{title}</h1>
+              <h1 className={`heading-h1${oneLineTitle ? " hero-one-line" : ""}`}>{title}</h1>
               <p className="text-paragraph">{paragraph}</p>
             </div>
             <div className="button-group">
