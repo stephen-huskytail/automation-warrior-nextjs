@@ -40,7 +40,6 @@ const organizationSchema = {
   address: { "@type": "PostalAddress", addressLocality: "Las Vegas", addressRegion: "NV", addressCountry: "US" },
   founder: { "@type": "Person", name: "Stephen Gardner", url: "https://www.automationwarrior.ai/about" },
   makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Assessment" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fractional CAIO (Chief AI Officer)", url: "https://www.automationwarrior.ai/fractional-caio" } },
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Managed AI Agent Teams", url: "https://www.automationwarrior.ai/agent-teams" } },
   ],

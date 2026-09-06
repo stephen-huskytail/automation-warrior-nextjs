@@ -105,11 +105,11 @@ const faqItems = [
   },
   {
     q: "Can we start with just the Assessment?",
-    a: "Yes. That's how most engagements start, and you keep the roadmap either way.",
+    a: "Every engagement starts with it. You can stop there and keep the roadmap, or carry it straight into the seat — the assessment is the first 30 days of the engagement, not a separate product.",
   },
   {
     q: "What does it cost?",
-    a: "Engagements are scoped after the strategy call, based on the number of workflows and the deployment model — cloud or private. Assessments are a fixed fee.",
+    a: "The assessment is a fixed fee. The retainer is scoped from it, based on the number of workflows and the deployment model — cloud or private.",
   },
 ];
 
@@ -227,8 +227,8 @@ export default function FractionalCaioPage() {
                       to a junior.
                     </p>
                     <p className="text-paragraph width-640">
-                      Pricing is scoped after the strategy call, based on the number of workflows and the
-                      deployment model — cloud or private.
+                      The assessment is a fixed fee. The retainer is scoped from it, based on the number of
+                      workflows and the deployment model — cloud or private.
                     </p>
                     <div className="button-group">
                       <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>

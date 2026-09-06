@@ -3,6 +3,35 @@ import Link from "next/link";
 
 const PHONE = "702-276-6921";
 const PHONE_TEL = "tel:7022766921";
+const BOOK_URL = "/book-a-call";
+
+const columns: { heading: string; links: { label: string; href: string }[] }[] = [
+  {
+    heading: "Work with Stephen",
+    links: [
+      { label: "Fractional CAIO", href: "/fractional-caio" },
+      { label: "AI Agent Teams", href: "/agent-teams" },
+      { label: "How it starts", href: "/#how-it-starts" },
+      { label: "Book a Strategy Call", href: BOOK_URL },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About Stephen", href: "/about" },
+      { label: "Results", href: "/#results" },
+      { label: "Blog", href: "/blog" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
@@ -30,52 +59,34 @@ export default function Footer() {
             <div className="footer-block2">
               <div className="footer-column1">
                 <div className="footer-column1-content-box">
-                  <h4 className="footer-heading">Stay ahead of the AI curve</h4>
+                  <h4 className="footer-heading">Bring the workflow that eats your team&apos;s week.</h4>
                   <p className="footer-text footer-text-width">
-                    Sign up to our substack newsletter below to stay up to date with the latest in AI.
+                    Thirty minutes with Stephen. He&apos;ll tell you whether AI belongs there, what it
+                    would take, and what it would be worth. No deck. No pitch.
                   </p>
                 </div>
-                <a href="#" className="primary-button">Stay up to date</a>
+                <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
               </div>
               <div className="footer-column2">
-                <div className="foomenu-box">
-                  <h4 className="footer-heading small-heading-footer">Links</h4>
-                  <ul className="footer-menu-ul">
-                    <li>
-                      <Link href="/fractional-caio" className="footer-menu-link">Fractional CAIO</Link>
-                    </li>
-                    <li>
-                      <Link href="/agent-teams" className="footer-menu-link">Agent Teams</Link>
-                    </li>
-                    <li>
-                      <Link href="/#results" className="footer-menu-link">Results</Link>
-                    </li>
-                    <li>
-                      <Link href="/blog" className="footer-menu-link">Blog</Link>
-                    </li>
-                  </ul>
-                </div>
-                <div className="foomenu-box">
-                  <h4 className="footer-heading small-heading-footer">Information</h4>
-                  <ul className="footer-menu-ul">
-                    <li>
-                      <Link href="/about" className="footer-menu-link">About Stephen</Link>
-                    </li>
-                    <li>
-                      <Link href="/book-a-call" className="footer-menu-link">Book a Strategy Call</Link>
-                    </li>
-                    <li>
-                      <Link href="/affiliate-disclosure" className="footer-menu-link">Affiliate Disclosure</Link>
-                    </li>
-                    <li>
-                      <Link href="/privacy-policy" className="footer-menu-link">Privacy Policy</Link>
-                    </li>
-                    <li>
-                      <Link href="/terms" className="footer-menu-link">Terms</Link>
-                    </li>
-                  </ul>
-                </div>
+                {columns.map((col) => (
+                  <div className="foomenu-box" key={col.heading}>
+                    <h4 className="footer-heading small-heading-footer">{col.heading}</h4>
+                    <ul className="footer-menu-ul">
+                      {col.links.map((l) => (
+                        <li key={l.label}>
+                          <Link href={l.href} className="footer-menu-link">{l.label}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
+            </div>
+            <div className="footer-bottom">
+              <p className="footer-text footer-bottom-text">
+                © {new Date().getFullYear()} Automation Warrior · Las Vegas, NV · AI consulting, agent teams, and
+                fractional CAIO engagements for service businesses.
+              </p>
             </div>
           </div>
         </div>
