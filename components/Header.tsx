@@ -83,6 +83,8 @@ export default function Header() {
                 className={`mobile-menu-toggle${menuOpen ? " open" : ""}`}
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-navigation"
               >
                 <span className="mobile-menu-line" />
                 <span className="mobile-menu-line" />
@@ -91,7 +93,7 @@ export default function Header() {
             </div>
 
             {/* Mobile dropdown */}
-            <div className={`mobile-menu-dropdown${menuOpen ? " open" : ""}`}>
+            <nav id="mobile-navigation" aria-label="Mobile navigation" className={`mobile-menu-dropdown${menuOpen ? " open" : ""}`}>
               <a href="#approach" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#approach")}>How it works</a>
               <Link href="/agent-teams" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Agent Teams</Link>
               <Link href={CAIO_URL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
@@ -100,7 +102,7 @@ export default function Header() {
               <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
               <a href="#how-it-starts" className="mobile-secondary-button" onClick={(e) => handleNavClick(e, "#how-it-starts")}>How it starts</a>
               <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
-            </div>
+            </nav>
           </div>
         </div>
       </div>

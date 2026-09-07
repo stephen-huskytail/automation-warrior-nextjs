@@ -196,6 +196,9 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 /* ─── Buttons ───────────────────────────────────────────────────── */
 .primary-button {
+  min-height: 48px;
+  max-width: 100%;
+  text-align: center;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -221,6 +224,13 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  max-width: 100%;
+  text-align: center;
   color: #fff;
   letter-spacing: -0.02em;
   background-color: #0a0a0a80;
@@ -243,6 +253,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .button-icon {
   width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
 }
 
 .button-group {
@@ -398,7 +410,12 @@ ul { list-style: none; margin: 0; padding: 0; }
   flex-direction: column;
   gap: 6px;
   cursor: pointer;
-  padding: 4px;
+  padding: 10px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   background: none;
   border: none;
 }
@@ -428,6 +445,10 @@ ul { list-style: none; margin: 0; padding: 0; }
   border-bottom: 1px solid #ffffff1a;
   border-radius: 12px;
   padding: 16px 24px 32px;
+  width: 100%;
+  max-height: calc(100dvh - 76px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .mobile-menu-dropdown.open {
@@ -1703,6 +1724,9 @@ ul { list-style: none; margin: 0; padding: 0; }
   .button-group {
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+    max-width: 360px;
+    margin-inline: auto;
   }
 
   .button-group .primary-button,
@@ -2071,7 +2095,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   border-radius: 10px;
   color: #fff;
   font-family: Satoshi, Arial, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   padding: 11px 14px;
   outline: none;
@@ -2222,7 +2246,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .blog-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: #111;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
@@ -2241,6 +2266,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .blog-card-thumb {
+  flex-shrink: 0;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -2259,12 +2285,13 @@ ul { list-style: none; margin: 0; padding: 0; }
   display: flex;
   flex-direction: column;
   gap: 12px;
-  height: 100%;
+  flex: 1;
   padding: 28px 28px 32px;
 }
 
 .blog-card-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
 }
@@ -2595,6 +2622,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .blog-post-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
@@ -3645,4 +3673,122 @@ ul { list-style: none; margin: 0; padding: 0; }
   font-size: 30px;
   letter-spacing: -0.03em;
   line-height: 1;
+}
+
+/* Keep controls usable and content contained at narrow viewport widths. */
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.bac-field,
+.bac-form-col,
+.blog-sidebar {
+  min-width: 0;
+}
+
+.legal-page-text,
+.mdx-a {
+  overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 991px) {
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer-block2 {
+    flex-wrap: wrap;
+  }
+
+  .footer-column1,
+  .footer-column2 {
+    min-width: 0;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .mobile-menu-dropdown.open {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .sub-heading {
+    text-align: center;
+    line-height: 1.4;
+    max-width: 100%;
+  }
+
+  .cta-block {
+    padding: 32px 20px;
+  }
+
+  .cta-bg-blob1,
+  .cta-bg-blob2,
+  .cta-bg-blob3 {
+    max-width: 100%;
+  }
+
+  .content-box-680 > :is(.primary-button, .secondary-button),
+  .footer-column1 > .primary-button {
+    width: 100%;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .product-card-buttons {
+    width: 100%;
+  }
+
+  .product-card-link,
+  .footer-menu-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .team-column {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .team-slider {
+    animation: none;
+    width: 100%;
+  }
+
+  .team-slider-item {
+    width: 100%;
+    min-width: 0;
+    max-width: 380px;
+    height: 480px;
+    scroll-snap-align: start;
+  }
+
+  .team-slider-item:nth-child(n + 6) {
+    display: none;
+  }
+
+  .team-name {
+    font-size: 24px;
+  }
+
+  .team-headingbox {
+    padding-inline: 20px;
+  }
+
+  .blog-post-cta {
+    padding: 28px 20px;
+  }
+
+  .blog-post-cta .primary-button {
+    width: 100%;
+  }
+
+  .bac-label {
+    font-size: 14px;
+  }
 }

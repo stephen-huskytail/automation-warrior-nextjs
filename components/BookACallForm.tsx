@@ -45,25 +45,31 @@ export default function BookACallForm() {
   }
 
   return (
-    <form className="bac-form" onSubmit={handleSubmit} noValidate>
+    <form className="bac-form" onSubmit={handleSubmit}>
       <div className="bac-form-row">
         <div className="bac-field">
-          <label className="bac-label">Name *</label>
+          <label className="bac-label" htmlFor="booking-name">Name *</label>
           <input
             className="bac-input"
             type="text"
             placeholder="Jane Smith"
+            id="booking-name"
+            name="name"
+            autoComplete="name"
             value={form.name}
             onChange={set("name")}
             required
           />
         </div>
         <div className="bac-field">
-          <label className="bac-label">Email *</label>
+          <label className="bac-label" htmlFor="booking-email">Email *</label>
           <input
             className="bac-input"
             type="email"
             placeholder="jane@company.com"
+            id="booking-email"
+            name="email"
+            autoComplete="email"
             value={form.email}
             onChange={set("email")}
             required
@@ -73,21 +79,27 @@ export default function BookACallForm() {
 
       <div className="bac-form-row">
         <div className="bac-field">
-          <label className="bac-label">Company</label>
+          <label className="bac-label" htmlFor="booking-company">Company</label>
           <input
             className="bac-input"
             type="text"
             placeholder="Acme Corp"
+            id="booking-company"
+            name="company"
+            autoComplete="organization"
             value={form.company}
             onChange={set("company")}
           />
         </div>
         <div className="bac-field">
-          <label className="bac-label">Phone</label>
+          <label className="bac-label" htmlFor="booking-phone">Phone</label>
           <input
             className="bac-input"
             type="tel"
             placeholder="+1 (555) 000-0000"
+            id="booking-phone"
+            name="phone"
+            autoComplete="tel"
             value={form.phone}
             onChange={set("phone")}
           />
@@ -95,11 +107,14 @@ export default function BookACallForm() {
       </div>
 
       <div className="bac-field">
-        <label className="bac-label">What do you want to automate? *</label>
+        <label className="bac-label" htmlFor="booking-message">What do you want to automate? *</label>
         <textarea
           className="bac-input bac-textarea"
           placeholder="Tell us about your business and where you're spending too much time on manual work..."
           rows={5}
+          id="booking-message"
+          name="message"
+          autoComplete="off"
           value={form.message}
           onChange={set("message")}
           required
@@ -115,7 +130,8 @@ export default function BookACallForm() {
         className="primary-button bac-submit-btn"
         disabled={status === "submitting"}
       >
-        {status === "submitting" ? "Sending…" : "Request a Strategy Call →"}
+        <span>{status === "submitting" ? "Sending…" : "Request a Strategy Call"}</span>
+        {status !== "submitting" && <span aria-hidden="true" className="button-icon">→</span>}
       </button>
     </form>
   );

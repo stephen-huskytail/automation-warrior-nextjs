@@ -14,7 +14,7 @@ export default function CtaSection({
             <div className="content-box-650">
               <h2 className="heading-h2">{title}</h2>
               <p className="text-paragraph">{text}</p>
-              <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+              <div className="button-group">
                 <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
                 <a href={PHONE_TEL} className="secondary-button">📞 {PHONE}</a>
               </div>
