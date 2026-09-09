@@ -6,6 +6,12 @@ Tracks all published blog posts by category and date. Check this file before eve
 
 Follow [`BLOG_PUBLISHING_SOP.md`](BLOG_PUBLISHING_SOP.md) for the authoritative remote/live dedupe, 48-hour cadence controller, recovery, and release-verification procedure. A local checkout or scheduler status alone is not publication proof.
 
+## ⚠️ ROTATION PAUSED (2026-09-09) — site repositioned, decision pending
+
+Commits `df017db` (2026-09-07, authored by Stephen) and `ecd1136` (2026-09-06/07) repositioned `automationwarrior.ai` from the affiliate tools blog into "AI Consultant for Service Businesses" (fractional CAIO / agent-teams consultancy). `ecd1136` deleted every published post below except `hermes-agent-skills-guide` and removed "Blog" from the header/mobile nav entirely. The tables below are retained as historical slug/date record only — most of the listed URLs are no longer live (verified `make-webhooks-guide` → 404 on 2026-09-09).
+
+**Do not resume the GoHighLevel/n8n/Kartra/Ontraport/Make/Zapier/OpenAI/Hermes AI/Automation Tips affiliate rotation** until Stephen or Myla explicitly confirms one of: (a) resume the old rotation as-is, (b) redirect the autopilot to consultancy-fit content, or (c) retire this autopilot. The 2026-09-09 scheduled run found this state and held rather than publish an off-brand affiliate post; see Slack `#hermes-blogs` (channel `C0BFFC20D6C`) for that day's incident report and the Myla handoff. Restore point at the base of this edit: tag `restore-2026-09-09-182021` (commit `8b60890`).
+
 ## Affiliate Link Policy (2026-07-03)
 
 - **Never paste raw affiliate URLs in posts.** Always link through the central redirect: `/go/<tool>`. Tracking codes live in one place: `app/go/[slug]/route.ts`.
@@ -140,7 +146,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-09-05
+- **Date:** 2026-09-05 (last actual publish before the 2026-09-06/07 prune, and the last entry before rotation was paused)
 - **Category:** Make.com
-- **Slug:** make-webhooks-guide
-- **Next category in rotation:** OpenAI
+- **Slug:** make-webhooks-guide (no longer live — deleted by `ecd1136`)
+- **Next category in rotation:** OpenAI — **do not auto-publish this; see "ROTATION PAUSED" above.** The 2026-09-09 scheduled run evaluated due-state, found the pause condition, and held without creating a candidate article.
