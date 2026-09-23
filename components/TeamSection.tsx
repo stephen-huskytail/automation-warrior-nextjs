@@ -27,13 +27,6 @@ const teamMembers: {
     text: "Drives internal efficiency, optimizes systems, and ensures smooth execution across all AI initiatives at Automation Warrior.",
   },
   {
-    name: "Hermes",
-    job: "Internal AI Assistant",
-    image: "/images/hermes-office.png",
-    linkedin: null,
-    text: "Hermes supports our team with lead follow-up, reporting, content coordination, and CRM updates. Our people remain responsible for the work and the decisions.",
-  },
-  {
     name: "Rhodora Villadegracia",
     job: "Project Manager",
     image: "/images/rhodora-villadegracia-office.png",
@@ -49,20 +42,17 @@ const teamMembers: {
   },
 ];
 
-// Duplicate for seamless loop
-const allMembers = [...teamMembers, ...teamMembers];
-
 function MemberCard({ member }: { member: (typeof teamMembers)[number] }) {
   return (
     <>
       {/* Photo */}
-      <div className="team-slider-image-box">
+      <div className="team-photo">
         <Image
           src={member.image}
           alt={member.name}
           fill
-          sizes="(max-width: 767px) 90vw, 380px"
-          className="team-slider-image"
+          sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 460px"
+          className="team-portrait"
           style={{ objectFit: "cover", objectPosition: member.imagePosition }}
         />
       </div>
@@ -110,26 +100,24 @@ export default function TeamSection() {
               </a>
             </div>
 
-            <div className="team-column">
-              <div className="team-slider">
-                {allMembers.map((member, i) =>
-                  member.linkedin ? (
-                    <a
-                      key={i}
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="team-slider-item"
-                    >
-                      <MemberCard member={member} />
-                    </a>
-                  ) : (
-                    <div key={i} className="team-slider-item">
-                      <MemberCard member={member} />
-                    </div>
-                  ),
-                )}
-              </div>
+            <div className="team-grid">
+              {teamMembers.map((member) =>
+                member.linkedin ? (
+                  <a
+                    key={member.name}
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="team-card"
+                  >
+                    <MemberCard member={member} />
+                  </a>
+                ) : (
+                  <div key={member.name} className="team-card">
+                    <MemberCard member={member} />
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </div>
