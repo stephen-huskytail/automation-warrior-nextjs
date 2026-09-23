@@ -11,7 +11,7 @@ const rules = [
   },
   {
     number: "3",
-    title: "QA proves it before it's \"done.\"",
+    title: 'QA proves it before it\'s "done."',
     text: "Nothing is marked complete without evidence: the file, the record, the screenshot, the test.",
   },
   {
@@ -31,7 +31,11 @@ const rules = [
   },
 ];
 
-export default function AgentTeamSection({ id = "agent-teams" }: { id?: string }) {
+export default function AgentTeamSection({
+  id = "agent-teams",
+}: {
+  id?: string;
+}) {
   return (
     <section id={id} className="approach-section" data-scroll-target="">
       <div className="padding-global">
@@ -39,16 +43,23 @@ export default function AgentTeamSection({ id = "agent-teams" }: { id?: string }
           <div className="approach-inner">
             <div className="content-box">
               <div className="sub-heading">How an agent team works</div>
-              <h2 className="heading-h2">A small operating unit. Not a noisy swarm.</h2>
+              <h2 className="heading-h2">Clear roles. Clear ownership.</h2>
               <p className="text-paragraph width-640">
-                The difference between an agent team and a pile of automations is discipline. Every team
-                Stephen builds runs on the same rules:
+                Each agent has a defined role, a bounded workflow, and a person
+                responsible for the outcome. We design the process around these
+                principles:
               </p>
             </div>
 
-            <ol className="approach-steps-grid" aria-label="How an agent team works">
+            <ol
+              className="approach-steps-grid"
+              aria-label="How an agent team works"
+            >
               {rules.map((r) => (
-                <li className="approach-slider-box approach-step-card" key={r.number}>
+                <li
+                  className="approach-slider-box approach-step-card"
+                  key={r.number}
+                >
                   <div className="approach-step-number" aria-hidden="true">
                     {r.number}
                   </div>
@@ -59,8 +70,9 @@ export default function AgentTeamSection({ id = "agent-teams" }: { id?: string }
             </ol>
 
             <p className="text-paragraph width-640">
-              You get a team that works nights and weekends, never forgets the process, and asks you exactly
-              one question when it needs a decision.
+              The goal is a repeatable workflow your people can understand,
+              review, and improve, with useful reporting and clear escalation
+              when a decision is needed.
             </p>
           </div>
         </div>

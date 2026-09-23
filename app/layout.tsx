@@ -7,13 +7,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.automationwarrior.ai"),
-  title: "AI Consultant for Service Businesses | Automation Warrior",
+  title: "Fractional CAIO & AI Consulting | Automation Warrior",
   description:
-    "Stephen Gardner builds AI agent teams for service businesses that want to scale without scaling headcount. Former Google Search team. HIPAA-compliant private deployments.",
+    "Make AI work for your business. Fractional Chief AI Officer, AI consulting, implementation, and team development for 7–9 figure businesses.",
   openGraph: {
-    title: "AI Consultant for Service Businesses | Automation Warrior",
+    title: "Fractional CAIO & AI Consulting | Automation Warrior",
     description:
-      "AI agent teams and fractional CAIO engagements for 7- to 9-figure service businesses. Former Google Search team. CMO through a $1M-to-$50M run.",
+      "AI leadership for 7–9 figure businesses. Build the strategy, systems, and team capabilities to grow your capacity with the team you have.",
     url: "https://www.automationwarrior.ai",
     siteName: "Automation Warrior",
     type: "website",
@@ -35,13 +35,44 @@ const organizationSchema = {
   logo: "https://www.automationwarrior.ai/images/bgBlack_1-removebg-preview-1.png",
   telephone: "+1-702-276-6921",
   description:
-    "AI consulting, AI agent teams, and fractional Chief AI Officer engagements for service businesses that want to scale without scaling headcount.",
+    "Fractional Chief AI Officer, AI consulting, implementation, and team development for 7–9 figure businesses.",
   areaServed: "US",
-  address: { "@type": "PostalAddress", addressLocality: "Las Vegas", addressRegion: "NV", addressCountry: "US" },
-  founder: { "@type": "Person", name: "Stephen Gardner", url: "https://www.automationwarrior.ai/about" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Las Vegas",
+    addressRegion: "NV",
+    addressCountry: "US",
+  },
+  founder: {
+    "@type": "Person",
+    name: "Stephen Gardner",
+    url: "https://www.automationwarrior.ai/about",
+  },
   makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fractional CAIO (Chief AI Officer)", url: "https://www.automationwarrior.ai/fractional-caio" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Managed AI Agent Teams", url: "https://www.automationwarrior.ai/agent-teams" } },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Fractional CAIO (Chief AI Officer)",
+        url: "https://www.automationwarrior.ai/fractional-caio",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "AI Consulting & Roadmaps",
+        url: "https://www.automationwarrior.ai/ai-consulting",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "AI Implementation & Team Training",
+        url: "https://www.automationwarrior.ai/ai-implementation",
+      },
+    },
   ],
 };
 
@@ -54,7 +85,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
           rel="stylesheet"
@@ -68,7 +103,9 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
         />
         {children}
         {/* JS is injected dynamically by CustomCursor component — no blocking */}

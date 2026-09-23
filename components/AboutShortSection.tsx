@@ -1,28 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
-
 export default function AboutShortSection() {
   return (
-    <section className="team-section" data-scroll-target="">
+    <section className="approach-section founder-section">
       <div className="padding-global">
-        <div className="inner-container">
-          <div className="team-inner">
-            <div className="content-box-680">
-              <div className="sub-heading">About Stephen</div>
-              <h2 className="heading-h2">The operator behind the agents.</h2>
-              <p className="text-paragraph">
-                Stephen Gardner spent five-plus years on Google&apos;s Search team, then twenty years building
-                businesses online. As CMO at The Life Coach School he helped take the company from $1M to a
-                $50M run rate in three years — during COVID, without a fifty-person team. That
-                growth-without-headcount problem is the one he&apos;s been solving ever since. Today he builds
-                AI agent teams for service businesses and serves as fractional CAIO for the ones that want
-                him in the room.
-              </p>
-              <Link href="/about" className="secondary-button">
-                <span>Read Stephen&apos;s story</span>
-                <Image src="/images/svgviewer-output-1.svg" alt="" width={18} height={18} className="button-icon" />
-              </Link>
-            </div>
+        <div className="inner-container founder-grid">
+          <div className="founder-photo">
+            <Image
+              src="/images/SG-1.jpg"
+              alt="Stephen Gardner, founder and fractional Chief AI Officer"
+              width={440}
+              height={520}
+              sizes="(max-width: 767px) 90vw, 340px"
+            />
+          </div>
+          <div className="founder-copy">
+            <div className="sub-heading">Meet Stephen Gardner</div>
+            <h2 className="heading-h2">
+              AI leadership grounded in building businesses.
+            </h2>
+            <p className="text-paragraph">
+              Former Google Search team. As CMO at The Life Coach School,
+              Stephen helped take the company from $1M to a $50M run rate in
+              three years.
+            </p>
+            <p className="text-paragraph">
+              Today, he brings that operating experience to 7–9 figure
+              businesses as a fractional Chief AI Officer and AI consultant:
+              connecting business priorities, practical implementation, and a
+              more capable team.
+            </p>
+            <Link className="secondary-button" href="/about">
+              Meet your AI partner
+            </Link>
           </div>
         </div>
       </div>

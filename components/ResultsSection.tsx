@@ -1,64 +1,68 @@
-import Image from "next/image";
-
 const results = [
   {
-    image: "/images/EBYRh95NL0xzpSGXa9h5MnpUAk.webp",
-    title: "4x Booking Volume",
-    text: "Therapy practice. A fully automated CRM, intake, and booking system — after-hours included — took the front desk out of the bottleneck and 4x'd booked volume.",
+    label: "Intake & booking",
+    title: "4× booking volume",
+    problem:
+      "A therapy practice needed to remove bottlenecks in intake and booking.",
+    change:
+      "Connected CRM, intake, and booking workflows, including after-hours inquiries.",
+    result: "Booking volume increased fourfold.",
   },
   {
-    image: "/images/h59BDDSstZQhXCz3eSB9OmcA.webp",
-    title: "3x Qualified Leads",
-    text: "An AI agent that answers, qualifies, and books meetings for sales reps before a human touches the lead — 3x more real opportunities on the calendar.",
+    label: "Sales operations",
+    title: "3× qualified leads",
+    problem: "Sales reps needed more qualified opportunities on the calendar.",
+    change:
+      "Introduced an AI agent to respond to inquiries, qualify leads, and book meetings.",
+    result: "Three times more qualified opportunities reached the calendar.",
   },
   {
-    image: "/images/2wmOPW2m5F8nj7mI2a0fQmngb8.webp",
-    title: "Increased Project Profitability",
-    text: "A Microsoft Teams–integrated agent that writes industry-specific meeting minutes and tracks scope, saving hundreds of hours a week and catching overruns early.",
+    label: "Project delivery",
+    title: "Clearer scope. Better profitability.",
+    problem: "Meeting documentation and project scope needed closer attention.",
+    change:
+      "Integrated an agent with Microsoft Teams to prepare industry-specific minutes and track scope.",
+    result: "Reduced admin work and helped the team catch overruns earlier.",
   },
 ];
-
 export default function ResultsSection() {
-  // Duplicate for seamless loop
-  const allResults = [...results, ...results];
-
   return (
-    <section id="results" className="results-section" data-scroll-target="">
+    <section id="results" className="approach-section business-results">
       <div className="padding-global">
         <div className="inner-container">
-          <div className="results-inner">
-            <div className="content-box-680">
-              <div className="sub-heading">Results</div>
-              <h2 className="heading-h2">Built for businesses that measure.</h2>
+          <div className="approach-inner">
+            <div className="content-box">
+              <div className="sub-heading">Business results</div>
+              <h2 className="heading-h2">
+                AI should earn its place in the business.
+              </h2>
               <p className="text-paragraph width-640">
-                Every deployment ships with a number attached. Here is what a few of them looked like.
+                Examples from our work across customer acquisition and
+                operations. Each engagement starts with its own baseline and
+                measures of success.
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Full-width slider — outside inner-container to avoid clipping */}
-      <div className="results-slider-column">
-        <div className="results-slider-slide">
-          {allResults.map((item, i) => (
-            <div
-              key={i}
-              className={`results-slider-item${i >= results.length ? " mobile-hide" : ""}`}
-            >
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="results-image"
-                style={{ objectFit: "cover" }}
-              />
-              <div className="results-slider-content-box">
-                <h4 className="heading-h3" style={{ textAlign: "left" }}>{item.title}</h4>
-                <p className="results-slider-text" style={{ textAlign: "left" }}>{item.text}</p>
-              </div>
+            <div className="approach-steps-grid">
+              {results.map((item) => (
+                <article className="case-card" key={item.title}>
+                  <span className="business-card-label">{item.label}</span>
+                  <h3 className="heading-h3">{item.title}</h3>
+                  <dl>
+                    <dt>The challenge</dt>
+                    <dd>{item.problem}</dd>
+                    <dt>What changed</dt>
+                    <dd>{item.change}</dd>
+                    <dt>The result</dt>
+                    <dd>{item.result}</dd>
+                  </dl>
+                </article>
+              ))}
             </div>
-          ))}
+            <p className="section-footnote">
+              We agree what to measure: time recovered, turnaround, capacity,
+              quality, adoption, or financial impact.
+            </p>
+          </div>
         </div>
       </div>
     </section>

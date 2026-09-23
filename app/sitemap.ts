@@ -22,7 +22,13 @@ async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
     if (!Array.isArray(blog)) return [];
 
     return (blog as VelitePost[])
-      .filter((post) => post && !post.draft && typeof post.slug === "string" && post.slug.length > 0)
+      .filter(
+        (post) =>
+          post &&
+          !post.draft &&
+          typeof post.slug === "string" &&
+          post.slug.length > 0,
+      )
       .map((post) => ({
         url: `${BASE}/blog/${post.slug}`,
         lastModified: safeDate(post.date),
@@ -94,6 +100,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.3,
     },
   ];
+
+  for (const path of [
+    "ai-consulting",
+    "ai-implementation",
+    "ai-operator-plans",
+  ]) {
+    staticPages.push({
+      url: `${BASE}/${path}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: path === "ai-operator-plans" ? 0.5 : 0.9,
+    });
+  }
 
   const blogEntries = await getBlogEntries();
   return [...staticPages, ...blogEntries];

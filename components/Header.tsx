@@ -1,56 +1,38 @@
 "use client";
 import { useState, useEffect } from "react";
-import type { MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-const BOOK_URL = "/book-a-call";
-const CAIO_URL = "/fractional-caio";
-const PHONE = "702-276-6921";
-const PHONE_TEL = "tel:7022766921";
-
+const links = [
+  { href: "/fractional-caio", label: "Fractional CAIO" },
+  { href: "/ai-consulting", label: "AI Consulting" },
+  { href: "/#results", label: "Results" },
+  { href: "/about", label: "About" },
+];
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("keydown", onKey);
+    };
   }, []);
-
-  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    const id = href.replace("#", "");
-    const el = document.getElementById(id);
-    if (el) {
-      // On the homepage — smooth scroll to section
-      const offset = window.innerWidth < 768 ? 70 : 100;
-      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-    } else {
-      // On another page (blog, etc.) — navigate to homepage with hash
-      window.location.href = `/${href}`;
-    }
-  };
-
   return (
-    <header className={`header-section${scrolled ? " scrolled" : ""}`}>
+    <header className={"header-section" + (scrolled ? " scrolled" : "")}>
       <div className="padding-global padding-none">
         <div className="container">
           <div className="header-inner">
             <div className="header-column">
-              {/* Logo — click scrolls to top */}
               <Link
                 href="/"
                 className="header-logo-link"
-                onClick={(e) => {
-                  if (window.location.pathname === "/") {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }
-                }}
+                onClick={() => setMenuOpen(false)}
               >
                 <Image
                   src="/images/bgBlack_1-removebg-preview-1.png"
@@ -61,26 +43,20 @@ export default function Header() {
                   priority
                 />
               </Link>
-
-              {/* Desktop nav */}
-              <nav className="header-nav">
-                <a href="#approach" className="nav-link" onClick={(e) => handleNavClick(e, "#approach")}>How it works</a>
-                <Link href="/agent-teams" className="nav-link">Agent Teams</Link>
-                <Link href={CAIO_URL} className="nav-link">Fractional CAIO</Link>
-                <a href="#results" className="nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-                <Link href="/about" className="nav-link">About</Link>
+              <nav className="header-nav" aria-label="Main navigation">
+                {links.map((link) => (
+                  <Link href={link.href} className="nav-link" key={link.href}>
+                    {link.label}
+                  </Link>
+                ))}
               </nav>
-
-              {/* Desktop CTA */}
               <div className="header-button-box">
-                <a href={PHONE_TEL} className="nav-link" style={{ fontVariantNumeric: "tabular-nums" }}>📞 {PHONE}</a>
-                <a href="#how-it-starts" className="header-secondary-button" onClick={(e) => handleNavClick(e, "#how-it-starts")}>How it starts</a>
-                <a href={BOOK_URL} className="header-button">Book a call</a>
+                <Link href="/book-a-call" className="header-button">
+                  Book an AI Strategy Call
+                </Link>
               </div>
-
-              {/* Mobile hamburger */}
               <button
-                className={`mobile-menu-toggle${menuOpen ? " open" : ""}`}
+                className={"mobile-menu-toggle" + (menuOpen ? " open" : "")}
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={menuOpen}
@@ -91,17 +67,42 @@ export default function Header() {
                 <span className="mobile-menu-line" />
               </button>
             </div>
-
-            {/* Mobile dropdown */}
-            <nav id="mobile-navigation" aria-label="Mobile navigation" className={`mobile-menu-dropdown${menuOpen ? " open" : ""}`}>
-              <a href="#approach" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#approach")}>How it works</a>
-              <Link href="/agent-teams" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Agent Teams</Link>
-              <Link href={CAIO_URL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Fractional CAIO</Link>
-              <a href="#results" className="mobile-nav-link" onClick={(e) => handleNavClick(e, "#results")}>Results</a>
-              <Link href="/about" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>About</Link>
-              <a href={PHONE_TEL} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>📞 {PHONE}</a>
-              <a href="#how-it-starts" className="mobile-secondary-button" onClick={(e) => handleNavClick(e, "#how-it-starts")}>How it starts</a>
-              <a href={BOOK_URL} className="mobile-primary-button">Book a Strategy Call</a>
+            <nav
+              id="mobile-navigation"
+              aria-label="Mobile navigation"
+              className={"mobile-menu-dropdown" + (menuOpen ? " open" : "")}
+            >
+              {links.map((link) => (
+                <Link
+                  href={link.href}
+                  className="mobile-nav-link"
+                  key={link.href}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                href="/ai-implementation"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                Implementation & Training
+              </Link>
+              <a
+                href="tel:7022766921"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                702-276-6921
+              </a>
+              <Link
+                href="/book-a-call"
+                className="mobile-primary-button"
+                onClick={() => setMenuOpen(false)}
+              >
+                Book an AI Strategy Call
+              </Link>
             </nav>
           </div>
         </div>

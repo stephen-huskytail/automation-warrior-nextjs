@@ -11,10 +11,10 @@ const teamMembers: {
 }[] = [
   {
     name: "Stephen Gardner",
-    job: "Founder & AI Consultant",
+    job: "Founder & Fractional CAIO",
     image: "/images/SG-1.jpg",
     linkedin: "https://www.linkedin.com/in/stephengardner76",
-    text: "Former Google Search team. CMO through a $1M-to-$50M run. Builds AI agent teams for service businesses and serves as fractional CAIO for the ones that want him in the room.",
+    text: "Former Google Search team. CMO during growth from $1M to a $50M run rate. Leads AI strategy, implementation, and team development for 7–9 figure businesses.",
   },
   {
     name: "Myla Mercado",
@@ -25,10 +25,10 @@ const teamMembers: {
   },
   {
     name: "Hermes",
-    job: "AI Employee",
+    job: "Internal AI Assistant",
     image: "/images/Hermes-1.jpg",
     linkedin: null,
-    text: "Yes, really. Hermes is the first hire on every agent team — lead follow-up, reporting, content coordination, CRM updates — working 24/7 alongside the humans.",
+    text: "Hermes supports our team with lead follow-up, reporting, content coordination, and CRM updates. Our people remain responsible for the work and the decisions.",
   },
   {
     name: "Rhodora Villadegracia",
@@ -94,14 +94,21 @@ export default function TeamSection() {
           <div className="team-inner">
             <div className="content-box-680">
               <div className="sub-heading">Team</div>
-              <h2 className="heading-h2">The pack.</h2>
+              <h2 className="heading-h2">The team behind the work.</h2>
               <p className="text-paragraph">
-                Stephen does the technical work. The team keeps every engagement moving — and our own
-                AI employee works alongside us every day, which is the point.
+                Stephen leads strategy and stays involved in implementation. Our
+                team supports operations, delivery, and automation, with AI
+                helping us work more effectively.
               </p>
               <a href={BOOK_URL} className="primary-button">
-                <span>Book a Strategy Call</span>
-                <Image src="/images/svgviewer-output-1.svg" alt="" width={18} height={18} className="button-icon" />
+                <span>Book an AI Strategy Call</span>
+                <Image
+                  src="/images/svgviewer-output-1.svg"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="button-icon"
+                />
               </a>
             </div>
 
@@ -122,7 +129,7 @@ export default function TeamSection() {
                     <div key={i} className="team-slider-item">
                       <MemberCard member={member} />
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>

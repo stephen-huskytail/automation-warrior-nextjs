@@ -9,14 +9,14 @@ import { blog as posts } from "@/.velite";
 export const metadata: Metadata = {
   title: "Blog | Automation Warrior",
   description:
-    "Insights on AI automation workflows, AI agents, and how to accelerate your business with generative AI.",
+    "Practical perspectives on AI strategy, implementation, and team development for business leaders.",
   alternates: {
     canonical: "https://www.automationwarrior.ai/blog",
   },
   openGraph: {
     title: "Blog | Automation Warrior",
     description:
-      "Insights on AI automation workflows, AI agents, and how to accelerate your business with generative AI.",
+      "Practical perspectives on AI strategy, implementation, and team development for business leaders.",
     url: "https://www.automationwarrior.ai/blog",
     siteName: "Automation Warrior",
     type: "website",
@@ -50,11 +50,11 @@ export default function BlogIndex() {
                 <div className="blog-hero-inner">
                   <span className="blog-label">Automation Warrior Blog</span>
                   <h1 className="blog-hero-heading">
-                    AI Insights &amp; Automation Strategies
+                    Practical AI for Business
                   </h1>
                   <p className="blog-hero-sub">
-                    Practical guides, case studies, and deep-dives on building AI
-                    automation workflows that actually move the needle.
+                    Explore how AI tools, workflows, and practical skills can
+                    help your business and your team work more effectively.
                   </p>
                 </div>
               </div>
@@ -98,10 +98,10 @@ export default function BlogIndex() {
                             )}
                           </div>
                           <h2 className="blog-card-title">{post.title}</h2>
-                          <p className="blog-card-excerpt">{post.description}</p>
-                          <span className="blog-card-cta">
-                            Read article →
-                          </span>
+                          <p className="blog-card-excerpt">
+                            {post.description}
+                          </p>
+                          <span className="blog-card-cta">Read article →</span>
                         </div>
                       </Link>
                     ))}

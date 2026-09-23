@@ -20,8 +20,8 @@ export default function AuthorBox({ name }: AuthorBoxProps) {
       <div className="author-box-info">
         <p className="author-box-name">{name}</p>
         <p className="author-box-bio">
-          Former Google. AI automation practitioner. 10+ years in digital marketing and workflow
-          automation. Based in Las Vegas.
+          Former Google Search team. Fractional Chief AI Officer and AI
+          consultant for 7–9 figure businesses. Based in Las Vegas.
         </p>
         <Link href="/about" className="author-box-link">
           View full bio →
