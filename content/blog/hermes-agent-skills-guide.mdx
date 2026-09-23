@@ -1,15 +1,21 @@
 ---
 title: "Hermes Agent Skills: Build Reusable AI Workflows"
-description: "Learn how Hermes Agent skills turn proven procedures into reusable AI workflows with focused instructions, references, safety gates, and verification."
+description: "A technical guide for implementation teams turning proven business procedures into reusable Hermes Agent workflows, with clear ownership, review, and verification."
 date: "2026-08-22"
 slug: "hermes-agent-skills-guide"
-tags: ["Hermes Agent", "AI Skills", "AI Workflows", "Business Automation", "Agent Operations"]
+tags: ["Technical Guide", "Hermes Agent", "AI Strategy", "Business Operations"]
 author: "Stephen Gardner"
 draft: false
+contentType: "Technical Guide"
+updatedDate: "2026-09-23"
 featured_image: "/images/blog/hermes-agent-skills-guide.jpg"
 image_alt: "Hermes Agent skills library connecting reusable workflow modules to verified automation paths"
 schema_type: "Article"
 ---
+
+This guide is for implementation teams that have selected a workflow and are considering Hermes as part of the solution. The business objective comes first: increasing useful capacity, improving consistency, or reducing avoidable work while keeping people accountable for the result.
+
+For the leadership view, start with [How to Turn Your Team’s Know-How Into AI Workflows That Scale](/blog/team-knowledge-ai-workflows). It covers process selection, team development, ownership, and measurement before the technical design.
 
 **Hermes Agent skills** turn a proven procedure into reusable operating knowledge. Instead of pasting the same long prompt every time, you can give Hermes a focused playbook that explains when to use a workflow, which steps to follow, what can go wrong, and how to verify the result.
 
@@ -25,20 +31,6 @@ That does not make every task automatic. A skill is guidance, not a guarantee. I
 > - Keep authoritative business data in the proper system of record; do not turn a skill into a stale copy of a CRM, price sheet, or approval ledger.
 > - Treat third-party skills as executable operating instructions: inspect the source, review bundled scripts, and grant only the tools and credentials the workflow needs.
 > - Update a skill when a real run exposes a missing step or stale instruction. Unmaintained procedures become operational risk.
-
-## Table of Contents
-
-- [What Hermes Agent Skills Are](#what-hermes-agent-skills-are)
-- [Skills vs Prompts, Memory, and Tools](#skills-vs-prompts-memory-and-tools)
-- [How Progressive Disclosure Works](#how-progressive-disclosure-works)
-- [What a Reliable Skill Should Contain](#what-a-reliable-skill-should-contain)
-- [How to Use Hermes Agent Skills](#how-to-use-hermes-agent-skills)
-- [How to Create a Reusable Skill](#how-to-create-a-reusable-skill)
-- [Example: Turn a Weekly Report Into a Skill](#example-turn-a-weekly-report-into-a-skill)
-- [Safety and Governance](#safety-and-governance)
-- [Testing and Maintenance](#testing-and-maintenance)
-- [Honest Limitations](#honest-limitations)
-- [Frequently Asked Questions](#frequently-asked-questions)
 
 ## What Hermes Agent Skills Are
 
@@ -101,7 +93,7 @@ If a workflow needs a browser or a specific API and that capability is unavailab
 
 Current customers belong in the CRM. Publication state belongs in the remote repository and live website. Approved prices belong in the maintained pricing source. A skill should point to those sources and explain how to reconcile them; it should not duplicate volatile data that will quietly go stale.
 
-If you are still deciding whether a process is suitable for an agent, start with an [AI automation audit](/blog/ai-automation-audit). Clarify the workflow before turning it into reusable instructions.
+If you are still deciding whether a process is suitable for an agent, start with an [AI consulting assessment](/ai-consulting). Clarify the workflow, business priority, and team responsibilities before turning it into reusable instructions.
 
 ## How Progressive Disclosure Works
 
@@ -205,7 +197,7 @@ Verification can include:
 - row count and duplicate check;
 - attachment names and recipient read-back.
 
-The [Hermes Agent cron jobs guide](/blog/hermes-agent-cron-jobs) applies the same rule to scheduled work: scheduler status is telemetry, not proof of the final business outcome.
+For scheduled work, confirm the final delivery and its usefulness to the business. The [guide to measuring AI business results](/blog/measure-ai-business-results) connects system activity to completed work, quality, capacity, and outcomes.
 
 ### 7. A clear blocked state
 
@@ -360,7 +352,7 @@ For every reported issue, include the workflow name, last relevant run time, obs
 
 This skill does not make the report infallible. It makes the operating standard explicit enough to test, improve, and review.
 
-For broader implementation guidance, see [Hermes Agent for business automation](/blog/hermes-agent-business-automation).
+For support connecting the workflow to your systems and equipping the people who use it, explore [AI implementation and team training](/ai-implementation).
 
 ## Safety and Governance
 
@@ -452,7 +444,7 @@ Scripts inside a skill can provide deterministic mechanics, but they introduce n
 
 Finally, a skill cannot provide a missing capability or permission. If the required tool, source, login, or authority is unavailable, the agent must report that boundary. It should not substitute a plausible-looking answer for real execution.
 
-## E-E-A-T and Responsible Implementation
+## Before Putting This Into Production
 
 This is a source-backed operating guide based on the current Hermes Agent documentation, not a claim that every profile, platform, or custom installation has identical settings. The live Hermes documentation and the commands exposed by the installed version are the technical sources of truth.
 
@@ -502,17 +494,17 @@ Update it when a real run exposes a missing step, stale command, new failure mod
 
 A skill can make a bounded workflow more repeatable, but autonomy depends on permissions, source quality, risk, test coverage, and approval policy. High-impact external actions may still require a human or separately authorized release gate.
 
-## Final Takeaway
+## Put the Procedure to Work
 
 Hermes Agent skills are most valuable when they preserve a procedure that has already earned trust. Build each skill around one recognizable trigger, a small set of authoritative sources, a bounded sequence, explicit risk limits, known failure modes, and proof of the final result.
 
 Do not use skills to make vague work look automated. Use them to make good operating practice easier to repeat—and easier to inspect when something changes.
 
-If you want help choosing a safe first agent workflow, [book an automation strategy call](/strategy). We will map the source, decision, permissions, approval boundary, and verification path before turning the procedure into durable automation.
+If you need to choose where AI can improve your business, [book a free AI strategy call](/book-a-call). We will discuss the operating problem, the people involved, and the right next step. A scoped assessment can then define the workflow, baseline, responsibilities, and measures of success.
 
 ## Sources
 
-[1] https://hermes-agent.nousresearch.com/docs/user-guide/features/skills — Hermes Agent: Skills System
-[2] https://hermes-agent.nousresearch.com/docs/guides/work-with-skills — Hermes Agent: Working with Skills
-[3] https://hermes-agent.nousresearch.com/docs/reference/cli-commands — Hermes Agent: CLI Commands Reference
-[4] https://hermes-agent.nousresearch.com/docs/reference/skills-catalog — Hermes Agent: Bundled Skills Catalog
+1. [Hermes Agent: Skills System](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills)
+2. [Hermes Agent: Working with Skills](https://hermes-agent.nousresearch.com/docs/guides/work-with-skills)
+3. [Hermes Agent: CLI Commands Reference](https://hermes-agent.nousresearch.com/docs/reference/cli-commands)
+4. [Hermes Agent: Bundled Skills Catalog](https://hermes-agent.nousresearch.com/docs/reference/skills-catalog)

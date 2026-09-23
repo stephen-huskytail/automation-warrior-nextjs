@@ -5,6 +5,7 @@ const BASE = "https://www.automationwarrior.ai";
 type VelitePost = {
   slug?: string;
   date?: string;
+  updatedDate?: string;
   draft?: boolean;
 };
 
@@ -31,7 +32,7 @@ async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
       )
       .map((post) => ({
         url: `${BASE}/blog/${post.slug}`,
-        lastModified: safeDate(post.date),
+        lastModified: safeDate(post.updatedDate || post.date),
         changeFrequency: "monthly" as const,
         priority: 0.7,
       }));

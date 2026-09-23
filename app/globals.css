@@ -2158,6 +2158,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .blog-hero-heading {
+  text-wrap: balance;
   font-family: Satoshi, Arial, sans-serif;
   font-size: 52px;
   font-weight: 500;
@@ -2256,6 +2257,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .blog-card-title {
+  text-wrap: balance;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.25;
@@ -2282,6 +2284,26 @@ ul { list-style: none; margin: 0; padding: 0; }
 .blog-empty {
   color: rgba(255, 255, 255, 0.4);
   font-size: 16px;
+}
+
+.blog-section-intro { margin-bottom: 28px; max-width: 760px; }
+.blog-section-intro h2, .blog-consulting-inner h2 { color: #fff; font-size: 32px; line-height: 1.2; letter-spacing: -0.03em; text-wrap: balance; margin: 0 0 12px; }
+.blog-section-intro p, .blog-consulting-inner p { color: #aaa; font-size: 17px; line-height: 1.6; margin: 0; }
+.blog-card-featured { margin-bottom: 24px; border-color: #ff453344; background: linear-gradient(125deg, #251512, #111 75%); }
+.blog-card-featured .blog-card-inner { padding: 40px; gap: 20px; }
+.blog-card-featured .blog-card-title { font-size: clamp(28px, 3.2vw, 42px); max-width: 860px; }
+.blog-card-featured .blog-card-excerpt { font-size: 18px; max-width: 780px; }
+.blog-featured-label { font-size: 13px; color: #ff8174; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.blog-technical-section { padding-top: 0; padding-bottom: 80px; }
+.blog-consulting-section { padding-bottom: 80px; }
+.blog-consulting-inner { display: flex; gap: 32px; align-items: center; justify-content: space-between; padding-top: 40px; border-top: 1px solid #ffffff20; }
+.blog-consulting-inner .primary-button { flex-shrink: 0; }
+.blog-post-author-line a { color: #ddd; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 767px) {
+  .blog-card-featured .blog-card-inner { padding: 24px; }
+  .blog-consulting-inner { flex-direction: column; align-items: flex-start; }
+  .blog-consulting-inner .primary-button { width: 100%; }
+  .blog-section-intro h2, .blog-consulting-inner h2 { font-size: 28px; }
 }
 
 /* ─── Blog Post Page (Two-Column) ───────────────────────────────── */
