@@ -1,14 +1,13 @@
-import type { Metadata } from "next";
+import { serviceMetadata } from "@/lib/serviceMetadata";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
-export const metadata: Metadata = {
-  title: "Affiliate Disclosure | Automation Warrior",
-  description:
-    "Automation Warrior affiliate disclosure — how we earn commissions and how it affects our content.",
-  alternates: { canonical: "https://www.automationwarrior.ai/affiliate-disclosure" },
-};
+export const metadata = serviceMetadata(
+  "Affiliate Disclosure | Automation Warrior",
+  "Automation Warrior affiliate disclosure — how we earn commissions and how it affects our content.",
+  "/affiliate-disclosure",
+);
 
 export default function AffiliateDisclosurePage() {
   return (
@@ -16,7 +15,7 @@ export default function AffiliateDisclosurePage() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <section className="legal-page-section">
             <div className="padding-global">
               <div className="legal-page-container">

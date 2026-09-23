@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { serviceMetadata } from "@/lib/serviceMetadata";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Automation Warrior",
-  description: "Privacy policy for automationwarrior.ai — how we collect and use data.",
-  alternates: { canonical: "https://www.automationwarrior.ai/privacy-policy" },
-};
+export const metadata = serviceMetadata(
+  "Privacy Policy | Automation Warrior",
+  "Privacy policy for automationwarrior.ai — how we collect and use data.",
+  "/privacy-policy",
+);
 
 export default function PrivacyPolicyPage() {
   return (
@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <section className="legal-page-section">
             <div className="padding-global">
               <div className="legal-page-container">
@@ -97,12 +97,6 @@ export default function PrivacyPolicyPage() {
                     to send inquiry notifications and acknowledgments, and reports delivery
                     status. See the{" "}
                     <a href="https://resend.com/legal/privacy-policy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Resend privacy policy</a>.
-                  </li>
-                  <li>
-                    <strong>Google Fonts</strong> — Supplies a font used on this site. Your
-                    browser contacts Google to load it, sharing request information such as
-                    your IP address and browser details. See the{" "}
-                    <a href="https://developers.google.com/fonts/faq/privacy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Google Fonts privacy information</a>.
                   </li>
                   <li>
                     <strong>Affiliate networks</strong> — Including Go High Level and others

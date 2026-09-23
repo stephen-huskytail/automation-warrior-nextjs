@@ -192,7 +192,7 @@ export default async function BlogPost({ params }: Props) {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <div className="blog-post-page">
             <div className="padding-global">
 

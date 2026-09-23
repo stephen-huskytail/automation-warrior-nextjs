@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteSocial } from "@/lib/serviceMetadata";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     "AI leadership, team capability, and measurable business results for leaders of 7–9 figure businesses. Practical perspectives from Stephen Gardner, fractional CAIO.",
   alternates: { canonical: "https://www.automationwarrior.ai/blog" },
   openGraph: {
+    ...siteSocial,
     title: "AI Leadership & Business Insights | Automation Warrior",
     description:
       "Make better AI decisions, build team capability, and measure the business impact. Practical insights for leaders of 7–9 figure businesses.",
@@ -73,7 +75,7 @@ export default function BlogIndex() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <section className="blog-hero-section">
             <div className="padding-global">
               <div className="container">

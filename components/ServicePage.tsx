@@ -47,7 +47,7 @@ export default function ServicePage({
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <Hero {...hero} />
           {sections.map((section) => (
             <BusinessSection key={section.title} {...section} />

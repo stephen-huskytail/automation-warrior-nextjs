@@ -26,7 +26,7 @@ export default function Home() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <Hero />
           <ResultsSection />
           <WaysToWorkSection />

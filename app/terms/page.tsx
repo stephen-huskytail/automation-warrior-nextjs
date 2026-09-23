@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { serviceMetadata } from "@/lib/serviceMetadata";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
-export const metadata: Metadata = {
-  title: "Terms of Use | Automation Warrior",
-  description: "Terms of use for automationwarrior.ai.",
-  alternates: { canonical: "https://www.automationwarrior.ai/terms" },
-};
+export const metadata = serviceMetadata(
+  "Terms of Use | Automation Warrior",
+  "Terms of use for automationwarrior.ai.",
+  "/terms",
+);
 
 export default function TermsPage() {
   return (
@@ -15,7 +15,7 @@ export default function TermsPage() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <section className="legal-page-section">
             <div className="padding-global">
               <div className="legal-page-container">
