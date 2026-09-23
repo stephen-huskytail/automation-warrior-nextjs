@@ -94,11 +94,6 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
           rel="stylesheet"
         />
-        {/* mouse-follower CSS — loaded statically in <head> */}
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css"
-        />
       </head>
       <body>
         <script

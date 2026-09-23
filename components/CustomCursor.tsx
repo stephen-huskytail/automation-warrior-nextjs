@@ -25,11 +25,6 @@ export default function CustomCursor() {
         });
         cursor = mouseFollower;
 
-        // Team card hover state
-        document.querySelectorAll(".team-slider-item").forEach((el) => {
-          el.addEventListener("mouseenter", () => mouseFollower.setText(""));
-          el.addEventListener("mouseleave", () => mouseFollower.removeText());
-        });
       } catch (e) {
         console.error("CustomCursor init failed:", e);
       }

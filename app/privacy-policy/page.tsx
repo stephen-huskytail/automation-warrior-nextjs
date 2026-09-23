@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
             <div className="padding-global">
               <div className="legal-page-container">
                 <h1 className="legal-page-heading">Privacy Policy</h1>
-                <p className="legal-page-date">Last updated: May 25, 2026</p>
+                <p className="legal-page-date">Last updated: September 23, 2026</p>
 
                 <p className="legal-page-text">
                   This Privacy Policy describes how Automation Warrior (&quot;we,&quot; &quot;us,&quot; or
@@ -31,11 +31,20 @@ export default function PrivacyPolicyPage() {
 
                 <h2 className="legal-page-subheading">Information We Collect</h2>
                 <p className="legal-page-text">
-                  We may collect information you provide directly — such as your name, email
-                  address, and business details when you submit a contact form, book a strategy
-                  call, or opt in to communications. We also collect information automatically,
-                  including your IP address, browser type, device type, referring URL, and pages
-                  visited, through standard web server logs and analytics tools.
+                  When you request a strategy call, we collect your name, email address,
+                  message, and any company or phone details you choose to provide. We save
+                  the inquiry in a private database and use email to notify our team and
+                  acknowledge your request. The form requests a conversation; it does not
+                  book an appointment with an external scheduling service.
+                </p>
+                <p className="legal-page-text">
+                  Our hosting and measurement services process request information such as
+                  IP addresses, page URLs, referring sites, browser and device details,
+                  approximate location, and loading-performance measurements. To prevent
+                  form abuse, we use a short-lived verification token and temporary counters
+                  keyed by protected hashes of your IP and email address. Raw IP addresses
+                  are not saved in our inquiry database. We also record email delivery
+                  identifiers and status, such as delivery failures.
                 </p>
 
                 <h2 className="legal-page-subheading">How We Use Information</h2>
@@ -44,15 +53,17 @@ export default function PrivacyPolicyPage() {
                   <li>To schedule and conduct strategy calls and consultations</li>
                   <li>To improve the Site and its content</li>
                   <li>To analyze traffic and usage patterns via analytics</li>
-                  <li>To send relevant communications when you opt in</li>
+                  <li>To protect the inquiry form, retry failed notifications, and monitor delivery</li>
                   <li>To comply with legal obligations</li>
                 </ul>
 
                 <h2 className="legal-page-subheading">Cookies and Tracking</h2>
                 <p className="legal-page-text">
-                  We use cookies and similar technologies for analytics and to improve user
-                  experience. You can disable cookies in your browser settings, though some
-                  functionality may be affected. We do not sell your data through cookie tracking.
+                  We use Vercel Web Analytics for aggregate site usage and Vercel Speed
+                  Insights for performance measurements. These services do not use tracking
+                  cookies. We do not send inquiry form contents to these analytics services.
+                  Submitting an inquiry does not subscribe you to a marketing mailing list.
+                  Third-party websites you visit through our links may use their own cookies.
                 </p>
 
                 <h2 className="legal-page-subheading">Affiliate Links</h2>
@@ -72,29 +83,26 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <ul className="legal-page-list">
                   <li>
-                    <strong>Vercel</strong> — Site hosting and edge network. Processes server
-                    logs and request metadata.
+                    <strong>Vercel</strong> — Hosts the website, processes requests and logs,
+                    and provides Web Analytics and Speed Insights. See the{" "}
+                    <a href="https://vercel.com/legal/privacy-policy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Vercel privacy policy</a>.
                   </li>
                   <li>
-                    <strong>Google Analytics</strong> — Website traffic and usage analytics.
-                    Subject to{" "}
-                    <a
-                      href="https://policies.google.com/privacy"
-                      className="legal-page-link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Google&apos;s Privacy Policy
-                    </a>
-                    .
+                    <strong>Neon</strong> — Stores inquiry details and notification status
+                    in our private database. See the{" "}
+                    <a href="https://neon.com/privacy-policy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Neon privacy notice</a>.
                   </li>
                   <li>
-                    <strong>Cal.com / Calendly</strong> — Appointment scheduling. Collects name,
-                    email, and meeting details when you book a call.
+                    <strong>Resend</strong> — Processes recipient addresses and email content
+                    to send inquiry notifications and acknowledgments, and reports delivery
+                    status. See the{" "}
+                    <a href="https://resend.com/legal/privacy-policy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Resend privacy policy</a>.
                   </li>
                   <li>
-                    <strong>Email marketing platform</strong> — Used to send newsletters and
-                    follow-up communications to opted-in subscribers.
+                    <strong>Google Fonts</strong> — Supplies a font used on this site. Your
+                    browser contacts Google to load it, sharing request information such as
+                    your IP address and browser details. See the{" "}
+                    <a href="https://developers.google.com/fonts/faq/privacy" className="legal-page-link" target="_blank" rel="noopener noreferrer">Google Fonts privacy information</a>.
                   </li>
                   <li>
                     <strong>Affiliate networks</strong> — Including Go High Level and others
@@ -112,9 +120,13 @@ export default function PrivacyPolicyPage() {
 
                 <h2 className="legal-page-subheading">Data Retention</h2>
                 <p className="legal-page-text">
-                  We retain personal information only as long as necessary to fulfill the purposes
-                  described in this policy, maintain business records, or as required by law.
-                  You may request deletion of your data at any time by contacting us.
+                  Inquiry records and their notification status are automatically removed
+                  from the website database after 365 days. Temporary abuse-prevention
+                  counters expire within an hour and are cleared by scheduled cleanup;
+                  delivery-event records are retained for up to 30 days. Email correspondence
+                  and records relating to an active client relationship may be retained
+                  separately for business or legal purposes. You may request access or
+                  deletion by contacting stephen@automationwarrior.ai.
                 </p>
 
                 <h2 className="legal-page-subheading">Your Rights</h2>
