@@ -219,8 +219,9 @@ export default async function BlogPost({ params }: Props) {
                         alt={post.image_alt || post.title}
                         width={1200}
                         height={630}
+                        sizes="(max-width: 768px) 94vw, (max-width: 1024px) 50vw, 804px"
                         className="blog-post-hero-img"
-                        priority
+                        preload
                       />
                     </div>
                   )}
