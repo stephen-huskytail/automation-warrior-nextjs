@@ -1,0 +1,62 @@
+.figure {
+  margin: 36px 0;
+  padding: 30px;
+  border: 1px solid #ffffff24;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #201917, #121212 55%);
+  color: #f4f0e9;
+}
+
+.header { display: flex; flex-direction: column; gap: 12px; }
+.eyebrow, .stepLabel {
+  color: #ff9586;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.title { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.2; letter-spacing: -0.025em; text-wrap: balance; }
+.description, .detail { color: #c5c0bb; font-size: 15px; line-height: 1.55; }
+.timeline, .scorecard { list-style: none; margin: 28px 0 0; padding: 0; }
+.timeline .step { display: flex; gap: 18px; position: relative; padding-bottom: 24px; }
+.timeline .step:last-child { padding-bottom: 0; }
+.timeline .step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 41px;
+  bottom: 4px;
+  left: 19px;
+  width: 1px;
+  background: #ff958650;
+}
+.number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ff958657;
+  background: #31201d;
+  color: #ffb0a5;
+  font-size: 13px;
+  font-weight: 600;
+}
+.stepContent { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.stepTitle { color: #f4f0e9; font-size: 18px; line-height: 1.35; font-weight: 600; }
+.phases { display: flex; justify-content: space-between; gap: 8px; margin-top: 24px; color: #e8ddd6; font-size: 14px; }
+.phases span[aria-hidden] { color: #ff9586; }
+.scorecard { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; margin-top: 20px; }
+.scorecard .step { padding: 18px; background: #ffffff04; border: 1px solid #ffffff1a; border-radius: 10px; }
+.outcome { display: flex; align-items: flex-start; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid #ffffff24; font-size: 16px; line-height: 1.5; }
+.outcomeIcon { color: #ff9586; font-size: 23px; line-height: 1; }
+.note { margin: 12px 0 0; color: #a9a29c; font-size: 13px; line-height: 1.55; }
+
+@media (max-width: 600px) {
+  .figure { padding: 22px 18px; }
+  .timeline .step { gap: 12px; }
+  .title { font-size: 25px; }
+  .scorecard { grid-template-columns: 1fr; }
+  .stepTitle { font-size: 17px; }
+}

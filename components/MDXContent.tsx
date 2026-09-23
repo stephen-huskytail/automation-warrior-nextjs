@@ -3,6 +3,7 @@ import * as runtime from "react/jsx-runtime";
 import { useMemo } from "react";
 import { FAQ } from "@/components/FAQ";
 import { TakeawayBox } from "@/components/TakeawayBox";
+import { ArticleFramework } from "@/components/ArticleFramework";
 
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -70,6 +71,7 @@ const components = {
   // Custom MDX components
   FAQ,
   TakeawayBox,
+  ArticleFramework,
 };
 
 interface MDXContentProps {
