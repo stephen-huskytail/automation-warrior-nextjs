@@ -1,17 +1,14 @@
-import type { Metadata } from "next";
+import { serviceMetadata } from "@/lib/serviceMetadata";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import BookACallForm from "@/components/BookACallForm";
 
-export const metadata: Metadata = {
-  title: "Book an AI Strategy Call | Automation Warrior",
-  description:
-    "Discuss fractional CAIO services and AI consulting for your 7–9 figure business in a free, 30-minute strategy call.",
-  alternates: {
-    canonical: "https://www.automationwarrior.ai/book-a-call",
-  },
-};
+export const metadata = serviceMetadata(
+  "Book an AI Strategy Call | Automation Warrior",
+  "Discuss fractional CAIO services and AI consulting for your 7–9 figure business in a free, 30-minute strategy call.",
+  "/book-a-call",
+);
 
 const CHECK_ICON = (
   <svg
@@ -39,7 +36,7 @@ export default function BookACallPage() {
       <Header />
 
       {/* ── Page hero ─────────────────────────────────────────────────── */}
-      <section className="bac-hero-section">
+      <section id="scroll" className="bac-hero-section" tabIndex={-1}>
         <div
           className="padding-global"
           style={{ width: "100%", position: "relative", zIndex: 2 }}

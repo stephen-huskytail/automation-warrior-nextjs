@@ -68,9 +68,9 @@ export default function Footer() {
             <div className="footer-block2">
               <div className="footer-column1">
                 <div className="footer-column1-content-box">
-                  <h4 className="footer-heading">
+                  <h2 className="footer-heading">
                     Make AI work for your business.
-                  </h4>
+                  </h2>
                   <p className="footer-text footer-text-width">
                     Discuss your business priorities, where AI could help, and
                     the right next step with Stephen in a free, 30-minute
@@ -84,9 +84,9 @@ export default function Footer() {
               <div className="footer-column2">
                 {columns.map((col) => (
                   <div className="foomenu-box" key={col.heading}>
-                    <h4 className="footer-heading small-heading-footer">
+                    <h2 className="footer-heading small-heading-footer">
                       {col.heading}
-                    </h4>
+                    </h2>
                     <ul className="footer-menu-ul">
                       {col.links.map((l) => (
                         <li key={l.label}>

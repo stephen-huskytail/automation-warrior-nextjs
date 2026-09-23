@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 const links = [
@@ -7,14 +7,19 @@ const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/#results", label: "Results" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Insights" },
 ];
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuToggle = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape" && document.activeElement?.closest("#mobile-navigation")) {
+        setMenuOpen(false);
+        menuToggle.current?.focus();
+      } else if (event.key === "Escape") setMenuOpen(false);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("keydown", onKey);
@@ -40,7 +45,7 @@ export default function Header() {
                   width={160}
                   height={40}
                   className="header-logo"
-                  priority
+                  preload
                 />
               </Link>
               <nav className="header-nav" aria-label="Main navigation">
@@ -56,9 +61,10 @@ export default function Header() {
                 </Link>
               </div>
               <button
+                ref={menuToggle}
                 className={"mobile-menu-toggle" + (menuOpen ? " open" : "")}
                 onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle menu"
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-navigation"
               >

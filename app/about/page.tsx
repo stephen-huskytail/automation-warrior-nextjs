@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteSocial } from "@/lib/serviceMetadata";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     "Meet Stephen Gardner: fractional Chief AI Officer and AI consultant for 7–9 figure businesses. Former Google Search team and experienced business operator.",
   alternates: { canonical: "https://www.automationwarrior.ai/about" },
   openGraph: {
+    ...siteSocial,
     title: "Stephen Gardner — AI Consultant | Automation Warrior",
     description:
       "Former Google Search team. CMO during growth from $1M to a $50M run rate. AI leadership, implementation, and team development for 7–9 figure businesses.",
@@ -81,7 +83,7 @@ export default function AboutPage() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <section className="about-page-section">
             <div className="padding-global">
               <div className="about-page-container">

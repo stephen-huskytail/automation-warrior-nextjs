@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { siteSocial } from "@/lib/serviceMetadata";
 import "./globals.css";
-import "swiper/css";
-import "swiper/css/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+const satoshi = localFont({
+  src: [
+    { path: "../public/fonts/Satoshi-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/Satoshi-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/Satoshi-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-satoshi",
+  display: "swap",
+  adjustFontFallback: "Arial",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.automationwarrior.ai"),
@@ -11,6 +22,7 @@ export const metadata: Metadata = {
   description:
     "Make AI work for your business. Fractional Chief AI Officer, AI consulting, implementation, and team development for 7–9 figure businesses.",
   openGraph: {
+    ...siteSocial,
     title: "Fractional CAIO & AI Consulting | Automation Warrior",
     description:
       "AI leadership for 7–9 figure businesses. Build the strategy, systems, and team capabilities to grow your capacity with the team you have.",
@@ -21,6 +33,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.automationwarrior.ai",
   },
+  twitter: { card: "summary_large_image" },
   icons: {
     icon: "/images/favicon.ico",
     apple: "/images/webclip.png",
@@ -82,20 +95,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={satoshi.variable}>
       <body>
+        <a href="#scroll" className="skip-link">Skip to content</a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/go/",
+      disallow: ["/go/", "/api/"],
     },
     sitemap: "https://www.automationwarrior.ai/sitemap.xml",
   };

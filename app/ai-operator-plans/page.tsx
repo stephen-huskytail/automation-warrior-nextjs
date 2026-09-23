@@ -44,7 +44,7 @@ export default function Page() {
       <CustomCursor />
       <main className="page-wrapper">
         <Header />
-        <div id="scroll" className="main-wrapper">
+        <div id="scroll" className="main-wrapper" tabIndex={-1}>
           <Hero
             eyebrow="AI Operator Plans / Smaller Teams"
             title="Practical AI support for everyday tasks."

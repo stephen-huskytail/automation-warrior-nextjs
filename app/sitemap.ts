@@ -1,120 +1,21 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { blog } from "@/.velite";
 
 const BASE = "https://www.automationwarrior.ai";
+const paths = [
+  "", "/blog", "/fractional-caio", "/ai-consulting", "/ai-implementation",
+  "/agent-teams", "/ai-operator-plans", "/about", "/book-a-call",
+  "/affiliate-disclosure", "/privacy-policy", "/terms",
+];
 
-type VelitePost = {
-  slug?: string;
-  date?: string;
-  updatedDate?: string;
-  draft?: boolean;
-};
-
-function safeDate(value: unknown): Date {
-  if (typeof value === "string" || value instanceof Date) {
-    const parsed = new Date(value);
-    if (!Number.isNaN(parsed.getTime())) return parsed;
-  }
-  return new Date();
-}
-
-async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
-  try {
-    const { blog } = await import("@/.velite");
-    if (!Array.isArray(blog)) return [];
-
-    return (blog as VelitePost[])
-      .filter(
-        (post) =>
-          post &&
-          !post.draft &&
-          typeof post.slug === "string" &&
-          post.slug.length > 0,
-      )
-      .map((post) => ({
-        url: `${BASE}/blog/${post.slug}`,
-        lastModified: safeDate(post.updatedDate || post.date),
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-      }));
-  } catch {
-    // Velite output can be missing or throw; still emit money/legal pages.
-    return [];
-  }
-}
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: BASE,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${BASE}/blog`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE}/fractional-caio`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE}/agent-teams`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE}/book-a-call`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE}/about`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${BASE}/affiliate-disclosure`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${BASE}/privacy-policy`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${BASE}/terms`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    // Omit lastModified where no content revision date is maintained.
+    // A deployment alone does not mean every page changed.
+    ...paths.map(path => ({ url: BASE + path })),
+    ...blog.filter(post => !post.draft).map(post => ({
+      url: `${BASE}/blog/${post.slug}`,
+      lastModified: new Date(post.updatedDate || post.date),
+    })),
   ];
-
-  for (const path of [
-    "ai-consulting",
-    "ai-implementation",
-    "ai-operator-plans",
-  ]) {
-    staticPages.push({
-      url: `${BASE}/${path}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: path === "ai-operator-plans" ? 0.5 : 0.9,
-    });
-  }
-
-  const blogEntries = await getBlogEntries();
-  return [...staticPages, ...blogEntries];
 }
