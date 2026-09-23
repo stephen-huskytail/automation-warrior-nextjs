@@ -6,6 +6,7 @@ import TeamEnablementSection from "@/components/TeamEnablementSection";
 import EngagementProcess from "@/components/EngagementProcess";
 import PillarsSection from "@/components/PillarsSection";
 import AboutShortSection from "@/components/AboutShortSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import HomeFaqSection, {
   homeFaqItems,
   faqSchema,
@@ -33,6 +34,7 @@ export default function Home() {
           <EngagementProcess />
           <PillarsSection />
           <AboutShortSection />
+          <TestimonialsSection />
           <HomeFaqSection />
           <CtaSection />
         </div>
