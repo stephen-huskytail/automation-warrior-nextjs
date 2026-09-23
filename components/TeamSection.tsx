@@ -21,28 +21,29 @@ const teamMembers: {
   {
     name: "Myla Mercado",
     job: "Operations Lead",
-    image: "/images/MM-1.jpg",
+    image: "/images/myla-mercado-office.png",
+    imagePosition: "center 25%",
     linkedin: "https://www.linkedin.com/in/mylamercado",
     text: "Drives internal efficiency, optimizes systems, and ensures smooth execution across all AI initiatives at Automation Warrior.",
   },
   {
     name: "Hermes",
     job: "Internal AI Assistant",
-    image: "/images/Hermes-1.jpg",
+    image: "/images/hermes-office.png",
     linkedin: null,
     text: "Hermes supports our team with lead follow-up, reporting, content coordination, and CRM updates. Our people remain responsible for the work and the decisions.",
   },
   {
     name: "Rhodora Villadegracia",
     job: "Project Manager",
-    image: "/images/Rhodora.png",
+    image: "/images/rhodora-villadegracia-office.png",
     linkedin: null,
     text: "Skilled in leading cross-functional teams, managing timelines, and ensuring projects are delivered on time, within scope, and aligned with strategic goals.",
   },
   {
     name: "Maru Perez",
     job: "Automation Specialist",
-    image: "/images/Maru.png",
+    image: "/images/maru-perez-office.png",
     linkedin: null,
     text: "Expert in streamlining workflows and implementing automation solutions to optimize processes, increase efficiency, and drive measurable results.",
   },
@@ -54,24 +55,16 @@ const allMembers = [...teamMembers, ...teamMembers];
 function MemberCard({ member }: { member: (typeof teamMembers)[number] }) {
   return (
     <>
-      {/* LinkedIn hover overlay — only for members with a profile link */}
-      {member.linkedin && (
-        <div className="mouse-hover-animation-box">
-          <p className="mouse-text">View on</p>
-          <h3 className="mouse-heading">LinkedIn</h3>
-        </div>
-      )}
-
       {/* Photo */}
       <div className="team-slider-image-box">
         <Image
           src={member.image}
           alt={member.name}
           fill
+          sizes="(max-width: 767px) 90vw, 380px"
           className="team-slider-image"
           style={{ objectFit: "cover", objectPosition: member.imagePosition }}
         />
-        <div className="team-slider-image-overlay" />
       </div>
 
       {/* Name + role */}
@@ -83,6 +76,9 @@ function MemberCard({ member }: { member: (typeof teamMembers)[number] }) {
         <div className="team-text-box">
           <p className="team-text">{member.text}</p>
         </div>
+        {member.linkedin && (
+          <span className="team-profile-link">View LinkedIn profile ↗</span>
+        )}
       </div>
     </>
   );
