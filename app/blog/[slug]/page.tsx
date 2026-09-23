@@ -9,6 +9,8 @@ import { MDXContent } from "@/components/MDXContent";
 import AffiliateDisclosure from "@/components/AffiliateDisclosure";
 import StarRating from "@/components/StarRating";
 import BlogSidebar from "@/components/BlogSidebar";
+import AuthorBox from "@/components/AuthorBox";
+import TableOfContents from "@/components/TableOfContents";
 import { blog as posts } from "@/.velite";
 
 interface Props {
@@ -245,9 +247,16 @@ export default async function BlogPost({ params }: Props) {
                     )}
 
                     <div className="blog-post-author-line">
-                      <span>By {post.author}</span>
+                      <span>By <Link href="/about">{post.author}</Link></span>
                     </div>
                   </header>
+
+                  {post.toc.length > 0 && (
+                    <details className="blog-mobile-toc">
+                      <summary>In this article</summary>
+                      <TableOfContents toc={post.toc} />
+                    </details>
+                  )}
 
                   {/* Affiliate Disclosure — only on posts that contain affiliate links */}
                   {post.hasAffiliateLinks && <AffiliateDisclosure />}
@@ -257,10 +266,12 @@ export default async function BlogPost({ params }: Props) {
                     <MDXContent code={post.content} />
                   </div>
 
+                  <AuthorBox name={post.author} />
+
                   {/* Mobile-only CTA (shown below content on small screens) */}
                   <div className="blog-mobile-cta">
-                    <p className="blog-post-cta-text">Ready to automate your business?</p>
-                    <Link href="/strategy" className="primary-button">Book a free call →</Link>
+                    <p className="blog-post-cta-text">Make AI work for your business.</p>
+                    <Link href="/book-a-call" className="primary-button">Book an AI Strategy Call →</Link>
                   </div>
 
                 </article>

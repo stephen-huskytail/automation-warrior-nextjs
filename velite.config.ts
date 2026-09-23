@@ -13,6 +13,8 @@ const blog = defineCollection({
     author: s.string().optional().default("Stephen Gardner"),
     image: s.string().optional(),
     draft: s.boolean().optional().default(false),
+    contentType: s.enum(["Business Insight", "Technical Guide"]).optional().default("Business Insight"),
+    featured: s.boolean().optional().default(false),
     // Extended frontmatter
     updatedDate: s.isodate().optional(),
     schema_type: s.enum(["Article", "Review", "HowTo"]).optional().default("Article"),
