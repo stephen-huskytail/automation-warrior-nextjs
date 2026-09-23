@@ -42,9 +42,10 @@ export default function BookACallForm() {
       if (!submissionId.current) submissionId.current = crypto.randomUUID();
       if (!challenge.current) {
         await refreshChallenge();
-        // Allow the server-issued form challenge to mature, including fast autofill.
-        await new Promise(resolve => setTimeout(resolve, 1100));
       }
+      // Fast autofill is legitimate; wait briefly rather than reject it.
+      const remaining = Number(challenge.current.split(".")[0]) + 1100 - Date.now();
+      if (remaining > 0) await new Promise(resolve => setTimeout(resolve, remaining));
       const res = await fetch("/api/book-a-call", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

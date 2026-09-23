@@ -51,7 +51,7 @@ function MemberCard({ member }: { member: (typeof teamMembers)[number] }) {
           src={member.image}
           alt={member.name}
           fill
-          sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 280px"
+          sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 460px"
           className="team-portrait"
           style={{ objectFit: "cover", objectPosition: member.imagePosition }}
         />
@@ -101,23 +101,23 @@ export default function TeamSection() {
             </div>
 
             <div className="team-grid">
-                {teamMembers.map((member) =>
-                  member.linkedin ? (
-                    <a
-                      key={member.name}
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="team-card"
-                    >
-                      <MemberCard member={member} />
-                    </a>
-                  ) : (
-                    <div key={member.name} className="team-card">
-                      <MemberCard member={member} />
-                    </div>
-                  ),
-                )}
+              {teamMembers.map((member) =>
+                member.linkedin ? (
+                  <a
+                    key={member.name}
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="team-card"
+                  >
+                    <MemberCard member={member} />
+                  </a>
+                ) : (
+                  <div key={member.name} className="team-card">
+                    <MemberCard member={member} />
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </div>
