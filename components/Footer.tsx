@@ -5,33 +5,36 @@ const PHONE = "702-276-6921";
 const PHONE_TEL = "tel:7022766921";
 const BOOK_URL = "/book-a-call";
 
-const columns: { heading: string; links: { label: string; href: string }[] }[] = [
-  {
-    heading: "Work with Stephen",
-    links: [
-      { label: "Fractional CAIO", href: "/fractional-caio" },
-      { label: "AI Agent Teams", href: "/agent-teams" },
-      { label: "How it starts", href: "/#how-it-starts" },
-      { label: "Book a Strategy Call", href: BOOK_URL },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "About Stephen", href: "/about" },
-      { label: "Results", href: "/#results" },
-      { label: "Blog", href: "/blog" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
-      { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms", href: "/terms" },
-    ],
-  },
-];
+const columns: { heading: string; links: { label: string; href: string }[] }[] =
+  [
+    {
+      heading: "Work with Stephen",
+      links: [
+        { label: "Fractional CAIO", href: "/fractional-caio" },
+        { label: "AI Consulting", href: "/ai-consulting" },
+        { label: "Implementation & Training", href: "/ai-implementation" },
+        { label: "How it starts", href: "/#how-it-starts" },
+        { label: "Book an AI Strategy Call", href: BOOK_URL },
+      ],
+    },
+    {
+      heading: "Company",
+      links: [
+        { label: "About Stephen", href: "/about" },
+        { label: "Results", href: "/#results" },
+        { label: "Blog", href: "/blog" },
+        { label: "AI Operator Plans", href: "/ai-operator-plans" },
+      ],
+    },
+    {
+      heading: "Legal",
+      links: [
+        { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+        { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Terms", href: "/terms" },
+      ],
+    },
+  ];
 
 export default function Footer() {
   return (
@@ -51,7 +54,13 @@ export default function Footer() {
               <a
                 href={PHONE_TEL}
                 className="footer-menu-link"
-                style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginTop: "12px", fontSize: "14px" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  marginTop: "12px",
+                  fontSize: "14px",
+                }}
               >
                 📞 {PHONE}
               </a>
@@ -59,22 +68,31 @@ export default function Footer() {
             <div className="footer-block2">
               <div className="footer-column1">
                 <div className="footer-column1-content-box">
-                  <h4 className="footer-heading">Bring the workflow that eats your team&apos;s week.</h4>
+                  <h4 className="footer-heading">
+                    Make AI work for your business.
+                  </h4>
                   <p className="footer-text footer-text-width">
-                    Thirty minutes with Stephen. He&apos;ll tell you whether AI belongs there, what it
-                    would take, and what it would be worth. No deck. No pitch.
+                    Discuss your business priorities, where AI could help, and
+                    the right next step with Stephen in a free, 30-minute
+                    strategy call.
                   </p>
                 </div>
-                <a href={BOOK_URL} className="primary-button">Book a Strategy Call</a>
+                <a href={BOOK_URL} className="primary-button">
+                  Book an AI Strategy Call
+                </a>
               </div>
               <div className="footer-column2">
                 {columns.map((col) => (
                   <div className="foomenu-box" key={col.heading}>
-                    <h4 className="footer-heading small-heading-footer">{col.heading}</h4>
+                    <h4 className="footer-heading small-heading-footer">
+                      {col.heading}
+                    </h4>
                     <ul className="footer-menu-ul">
                       {col.links.map((l) => (
                         <li key={l.label}>
-                          <Link href={l.href} className="footer-menu-link">{l.label}</Link>
+                          <Link href={l.href} className="footer-menu-link">
+                            {l.label}
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -84,8 +102,9 @@ export default function Footer() {
             </div>
             <div className="footer-bottom">
               <p className="footer-text footer-bottom-text">
-                © {new Date().getFullYear()} Automation Warrior · Las Vegas, NV · AI consulting, agent teams, and
-                fractional CAIO engagements for service businesses.
+                © {new Date().getFullYear()} Automation Warrior · Las Vegas, NV
+                · Fractional CAIO, AI consulting, and implementation for 7–9
+                figure businesses.
               </p>
             </div>
           </div>

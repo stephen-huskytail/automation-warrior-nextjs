@@ -6,11 +6,17 @@ type Status = "idle" | "submitting" | "success" | "error";
 export default function BookACallForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
-    name: "", email: "", company: "", phone: "", message: "",
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    message: "",
   });
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((p) => ({ ...p, [k]: e.target.value }));
+  const set =
+    (k: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((p) => ({ ...p, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +44,8 @@ export default function BookACallForm() {
         <div className="bac-success-icon">✓</div>
         <h3 className="bac-success-heading">We&apos;ll be in touch soon!</h3>
         <p className="bac-success-text">
-          Thanks for reaching out. We&apos;ll reply within one business day to schedule your call.
+          Thanks for reaching out. We&apos;ll reply within one business day to
+          schedule your call.
         </p>
       </div>
     );
@@ -48,7 +55,9 @@ export default function BookACallForm() {
     <form className="bac-form" onSubmit={handleSubmit}>
       <div className="bac-form-row">
         <div className="bac-field">
-          <label className="bac-label" htmlFor="booking-name">Name *</label>
+          <label className="bac-label" htmlFor="booking-name">
+            Name *
+          </label>
           <input
             className="bac-input"
             type="text"
@@ -62,7 +71,9 @@ export default function BookACallForm() {
           />
         </div>
         <div className="bac-field">
-          <label className="bac-label" htmlFor="booking-email">Email *</label>
+          <label className="bac-label" htmlFor="booking-email">
+            Email *
+          </label>
           <input
             className="bac-input"
             type="email"
@@ -79,7 +90,9 @@ export default function BookACallForm() {
 
       <div className="bac-form-row">
         <div className="bac-field">
-          <label className="bac-label" htmlFor="booking-company">Company</label>
+          <label className="bac-label" htmlFor="booking-company">
+            Company
+          </label>
           <input
             className="bac-input"
             type="text"
@@ -92,7 +105,9 @@ export default function BookACallForm() {
           />
         </div>
         <div className="bac-field">
-          <label className="bac-label" htmlFor="booking-phone">Phone</label>
+          <label className="bac-label" htmlFor="booking-phone">
+            Phone
+          </label>
           <input
             className="bac-input"
             type="tel"
@@ -107,10 +122,12 @@ export default function BookACallForm() {
       </div>
 
       <div className="bac-field">
-        <label className="bac-label" htmlFor="booking-message">What do you want to automate? *</label>
+        <label className="bac-label" htmlFor="booking-message">
+          What would you like AI to improve in your business? *
+        </label>
         <textarea
           className="bac-input bac-textarea"
-          placeholder="Tell us about your business and where you're spending too much time on manual work..."
+          placeholder="Tell us about your business, your growth priorities, and the challenges your team needs help solving..."
           rows={5}
           id="booking-message"
           name="message"
@@ -122,7 +139,9 @@ export default function BookACallForm() {
       </div>
 
       {status === "error" && (
-        <p className="bac-error-msg">Something went wrong — please try again or email us directly.</p>
+        <p className="bac-error-msg">
+          Something went wrong — please try again or email us directly.
+        </p>
       )}
 
       <button
@@ -130,8 +149,14 @@ export default function BookACallForm() {
         className="primary-button bac-submit-btn"
         disabled={status === "submitting"}
       >
-        <span>{status === "submitting" ? "Sending…" : "Request a Strategy Call"}</span>
-        {status !== "submitting" && <span aria-hidden="true" className="button-icon">→</span>}
+        <span>
+          {status === "submitting" ? "Sending…" : "Request an AI Strategy Call"}
+        </span>
+        {status !== "submitting" && (
+          <span aria-hidden="true" className="button-icon">
+            →
+          </span>
+        )}
       </button>
     </form>
   );

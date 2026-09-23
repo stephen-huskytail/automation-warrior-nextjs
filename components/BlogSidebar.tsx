@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -54,7 +54,11 @@ function formatDate(iso: string) {
   });
 }
 
-export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSidebarProps) {
+export default function BlogSidebar({
+  toc,
+  relatedPosts,
+  authorName,
+}: BlogSidebarProps) {
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
@@ -70,7 +74,7 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
           }
         }
       },
-      { rootMargin: "0px 0px -60% 0px", threshold: 0 }
+      { rootMargin: "0px 0px -60% 0px", threshold: 0 },
     );
 
     headings.forEach((h) => observer.observe(h));
@@ -79,7 +83,6 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
 
   return (
     <aside className="blog-sidebar">
-
       {/* Table of Contents */}
       {toc.length > 0 && (
         <div className="sidebar-widget sidebar-toc-widget">
@@ -96,13 +99,14 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
 
       {/* CTA Widget */}
       <div className="sidebar-widget sidebar-cta-widget">
-        <div className="sidebar-cta-badge">Free Strategy Call</div>
-        <h3 className="sidebar-cta-heading">Want this built for you?</h3>
+        <div className="sidebar-cta-badge">AI Leadership</div>
+        <h3 className="sidebar-cta-heading">Make AI work for your business.</h3>
         <p className="sidebar-cta-body">
-          We build AI agent teams that run your intake, follow-up, research, and records — 24/7, with a human approval gate on anything that matters.
+          Fractional CAIO and AI consulting for 7–9 figure businesses. Build
+          your strategy, improve operations, and equip your team.
         </p>
-        <Link href="/strategy" className="sidebar-cta-btn">
-          Book a free call →
+        <Link href="/book-a-call" className="sidebar-cta-btn">
+          Book an AI strategy call →
         </Link>
       </div>
 
@@ -122,7 +126,8 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
           </div>
         </div>
         <p className="sidebar-author-bio">
-          Former Google Search team. AI consultant and fractional CAIO. Builds AI agent teams for service businesses that want to scale without scaling headcount.
+          Former Google Search team. Fractional Chief AI Officer and AI
+          consultant helping 7–9 figure businesses put AI to work.
         </p>
         <Link href="/about" className="sidebar-author-link">
           Full bio →
@@ -136,17 +141,21 @@ export default function BlogSidebar({ toc, relatedPosts, authorName }: BlogSideb
           <ul className="sidebar-related-list">
             {relatedPosts.map((post) => (
               <li key={post.slug} className="sidebar-related-item">
-                <Link href={`/blog/${post.slug}`} className="sidebar-related-link">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="sidebar-related-link"
+                >
                   <span className="sidebar-related-tag">{post.tags[0]}</span>
                   <span className="sidebar-related-title">{post.title}</span>
-                  <span className="sidebar-related-date">{formatDate(post.date)}</span>
+                  <span className="sidebar-related-date">
+                    {formatDate(post.date)}
+                  </span>
                 </Link>
               </li>
             ))}
           </ul>
         </div>
       )}
-
     </aside>
   );
 }

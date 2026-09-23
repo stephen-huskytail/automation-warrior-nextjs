@@ -18,20 +18,28 @@ const steps = [
 
 export default function ApproachSection() {
   return (
-    <section id="how-plans-work" className="approach-section" data-scroll-target="">
+    <section
+      id="how-plans-work"
+      className="approach-section"
+      data-scroll-target=""
+    >
       <div className="padding-global">
         <div className="inner-container">
           <div className="approach-inner">
             <div className="content-box">
               <h2 className="heading-h2">How the plans work</h2>
               <p className="text-paragraph width-640">
-                Pick a plan, we set it up, your AI gets to work. No long build cycles, no big consulting retainer.
+                Agree the tasks and integrations, set up the workflows, and
+                learn how to use and review the results.
               </p>
             </div>
 
             <ol className="approach-steps-grid" aria-label="How it works steps">
               {steps.map((step) => (
-                <li className="approach-slider-box approach-step-card" key={step.number}>
+                <li
+                  className="approach-slider-box approach-step-card"
+                  key={step.number}
+                >
                   <div className="approach-step-number" aria-hidden="true">
                     {step.number}
                   </div>
