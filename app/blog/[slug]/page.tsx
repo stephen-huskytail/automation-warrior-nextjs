@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return {};
+  if (!post) notFound();
 
   const canonical = `https://www.automationwarrior.ai/blog/${post.slug}`;
   const ogImage = post.featured_image || post.image;
