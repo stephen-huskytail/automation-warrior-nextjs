@@ -1,12 +1,14 @@
 import { Resend } from "resend";
+import { readTextBounded, SubmissionError } from "@/lib/leads/validation";
 import { deliveryState, recordDelivery } from "@/lib/leads/delivery";
 export const runtime = "nodejs";
 export async function POST(req: Request) {
   const secret = process.env.RESEND_WEBHOOK_SECRET;
   if (!secret) return new Response(null, { status: 503 });
   if (Number(req.headers.get("content-length")) > 65_536) return new Response(null, { status: 413 });
-  const payload = await req.text();
-  if (Buffer.byteLength(payload) > 65_536) return new Response(null, { status: 413 });
+  let payload: string;
+  try { payload = await readTextBounded(req, 65_536); }
+  catch (error) { return new Response(null, { status: error instanceof SubmissionError ? error.status : 400 }); }
   let event;
   try {
     event = new Resend(process.env.RESEND_API_KEY).webhooks.verify({

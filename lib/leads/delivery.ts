@@ -105,7 +105,7 @@ export async function monitorDelivery() {
   const [summary] = await sql`SELECT
     count(*) FILTER (WHERE n.status IN ('pending','retry','processing'))::int AS pending,
     count(*) FILTER (WHERE n.status IN ('bounced','complained','failed','suppressed','needs_attention'))::int AS failures,
-    count(*) FILTER (WHERE n.kind = 'team' AND n.status IN ('pending','retry','processing') AND n.created_at < now() - interval '15 minutes')::int AS overdue,
+    count(*) FILTER (WHERE n.kind = 'team' AND n.status IN ('pending','retry','processing') AND n.created_at < now() - interval '30 minutes')::int AS overdue,
     count(*) FILTER (WHERE n.status IN ('accepted','delayed') AND n.updated_at < now() - interval '24 hours')::int AS unconfirmed,
     count(*) FILTER (WHERE n.status = 'delivered')::int AS delivered
     FROM aw_lead_notifications n JOIN aw_leads l ON l.id = n.lead_id WHERE l.namespace = ${namespace}`;

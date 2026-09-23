@@ -55,10 +55,7 @@ export function verifyChallenge(token: unknown, identity: string, now = Date.now
   return constantEqual(signature, secretHash(`challenge:${identity}:${time}.${nonce}`));
 }
 
-export async function readBody(req: Request) {
-  if (!req.headers.get("content-type")?.includes("application/json")) {
-    throw new SubmissionError(415, "Please submit the form as JSON.");
-  }
+export async function readTextBounded(req: Request, limit = 16_384) {
   const reader = req.body?.getReader();
   if (!reader) throw new SubmissionError(400, "Please complete the form.");
   const chunks: Uint8Array[] = [];
@@ -67,14 +64,22 @@ export async function readBody(req: Request) {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.byteLength;
-    if (size > 16_384) {
+    if (size > limit) {
       await reader.cancel();
       throw new SubmissionError(413, "Your message is too long. Please shorten it.");
     }
     chunks.push(value);
   }
+  return Buffer.concat(chunks).toString("utf8");
+}
+
+export async function readBody(req: Request) {
+  if (!req.headers.get("content-type")?.includes("application/json")) {
+    throw new SubmissionError(415, "Please submit the form as JSON.");
+  }
+  const text = await readTextBounded(req);
   try {
-    const value = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    const value = JSON.parse(text);
     if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error();
     return value as Record<string, unknown>;
   } catch { throw new SubmissionError(400, "Please complete the form and try again."); }
