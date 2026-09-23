@@ -17,6 +17,8 @@ declare module "@/.velite" {
     author: string;
     image?: string;
     draft: boolean;
+    contentType: "Business Insight" | "Technical Guide";
+    featured: boolean;
     // Extended frontmatter
     updatedDate?: string;
     schema_type: "Article" | "Review" | "HowTo";
