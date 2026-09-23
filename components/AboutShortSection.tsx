@@ -7,10 +7,10 @@ export default function AboutShortSection() {
         <div className="inner-container founder-grid">
           <div className="founder-photo">
             <Image
-              src="/images/SG-1.jpg"
+              src="/images/stephen-gardner-portrait.png"
               alt="Stephen Gardner, founder and fractional Chief AI Officer"
-              width={440}
-              height={520}
+              width={1024}
+              height={1536}
               sizes="(max-width: 767px) 90vw, 340px"
             />
           </div>

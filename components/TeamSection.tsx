@@ -6,13 +6,15 @@ const teamMembers: {
   name: string;
   job: string;
   image: string;
+  imagePosition?: string;
   linkedin: string | null;
   text: string;
 }[] = [
   {
     name: "Stephen Gardner",
     job: "Founder & Fractional CAIO",
-    image: "/images/SG-1.jpg",
+    image: "/images/stephen-gardner-portrait.png",
+    imagePosition: "center 15%",
     linkedin: "https://www.linkedin.com/in/stephengardner76",
     text: "Former Google Search team. CMO during growth from $1M to a $50M run rate. Leads AI strategy, implementation, and team development for 7–9 figure businesses.",
   },
@@ -67,7 +69,7 @@ function MemberCard({ member }: { member: (typeof teamMembers)[number] }) {
           alt={member.name}
           fill
           className="team-slider-image"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition: member.imagePosition }}
         />
         <div className="team-slider-image-overlay" />
       </div>

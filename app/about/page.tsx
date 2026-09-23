@@ -31,7 +31,7 @@ const personSchema = {
   "@type": "Person",
   name: "Stephen Gardner",
   url: "https://www.automationwarrior.ai/about",
-  image: "https://www.automationwarrior.ai/images/SG-1.jpg",
+  image: "https://www.automationwarrior.ai/images/stephen-gardner-portrait.png",
   jobTitle: "AI Consultant & Fractional Chief AI Officer",
   description:
     "Fractional Chief AI Officer and AI consultant for 7–9 figure businesses. Former Google Search team. CMO at The Life Coach School during its growth from $1M to a $50M run rate.",
@@ -88,7 +88,7 @@ export default function AboutPage() {
                 <div className="about-page-hero">
                   <div className="about-page-photo-wrap">
                     <Image
-                      src="/images/SG-1.jpg"
+                      src="/images/stephen-gardner-portrait.png"
                       alt="Stephen Gardner — Automation Warrior"
                       width={160}
                       height={160}

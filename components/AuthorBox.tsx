@@ -10,7 +10,7 @@ export default function AuthorBox({ name }: AuthorBoxProps) {
     <div className="author-box">
       <div className="author-box-photo-wrap">
         <Image
-          src="/images/SG-1.jpg"
+          src="/images/stephen-gardner-portrait.png"
           alt="Stephen Gardner"
           width={64}
           height={64}

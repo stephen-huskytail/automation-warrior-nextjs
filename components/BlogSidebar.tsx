@@ -114,7 +114,7 @@ export default function BlogSidebar({
       <div className="sidebar-widget sidebar-author-widget">
         <div className="sidebar-author-inner">
           <Image
-            src="/images/SG-1.jpg"
+            src="/images/stephen-gardner-portrait.png"
             alt={authorName}
             width={52}
             height={52}
