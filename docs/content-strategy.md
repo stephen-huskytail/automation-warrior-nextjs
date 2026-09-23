@@ -9,7 +9,7 @@ Lead with the operating problem and the decision a leader needs to make. Explain
 
 ## Foundation published with this update
 
-- [How to Turn Your Team’s Know-How Into AI Workflows That Scale](https://www.automationwarrior.ai/blog/team-knowledge-ai-workflows): featured business article, with an explicitly illustrative onboarding workflow.
+- [How to Turn Your Team’s Knowledge Into AI Workflows That Scale](https://www.automationwarrior.ai/blog/team-knowledge-ai-workflows): featured business article, with an explicitly illustrative onboarding workflow.
 - [What I Would Assess in My First 30 Days as Your Fractional CAIO](https://www.automationwarrior.ai/blog/fractional-caio-first-30-days): an example assessment agenda and concrete deliverables.
 - [How to Measure Whether AI Is Improving Your Business](https://www.automationwarrior.ai/blog/measure-ai-business-results): baseline, adoption, quality, net capacity, cost, and decision reporting.
 - [Hermes Agent Skills: Build Reusable AI Workflows](https://www.automationwarrior.ai/blog/hermes-agent-skills-guide): retained as an implementation guide with a business introduction, working links, and an aligned call to action.

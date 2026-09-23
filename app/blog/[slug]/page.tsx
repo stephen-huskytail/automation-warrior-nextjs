@@ -10,6 +10,7 @@ import AffiliateDisclosure from "@/components/AffiliateDisclosure";
 import StarRating from "@/components/StarRating";
 import BlogSidebar from "@/components/BlogSidebar";
 import AuthorBox from "@/components/AuthorBox";
+import TableOfContents from "@/components/TableOfContents";
 import { blog as posts } from "@/.velite";
 
 interface Props {
@@ -249,6 +250,13 @@ export default async function BlogPost({ params }: Props) {
                       <span>By <Link href="/about">{post.author}</Link></span>
                     </div>
                   </header>
+
+                  {post.toc.length > 0 && (
+                    <details className="blog-mobile-toc">
+                      <summary>In this article</summary>
+                      <TableOfContents toc={post.toc} />
+                    </details>
+                  )}
 
                   {/* Affiliate Disclosure — only on posts that contain affiliate links */}
                   {post.hasAffiliateLinks && <AffiliateDisclosure />}
