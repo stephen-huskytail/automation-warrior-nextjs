@@ -5,6 +5,7 @@
   border-radius: 16px;
   background: linear-gradient(145deg, #201917, #121212 55%);
   color: #f4f0e9;
+  container-type: inline-size;
 }
 
 .header { display: flex; flex-direction: column; gap: 12px; }
@@ -47,11 +48,15 @@
 .stepTitle { color: #f4f0e9; font-size: 18px; line-height: 1.35; font-weight: 600; }
 .phases { display: flex; justify-content: space-between; gap: 8px; margin-top: 24px; color: #e8ddd6; font-size: 14px; }
 .phases span[aria-hidden] { color: #ff9586; }
-.scorecard { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; margin-top: 20px; }
+.scorecard { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
 .scorecard .step { padding: 18px; background: #ffffff04; border: 1px solid #ffffff1a; border-radius: 10px; }
 .outcome { display: flex; align-items: flex-start; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid #ffffff24; font-size: 16px; line-height: 1.5; }
 .outcomeIcon { color: #ff9586; font-size: 23px; line-height: 1; }
 .note { margin: 12px 0 0; color: #a9a29c; font-size: 13px; line-height: 1.55; }
+
+@container (max-width: 480px) {
+  .scorecard { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 600px) {
   .figure { padding: 22px 18px; }
