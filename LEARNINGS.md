@@ -6,11 +6,11 @@ Tracks all published blog posts by category and date. Check this file before eve
 
 Follow [`BLOG_PUBLISHING_SOP.md`](BLOG_PUBLISHING_SOP.md) for the authoritative remote/live dedupe, 48-hour cadence controller, recovery, and release-verification procedure. A local checkout or scheduler status alone is not publication proof.
 
-## ⚠️ ROTATION PAUSED (2026-09-09) — site repositioned, decision pending
+## Current Editorial Cadence (2026-09-26)
 
-Commits `df017db` (2026-09-07, authored by Stephen) and `ecd1136` (2026-09-06/07) repositioned `automationwarrior.ai` from the affiliate tools blog into "AI Consultant for Service Businesses" (fractional CAIO / agent-teams consultancy). `ecd1136` deleted every published post below except `hermes-agent-skills-guide` and removed "Blog" from the header/mobile nav entirely. The tables below are retained as historical slug/date record only — most of the listed URLs are no longer live (verified `make-webhooks-guide` → 404 on 2026-09-09).
+The 2026-09 repositioning remains in effect: Automation Warrior now publishes consultancy-fit business insights for leaders of service businesses. The standing, pre-approved Path A recovery authorization resumes the scheduled cadence for this repository; it does **not** revive the retired affiliate-tool topic rotation below.
 
-**Do not resume the GoHighLevel/n8n/Kartra/Ontraport/Make/Zapier/OpenAI/Hermes AI/Automation Tips affiliate rotation** until Stephen or Myla explicitly confirms one of: (a) resume the old rotation as-is, (b) redirect the autopilot to consultancy-fit content, or (c) retire this autopilot. The 2026-09-09 scheduled run found this state and held rather than publish an off-brand affiliate post; see Slack `#hermes-blogs` (channel `C0BFFC20D6C`) for that day's incident report and the Myla handoff. Restore point at the base of this edit: tag `restore-2026-09-09-182021` (commit `8b60890`).
+The legacy affiliate tables are retained as historical slug/date records only. Most of those legacy URLs were removed by `ecd1136`; do not use them as current topic or linking targets. Restore point at the base of the original pause edit: tag `restore-2026-09-09-182021` (commit `8b60890`).
 
 ## Affiliate Link Policy (2026-07-03)
 
@@ -20,13 +20,24 @@ Commits `df017db` (2026-09-07, authored by Stephen) and `ecd1136` (2026-09-06/07
 - Review posts must set frontmatter `schema_type: "Review"`, `tool_name`, and `rating` (only if a numeric rating is stated in the post body) to get review rich snippets.
 - Internal links must be relative paths (`/blog/foo`, `/book-a-call`), never `https://automationwarrior.ai/...`. Exception: a link to the bare homepage must be written `https://www.automationwarrior.ai/` (a bare `](/)` breaks the Velite build).
 
-## Category Rotation Order
+## Current Category Rotation Order
 
-GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → OpenAI → Zapier → Hermes AI → Automation Tips → [repeat]
+AI Leadership → Team Capability → Business Outcomes → AI Governance → AI Implementation → [repeat]
+
+The historical affiliate-tool rotation is retired with the prior site positioning; its entries remain below only as a duplicate-slug record.
 
 ## Published Posts
 
-### GoHighLevel
+### Current Consultancy-Fit Editorial Cadence
+| Date | Category | Slug |
+|------|----------|------|
+| 2026-08-22 | Technical Guide | hermes-agent-skills-guide |
+| 2026-09-23 | AI Leadership | fractional-caio-first-30-days |
+| 2026-09-23 | Business Outcomes | measure-ai-business-results |
+| 2026-09-23 | Team Capability | team-knowledge-ai-workflows |
+| 2026-09-26 | AI Governance | ai-governance-service-businesses |
+
+### Historical Affiliate Rotation
 | Date | Slug |
 |------|------|
 | 2026-05-09 | go-high-level-review |
@@ -146,7 +157,7 @@ GoHighLevel → n8n → AI/AGI/Claude → Ontraport → Kartra → Make.com → 
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-09-05 (last actual publish before the 2026-09-06/07 prune, and the last entry before rotation was paused)
-- **Category:** Make.com
-- **Slug:** make-webhooks-guide (no longer live — deleted by `ecd1136`)
-- **Next category in rotation:** OpenAI — **do not auto-publish this; see "ROTATION PAUSED" above.** The 2026-09-09 scheduled run evaluated due-state, found the pause condition, and held without creating a candidate article.
+- **Date:** 2026-09-26
+- **Category:** AI Governance
+- **Slug:** ai-governance-service-businesses
+- **Next category in rotation:** AI Implementation
