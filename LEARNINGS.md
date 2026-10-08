@@ -42,6 +42,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | 2026-10-02 | Business Outcomes | ai-operations-scorecard-measure-what-matters |
 | 2026-10-04 | AI Governance | ai-exception-escalation-service-teams |
 | 2026-10-06 | AI Implementation | ai-implementation-checklist-service-workflows |
+| 2026-10-08 | AI Leadership | ai-leadership-cadence-weekly-decisions-service-teams |
 
 ### Historical Affiliate Rotation
 | Date | Slug |
@@ -163,7 +164,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-10-06
-- **Category:** AI Implementation
-- **Slug:** ai-implementation-checklist-service-workflows
-- **Next category in rotation:** AI Leadership
+- **Date:** 2026-10-08
+- **Category:** AI Leadership
+- **Slug:** ai-leadership-cadence-weekly-decisions-service-teams
+- **Next category in rotation:** Team Capability
