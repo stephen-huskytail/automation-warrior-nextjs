@@ -45,6 +45,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | 2026-10-08 | AI Leadership | ai-leadership-cadence-weekly-decisions-service-teams |
 | 2026-10-10 | Team Capability | ai-skills-matrix-service-teams |
 | 2026-10-12 | Business Outcomes | ai-pilot-scale-decision-service-businesses |
+| 2026-10-14 | AI Governance | ai-risk-tiering-service-workflows |
 
 ### Historical Affiliate Rotation
 | Date | Slug |
@@ -166,7 +167,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-10-12
-- **Category:** Business Outcomes
-- **Slug:** ai-pilot-scale-decision-service-businesses
-- **Next category in rotation:** AI Governance
+- **Date:** 2026-10-14
+- **Category:** AI Governance
+- **Slug:** ai-risk-tiering-service-workflows
+- **Next category in rotation:** AI Implementation

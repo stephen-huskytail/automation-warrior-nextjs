@@ -1,0 +1,140 @@
+---
+title: "AI Risk Tiering for Service Workflows: A Practical Guide"
+description: "Use AI risk tiering to match service-workflow controls to real consequences, from internal drafts to customer-facing decisions and durable actions."
+date: "2026-10-14"
+slug: "ai-risk-tiering-service-workflows"
+tags: ["AI Governance", "Business Operations", "AI Strategy"]
+author: "Stephen Gardner"
+contentType: "Business Insight"
+featured: true
+draft: false
+schema_type: "Article"
+featured_image: "/images/blog/ai-risk-tiering-service-workflows.jpg"
+image_alt: "AI risk tiering shown as four dark service-workflow paths passing through red control gates toward a bright review beacon."
+---
+
+**AI risk tiering** gives a service business a practical way to match an AI-assisted workflow to the level of care it deserves. Instead of treating every use case as either harmless experimentation or a major compliance project, the team asks a more useful question: *what could go wrong here, who would be affected, and what must happen before the work moves forward?*
+
+That question matters because service work is not one thing. Drafting an internal meeting recap from approved notes has a different consequence from sending a customer a scope commitment, changing a billing record, or recommending an action involving a sensitive employee or client matter. One generic “human in the loop” rule will either slow simple work unnecessarily or fail to protect decisions that need a real checkpoint.
+
+AI risk tiering is not a certification, a legal standard, or a promise that a tier makes a workflow safe. It is an operating design for choosing proportionate boundaries, review, and fallback before a team expands an assisted workflow.
+
+> **Quick Summary**
+>
+> - Use AI risk tiering to match controls to the consequences of a workflow, not to the novelty of the tool.
+> - Evaluate the action, approved information, affected people, reversibility, and evidence needed to check the result.
+> - Keep low-consequence internal assistance lightweight, but require explicit review before consequential customer-facing or durable actions.
+> - Give every tier an owner, a stop rule, and a manual route; more controls do not replace accountable judgment.
+> - Revisit a tier when the workflow, data, permissions, or downstream action changes.
+
+## What AI risk tiering means in a service business
+
+A useful tiering model classifies the *workflow*, not the AI brand or model. The same assistant might help prepare an internal project brief in one use case and draft a customer commitment in another. Those are different operating situations even if the screen and prompt look similar.
+
+The voluntary [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) offers a cross-sector reference for incorporating trustworthiness considerations across the design, development, use, and evaluation of AI systems. Its companion [AI RMF Playbook](https://www.nist.gov/itl/ai-risk-management-framework/nist-ai-rmf-playbook) organizes suggested actions around Govern, Map, Measure, and Manage. A service business does not need to reproduce that material as a policy binder. It can use the ideas to make one workflow’s owner, source boundary, review point, and response to failure visible.
+
+The tier is simply the team’s shared shorthand for that decision. It should help a coordinator know when an output can be checked in a sample, when a named reviewer must approve it before use, and when the work should stay manual until the business has stronger evidence and specialist input.
+
+This is part of a broader [AI strategy](/strategy): start from a business priority and a real handoff, rather than adopting a tool first and discovering its consequences later.
+
+## Choose a tier by looking at five signals
+
+Do not rank a workflow only by whether it seems technically complex. A short, simple message can be high consequence if it commits the business to something a customer will rely on. Review these five signals together.
+
+1. **Action:** Is the output an internal draft, a recommendation, a customer-facing communication, or a change to a durable record or system?
+2. **Information:** Does the workflow use only approved, low-sensitivity material, or does it touch confidential, personal, financial, health, employment, contractual, or otherwise restricted information?
+3. **Affected party:** Could an error inconvenience an internal user, mislead a customer, change a commercial commitment, or affect a person’s opportunity, rights, or safety?
+4. **Reversibility:** Can the team notice and correct the result before anyone relies on it, or might the action be hard to unwind after it is sent, saved, or acted upon?
+5. **Evidence:** Can a reviewer trace the material output to approved sources and test whether it meets a clear quality standard?
+
+The answers do not create a universal score. They support a business decision. A workflow may move to a higher tier because it adds a customer send, gains access to a new source system, expands to a less-trained group, or begins changing records automatically. Treat those as design changes, not as a small configuration adjustment.
+
+## A lightweight four-tier model
+
+The following model is an example for service businesses. It is not prescribed by NIST, and it must be adapted to the work, contracts, tools, and sector involved.
+
+### Tier 1: Internal assistance with a reversible outcome
+
+Tier 1 work may help an employee brainstorm, summarize approved internal material, organize a private draft, or locate a documented procedure. The result does not create a customer commitment, alter a system of record, or make a consequential decision. The user remains responsible for deciding whether to use it.
+
+Controls can be light but should still exist: give users an approved source boundary, explain what not to enter, and make it clear that plausible output is not evidence.
+
+### Tier 2: Internal workflow support with a defined reviewer
+
+Tier 2 work assists a repeatable internal process where an error could create rework, delay, or a bad handoff, but a trained reviewer can catch it before a consequential action. Examples might include preparing an internal account brief from approved records or categorizing incoming service requests for a coordinator to confirm.
+
+Name the process owner, the approved inputs, the review check, and the manual fallback. Measure completed-work quality, correction effort, exceptions, and whether users can actually follow the path. The [AI implementation checklist](/blog/ai-implementation-checklist-service-workflows) explains how to establish those elements for one bounded workflow instead of treating a demo as proof of operational readiness.
+
+The benefit is practical testing at a real handoff.
+
+### Tier 3: Customer-facing or durable actions with pre-action review
+
+Tier 3 includes work that affects a customer, a contract, a financial or operational commitment, or a durable business record. An AI system may prepare the draft or recommend a next action, but a named person must verify the relevant sources and approve the result before it is sent, saved, or relied upon.
+
+Specify the exact decision boundary. A reviewer should know what to check, have access to the governing source, and have authority to hold the work. For example, a proposed client onboarding note may require confirmation of scope, dates, owners, and any promise before it becomes the team’s working record.
+
+This tier is where a general policy becomes an actual operating practice. An [AI exception escalation runbook](/blog/ai-exception-escalation-service-teams) can identify the triggers that require a correction, hold, or stop; the accountable person; the evidence they need; and the manual route that still completes the work.
+
+This tier keeps assistance separate from authorization.
+
+### Tier 4: High-consequence or restricted workflows
+
+Tier 4 covers workflows where an error can materially affect an individual, create a regulated or contractual exposure, expose restricted information, cause a security issue, or make a difficult-to-reverse decision. Examples may include employment, healthcare, legal, safety, credit, pricing, access-control, or sensitive client-data scenarios, depending on the business and jurisdiction.
+
+Do not use a generic checklist as approval to automate this work. Involve the qualified legal, privacy, security, compliance, and domain specialists appropriate to the use case. Define whether AI assistance is allowed at all, which information is permitted, how outputs are independently checked, what audit evidence is retained, and what must happen after an incident. A manual process may remain the right option.
+
+The honest limitation is that a tier label cannot resolve obligations that depend on sector rules, contracts, or the facts of a particular decision. This article is not legal, privacy, security, or compliance advice.
+
+## Put controls where the workflow changes state
+
+A risk tier becomes useful when it changes the work, not when it produces a color-coded spreadsheet. Map the points where the workflow changes state: a source is read, an output is generated, someone reviews it, a customer sees it, or a system record changes.
+
+For each point, answer four questions:
+
+- What is allowed to happen here?
+- What evidence must be available to check it?
+- Who can approve, hold, or stop it?
+- What is the manual fallback if the assisted path is uncertain?
+
+A successful automation log only proves that software ran. It does not prove the right source was used, the work was correct, the recipient understood it, or an external action completed once and only once. Build a read-back step before retrying uncertain writes, and do not replay an action merely because the first attempt timed out.
+
+The [AI governance model for service businesses](/blog/ai-governance-service-businesses) provides the wider operating structure: ownership, approved information, review, change records, and evidence. Tiering gives that model a practical way to keep controls proportional as different workflows emerge.
+
+## Reassess the tier when the scope changes
+
+A workflow should not keep its old tier by inertia. Review it when the team changes any meaningful condition: a new data source, a new integration permission, a different customer segment, a new user group, a customer-facing send, or a move from drafting to updating a system of record.
+
+Use a small change record: the workflow purpose, current tier, owner, approved sources, reviewer, stop conditions, known limits, date of the last review, and the evidence that supported the decision. A well-maintained document is often enough for an early program. The point is to make a change visible before a quiet expansion alters the risk.
+
+Also review the tier after a material exception. Look for the actual cause: an unreliable source, a weak instruction, missing access, unclear responsibility, a review step that was skipped, or a poor fit for assisted work. Do not merely add more prompts and call the issue fixed.
+
+## Experience, expertise, and limitations
+
+This is an operating framework for leaders evaluating AI-assisted service workflows. It does not report a client result, certify a system, guarantee risk reduction, or determine the controls required for a specific organization. Examples are illustrative and should not be treated as a substitute for qualified legal, privacy, security, compliance, or domain advice.
+
+The practical test is modest: can the team explain what the workflow is allowed to do, the information it may use, who decides when it cannot proceed, and how the work still reaches a responsible outcome? If the answer is unclear, the workflow probably needs a narrower scope or a higher tier before it needs more automation.
+
+## Start with one current workflow
+
+Pick one recurring workflow and write its current action, information boundary, affected party, reversibility, and evidence check. Assign a provisional tier, name the owner and reviewer, and test a small set of representative cases—including a missing source and an exception. That gives the team an evidence-based starting point instead of a blanket rule for every AI tool.
+
+If you want help deciding where AI can create useful capacity without obscuring accountability, [book an AI strategy call](/book-a-call). Bring the real workflow and the point where an error would matter; we can discuss a practical pilot, its controls, and its decision criteria.
+
+<FAQ items={[
+  {
+    q: "What is AI risk tiering?",
+    a: "AI risk tiering is a practical method for matching an AI-assisted workflow's controls to its consequences. It considers the action, information, affected people, reversibility, and evidence needed to check the result."
+  },
+  {
+    q: "Should every AI workflow have human review?",
+    a: "Every workflow needs accountable use, but the review method should be proportionate. Low-consequence internal assistance may use sampling and clear user responsibility, while customer-facing or durable actions generally need a defined pre-action review."
+  },
+  {
+    q: "When should an AI workflow move to a higher risk tier?",
+    a: "Reassess when it gains sensitive data, new permissions, a customer-facing action, a durable record update, a broader user group, or a consequence that is harder to reverse. A changed workflow needs a new decision, not just a new setting."
+  },
+  {
+    q: "Does AI risk tiering make a workflow compliant?",
+    a: "No. Tiering is an operating framework, not a compliance certification or legal conclusion. Work involving regulated decisions, restricted data, contracts, security, or other high-consequence outcomes may require qualified specialist review and a manual process."
+  }
+]} />
