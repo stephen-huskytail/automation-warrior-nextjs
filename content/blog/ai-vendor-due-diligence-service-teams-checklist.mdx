@@ -1,0 +1,124 @@
+---
+title: "AI Vendor Due Diligence for Service Teams: Checklist"
+description: "Use an AI vendor due diligence checklist to compare service-team tools, define accountable use, test real workflows, and make a bounded adoption decision."
+date: "2026-10-24"
+slug: "ai-vendor-due-diligence-service-teams-checklist"
+tags: ["AI Governance", "Vendor Evaluation", "Business Operations"]
+author: "Stephen Gardner"
+contentType: "Business Insight"
+featured: true
+draft: false
+schema_type: "Article"
+featured_image: "/images/blog/ai-vendor-due-diligence-service-teams-checklist.jpg"
+image_alt: "AI vendor due diligence for service teams represented by a red verification path moving through dark review gates toward an archival vault and approval signal."
+---
+
+**AI vendor due diligence for service teams** is the work of deciding whether a particular AI tool fits one defined business workflow—not whether its demo is impressive. A useful review connects the vendor’s product, contract, controls, and support model to the actual work a team wants to improve. It also names what the team will not ask the tool to do until the evidence, ownership, and safeguards are in place.
+
+This checklist is an operating framework, not legal, security, privacy, procurement, or compliance advice. It does not certify a vendor or guarantee that a tool will deliver a business result. Bring the relevant legal, privacy, security, procurement, and domain specialists into the decision when the data, contract, sector, or consequences require them.
+
+> **Quick Summary**
+>
+> - Start with one service workflow and the outcome it must improve; do not begin with a feature list.
+> - Ask how data, permissions, model changes, incidents, and customer-facing actions are handled in that workflow.
+> - Test representative work with an accountable reviewer before committing to wider use.
+> - Document the decision, approved boundary, owner, fallback, and conditions that would pause the tool.
+> - Treat vendor answers as inputs to your decision, not as proof that a workflow is safe or valuable.
+
+## AI vendor due diligence for service teams starts before the demo
+
+A product walkthrough can make almost any AI capability sound generally useful. Service businesses need a narrower question: *What specific work will this tool support, for whom, using which approved inputs, and what must remain under human authority?* Without that definition, a team can collect favorable answers about security, integrations, or automation and still make no decision about the work that customers and employees actually experience.
+
+Write a one-paragraph use case before meeting vendors. For example: “Prepare an internal project-recap draft from approved meeting notes and project records; a project manager reviews it before any client update.” That statement defines the output as internal preparation rather than an automatic customer commitment. It also gives the team something concrete to test.
+
+The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) is voluntary guidance intended to help organizations incorporate trustworthiness considerations across AI design, development, use, and evaluation. Its Govern, Map, Measure, and Manage functions can help structure questions, but they are not a certification, universal checklist, or substitute for qualified advice. For a smaller service business, the practical value is often simply making the workflow, owner, evidence, and fallback visible.
+
+Before comparing vendors, identify:
+
+1. **The work unit:** What starts and finishes the workflow? “Answer client questions” is broad; “prepare a recap draft after a completed discovery call” is observable.
+2. **The approved source set:** Which systems, documents, templates, and records may the tool use? Which sources must it never access?
+3. **The proposed output:** Is the output a draft, classification, internal summary, recommendation, or a durable change in a system of record?
+4. **The decision boundary:** Who checks the result, who can approve it, and which actions are explicitly outside the tool’s authority?
+5. **The evidence for value:** What would show a worthwhile improvement—less rework, more timely completed handoffs, fewer missed fields, or another defined service outcome?
+
+That preparation complements an [AI implementation checklist](/blog/ai-implementation-checklist-service-workflows). Implementation should follow a decision about the work, not replace it.
+
+## Evaluate the vendor against the real workflow
+
+A vendor questionnaire is most useful when every answer is connected to a use case. Ask for documentation and demonstrations that show how the product behaves in the proposed configuration, not only a general statement of intent. Capture the version or date of materials reviewed, the owner of each follow-up, and unanswered questions. A sales answer can be relevant evidence, but it should not become the team’s only record of how the product works.
+
+Use the following categories as a practical review list.
+
+### Data and access boundaries
+
+Map the data that the workflow would send, retrieve, retain, or expose to users. Ask what controls exist for access roles, connectors, exports, retention, deletion, and audit records. Confirm whether the intended deployment relies on a third-party integration, a browser extension, an API, or a human upload; those paths can have different permissions and failure modes.
+
+Do not infer that a vendor’s general statement about encryption answers questions about your own records, customer commitments, or contractual obligations. The relevant question is whether the proposed workflow has an approved data path and a named owner who can review changes to that path. If the tool would handle sensitive, regulated, confidential, or client-restricted information, obtain the appropriate specialist review rather than treating this article as approval.
+
+### Output quality and human review
+
+Ask what the tool can reliably show about its sources, uncertainty, and changes to generated output. Then test the answer. Give the vendor—or an internal pilot—a representative, permitted case with known edge conditions: conflicting dates, missing information, ambiguous scope, or a request that should be held. Observe whether the workflow flags uncertainty, preserves the relevant source context, and lets a reviewer correct or reject the result.
+
+A polished answer is not evidence that an output is complete or suitable for a client. The [AI client handoff framework](/blog/ai-client-handoffs-for-service-businesses) explains why a team should distinguish preparation from a client-ready commitment. Require a person with the right context and authority to make that decision.
+
+### Change, continuity, and support
+
+AI products can change through model updates, connector changes, pricing or usage rules, product releases, and vendor support processes. Ask how the team will learn about a material change, what configuration history is available, and how it can test a change before depending on it in routine work. Clarify support channels, incident communications, export options, and the practical steps for pausing or ending use.
+
+## Run a bounded proof instead of buying from a demo
+
+A short, controlled pilot can reveal more than a long feature comparison. Keep the first use case narrow, use permitted representative records, and define what the reviewer will check.
+
+Set a simple pilot plan:
+
+- **Scope:** one workflow, a limited time period or small sample, and a named team.
+- **Success conditions:** the accepted output meets a stated quality standard and supports a measurable service or operating decision.
+- **Review method:** compare the result with approved sources; record corrections, holds, and manual completions.
+- **Stop conditions:** pause the pilot if an unauthorized action, unresolved source issue, inappropriate data path, or material quality concern appears.
+- **Decision date:** review the evidence with the accountable owner and decide whether to stop, revise, extend cautiously, or expand one bounded use case.
+
+The NIST [Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1) discusses risks that may be unique to or intensified by generative AI and proposes actions organizations can align to their goals and priorities. It is useful context for a pilot, not proof that the tool or pilot is compliant, safe, or ready for broad deployment.
+
+A pilot should generate a decision record, not just positive anecdotes. Capture the workflow version, source boundaries, reviewer, quality criteria, sample conditions, corrections, exceptions, time spent by people, and the decision made. If the pilot is inconclusive, that is a valid result. It can mean the workflow needs a clearer source, a different review design, better data handling, or should remain manual.
+
+## Assign accountability before enabling broader access
+
+Vendor selection and workflow ownership are related but different. A vendor may provide product documentation, yet the service business still decides which work is allowed, which records are approved, and who can make a customer commitment. Name an internal owner for the use case before turning a successful pilot into routine work.
+
+The owner should be able to answer: What is the tool allowed to do? What is it not allowed to do? Who reviews results? Where is the authoritative source? How are exceptions handled? How is a change to the tool evaluated? And when is the workflow paused?
+
+Use an [AI risk-tiering approach](/blog/ai-risk-tiering-service-workflows) to scale the review to the consequences of the work. A low-consequence internal draft may require a lighter control than a workflow involving sensitive information, employment, finance, a regulated decision, or a customer promise. The category is not a shortcut to approve a tool; it is a prompt to involve the appropriate people and establish the right boundary.
+
+When an item does not fit the approved path, route it through an [AI exception escalation process](/blog/ai-exception-escalation-service-teams). A reviewer needs the relevant sources, the proposed output or attempted action, the reason for the hold, the accountable owner, and a manual way to complete the work. “Ask AI again” is not a recovery plan when the issue is missing evidence, unclear authority, or an uncertain external action.
+
+## Benefits and tradeoffs to evaluate honestly
+
+**Potential benefits:** A focused vendor review can help a team avoid buying on feature enthusiasm alone. A bounded pilot may expose repeated rework, unclear source systems, missing templates, or unnecessary manual assembly. When the workflow is well-defined, AI can help prepare routine information so experienced people spend more attention on the decision, client context, and exceptions that need judgment.
+
+**Tradeoffs and limits:** A vendor’s controls do not transfer accountability for a service business’s promises or decisions. A useful demo does not establish performance across messy real cases. Review time, configuration work, integration dependencies, usage costs, data handling obligations, and change management can outweigh the value of a weak use case. Faster output does not by itself prove better service, reduced risk, or realized financial benefit.
+
+Keep those tradeoffs in the decision record. If the team cannot articulate what it is gaining, what it is accepting, who owns the boundary, and how it will stop safely, it is too early to scale. That discipline is part of a practical [AI strategy](/strategy), not a reason to delay every experiment indefinitely.
+
+## Experience, expertise, authoritativeness, and trust
+
+This guidance reflects an operations-first approach to evaluating AI-assisted service workflows: begin with the actual work, verify against approved sources, assign accountable human decisions, and preserve a manual path. It does not claim proprietary vendor testing, client outcomes, certification, or a universal procurement standard. The NIST references are public, voluntary resources; apply them with appropriate specialists, contracts, and organization-specific requirements.
+
+For a service business that wants help defining a bounded AI use case, evidence plan, and decision boundary, [book an AI strategy call](/book-a-call). Start with one recurring workflow and the handoff that currently creates the most avoidable rework or uncertainty.
+
+## FAQs
+
+### What is AI vendor due diligence?
+
+AI vendor due diligence is the process of evaluating whether a specific vendor and configuration fit a defined business workflow. It considers the proposed data path, access, outputs, human review, changes, support, accountability, and evidence needed for an adoption decision. It is more useful than a generic feature comparison because it tests the work the team actually intends to perform.
+
+### Is a vendor security questionnaire enough to approve an AI tool?
+
+No. It can be an important input, but it does not define the business workflow, determine which data is appropriate, assign authority for client-facing actions, or prove that outputs will meet the team’s quality standard. Use the questionnaire alongside the relevant legal, privacy, security, procurement, domain, and operational review for the proposed use case.
+
+### How long should an AI vendor pilot run?
+
+There is no universal duration. Run it long enough to examine representative permitted cases and the conditions that matter to the decision, but keep the scope limited enough for accountable review. Define the sample, success conditions, stop conditions, and decision date before starting rather than extending a pilot because the result is hard to interpret.
+
+### Who owns an AI tool after a team selects a vendor?
+
+Name an internal owner for each approved workflow. That person does not need to perform every review, but should be able to clarify the use case, approved sources, human decision boundary, exception route, and conditions for changing or pausing the workflow. Vendor support does not replace that operating accountability.
