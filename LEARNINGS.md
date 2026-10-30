@@ -53,6 +53,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | 2026-10-24 | AI Governance | ai-vendor-due-diligence-service-teams-checklist |
 | 2026-10-26 | AI Implementation | ai-implementation-change-control-service-businesses |
 | 2026-10-28 | AI Leadership | ai-leadership-operating-system-service-businesses |
+| 2026-10-30 | Team Capability | ai-competency-framework-service-business-teams |
 
 ### Historical Affiliate Rotation
 | Date | Slug |
@@ -174,7 +175,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-10-28
-- **Category:** AI Leadership
-- **Slug:** ai-leadership-operating-system-service-businesses
-- **Next category in rotation:** Team Capability
+- **Date:** 2026-10-30
+- **Category:** Team Capability
+- **Slug:** ai-competency-framework-service-business-teams
+- **Next category in rotation:** Business Outcomes
