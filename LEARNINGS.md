@@ -55,6 +55,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | 2026-10-28 | AI Leadership | ai-leadership-operating-system-service-businesses |
 | 2026-10-30 | Team Capability | ai-competency-framework-service-business-teams |
 | 2026-11-01 | Business Outcomes | ai-workflow-baseline-service-business-results |
+| 2026-11-02 | AI Governance | ai-governance-audit-trail-service-business-teams |
 
 ### Historical Affiliate Rotation
 | Date | Slug |
@@ -176,7 +177,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-11-01
-- **Category:** Business Outcomes
-- **Slug:** ai-workflow-baseline-service-business-results
-- **Next category in rotation:** AI Governance
+- **Date:** 2026-11-02
+- **Category:** AI Governance
+- **Slug:** ai-governance-audit-trail-service-business-teams
+- **Next category in rotation:** AI Implementation
