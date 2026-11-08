@@ -72,14 +72,16 @@ function buildSchemas(post: ReturnType<typeof getPost>) {
   if (!post) return [];
   const base = `https://www.automationwarrior.ai`;
   const url = `${base}/blog/${post.slug}`;
+  const publishedDate = post.date.slice(0, 10);
+  const modifiedDate = (post.updatedDate || post.date).slice(0, 10);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    datePublished: post.date,
-    dateModified: post.updatedDate || post.date,
+    datePublished: publishedDate,
+    dateModified: modifiedDate,
     author: {
       "@type": "Person",
       name: "Stephen Gardner",
