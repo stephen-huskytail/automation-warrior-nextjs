@@ -171,9 +171,6 @@ export default function AgentTeamsContent() {
               </div>
               <div className="content-box-680 agent-teams-notes">
                 <p className="text-paragraph">
-                  Build support for more repeatable workflows.
-                </p>
-                <p className="text-paragraph">
                   <strong>Setup and model usage are separate from the monthly service fee.</strong>{" "}
                   The one-time setup fee is additional to the recurring service
                   fee; it is $497 for Starter Team or $1,997 for Scale Team. You

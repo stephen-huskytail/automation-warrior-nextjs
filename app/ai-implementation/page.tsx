@@ -40,7 +40,7 @@ const sections = [
     ],
     link: {
       href: "/agent-teams",
-      label: "Explore Custom AI Agent Teams",
+      label: "Explore AI Agent Teams",
     },
   },
   {
