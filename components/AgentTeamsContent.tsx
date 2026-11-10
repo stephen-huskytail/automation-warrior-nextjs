@@ -21,18 +21,14 @@ const rows: Row[] = [
   { label: "Monthly price", starter: "$497/mo", scale: "$1,997/mo" },
   { label: "One-time setup fee", starter: "One month of the tier ($497)", scale: "One month of the tier ($1,997)" },
   { label: "Term", starter: "3-month minimum, then month-to-month", scale: "3-month minimum, then month-to-month" },
-  { label: "Support", starter: "Included", scale: "Included, with priority support" },
+  { label: "Support", starter: "Included", scale: "Included" },
   { label: "Training", starter: "Included", scale: "Included" },
   { label: "Integration", starter: "Included", scale: "Included" },
   { label: "Ongoing security", starter: "Included", scale: "Included" },
-  { label: "Private services", starter: "Included", scale: "Included" },
+  { label: "Private services", starter: "Not included", scale: "AI running on hardware we set up for you; you pay for hardware and hosting" },
   { label: "Skills and best-practices training", starter: "Included", scale: "Included" },
   { label: "AI-model agnostic", starter: "Yes", scale: "Yes" },
-  {
-    label: "Local-model options",
-    starter: "Can run compatible local models; deployment scope confirmed before setup",
-    scale: "Private/local-model deployment option included; deployment scope confirmed before setup",
-  },
+  { label: "Model deployment", starter: "Cloud/free models only", scale: "Private/local-model setup included; you pay for hardware and hosting" },
   { label: "Monthly strategy session", starter: "Not included", scale: "Included" },
 ];
 
@@ -43,19 +39,19 @@ const security = [
   },
   {
     title: "Credential handling.",
-    text: "We scope access to the agent’s agreed job and use the credential-sharing method agreed during setup. Do not send passwords or API keys through ordinary chat or email.",
+    text: "We limit each agent to the tools and accounts its job needs, using role-specific access routes and rules; where a connected service only offers account-wide access, we restrict how it is used and confirm the exact account or project before acting. We use the secure credential-sharing method agreed during setup. Do not send passwords or API keys through ordinary chat or email.",
   },
   {
     title: "Activity records.",
-    text: "We agree what activity is recorded, how it can be reviewed and how long records are kept. Coverage depends on the connected tools and deployment.",
+    text: "We agree up front what activity is recorded and how you can review it. Coverage depends on the tools connected to your deployment. Retention is set in your agreement.",
   },
   {
     title: "Data use.",
     text: "We do not use your business data to train our own AI models. Your chosen model providers and connected services process data under their own terms and account settings, including any training and retention provisions.",
   },
   {
-    title: "Local-model options.",
-    text: "We can discuss a local-model deployment for compatible workflows. Running a model locally does not by itself keep all workflow data local: connected tools, support access and activity records also need to be considered. Deployment details are agreed before setup.",
+    title: "Private/local-model deployment.",
+    text: "Scale Team includes setup of AI running on hardware we set up for you. You pay for the hardware and hosting. Starter Team uses cloud/free models only. Running a model locally does not by itself keep all workflow data local: connected tools, support access and activity records also need to be considered. Deployment details are agreed before setup.",
   },
 ];
 
@@ -187,8 +183,18 @@ export default function AgentTeamsContent() {
                   fee still applies.
                 </p>
                 <p className="text-paragraph">
-                  <strong>Initial term:</strong> Both teams have a 3-month
-                  minimum, then continue month-to-month.
+                  <strong>Billing:</strong> The setup fee is due at signing. Your
+                  first monthly service charge is due 30 days after setup
+                  starts, then on the same date each month. Applicable taxes are
+                  extra.
+                </p>
+                <p className="text-paragraph">
+                  <strong>Term and cancellation:</strong> Both teams have a
+                  3-month minimum, then continue month-to-month. After the
+                  minimum term, you may cancel with 30 days’ written notice by
+                  email. Cancellation takes effect at the end of the billing
+                  month in which the 30-day notice period ends. There are no
+                  refunds for partial months or for the setup fee.
                 </p>
                 <div className="button-group">
                   <a href={BOOK_URL} className="primary-button">
@@ -207,7 +213,7 @@ export default function AgentTeamsContent() {
             <div className="content-box">
               <h2 className="heading-h2">Proof: we run on it</h2>
               <p className="text-paragraph width-640">
-                We run our own agency on a team of 25+ AI agents.
+                We run this in our own agency on a team of 20+ AI agents
               </p>
             </div>
           </div>

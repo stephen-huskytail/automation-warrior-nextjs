@@ -4,7 +4,7 @@ import { blog } from "@/.velite";
 const BASE = "https://www.automationwarrior.ai";
 const paths = [
   "", "/blog", "/fractional-caio", "/ai-consulting", "/ai-implementation",
-  "/agent-teams", "/ai-operator-plans", "/about", "/book-a-call",
+  "/agent-teams", "/about", "/book-a-call",
   "/affiliate-disclosure", "/privacy-policy", "/terms",
 ];
 

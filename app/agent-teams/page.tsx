@@ -10,7 +10,7 @@ export const metadata = serviceMetadata(
 const faqs = [
   {
     q: "Which AI models do you use?",
-    a: "We work with different model providers and agree the model selection with you based on the workflow, cost and data-handling needs. Free and open models are available. Local models may suit compatible workflows; hosting, hardware, integrations and provider terms still matter.",
+    a: "We work with different model providers and agree the model selection with you based on the workflow, cost and data-handling needs. Free and open models are available. Starter Team uses cloud/free models only. Scale Team includes private/local-model setup for compatible workflows; you pay for hardware and hosting. Integrations and provider terms still matter.",
   },
   {
     q: "Is my data used to train AI models?",
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "What is the minimum term, and how do I cancel?",
-    a: "Both teams have a 3-month minimum, then continue month-to-month. The one-time setup fee is additional to the recurring service fee and equals one month of your tier: $497 for Starter Team or $1,997 for Scale Team. Your agreement will state how to give notice and when cancellation takes effect.",
+    a: "Both teams have a 3-month minimum, then continue month-to-month. After the minimum term, you may cancel with 30 days’ written notice by email. Cancellation takes effect at the end of the billing month in which the 30-day notice period ends. There are no refunds for partial months or for the setup fee. The one-time setup fee is additional to the recurring service fee and equals one month of your tier: $497 for Starter Team or $1,997 for Scale Team. It is due at signing; your first monthly service charge is due 30 days after setup starts, then on the same date each month. Applicable taxes are extra.",
   },
   {
     q: "Who pays for the AI models?",
@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "What is the difference between the two teams?",
-    a: "Starter Team has 5 agents. Scale Team has 20 agents and adds priority support, a monthly strategy session, and an included private/local-model deployment option. Both can run compatible local models. We confirm the deployment scope and responsibilities before setup.",
+    a: "Starter Team has 5 agents and uses cloud/free models only. Scale Team has 20 agents and adds a monthly strategy session and private/local-model deployment: AI running on hardware we set up for you, with local-model setup included. You pay for hardware and hosting. We confirm the deployment scope and responsibilities before setup.",
   },
 ];
 export default function Page() {
