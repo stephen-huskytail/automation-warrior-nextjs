@@ -12,6 +12,8 @@ export default function ServicePage({
   hero,
   sections,
   faqs,
+  faqHeading,
+  cta,
   children,
 }: {
   name: string;
@@ -19,6 +21,8 @@ export default function ServicePage({
   hero: Partial<HeroProps>;
   sections: ComponentProps<typeof BusinessSection>[];
   faqs: { q: string; a: string }[];
+  faqHeading?: string;
+  cta?: ReactNode;
   children?: ReactNode;
 }) {
   const schema = {
@@ -53,8 +57,8 @@ export default function ServicePage({
             <BusinessSection key={section.title} {...section} />
           ))}
           {children}
-          <HomeFaqSection items={faqs} />
-          <CtaSection />
+          <HomeFaqSection items={faqs} heading={faqHeading} />
+          {cta ?? <CtaSection />}
         </div>
         <Footer />
       </main>

@@ -8,14 +8,15 @@ interface FAQItem {
 
 interface FAQProps {
   items: FAQItem[];
+  heading?: string;
 }
 
-export function FAQ({ items }: FAQProps) {
+export function FAQ({ items, heading = "Frequently Asked Questions" }: FAQProps) {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
     <div className="faq-block">
-      <h2 className="faq-block-heading">Frequently Asked Questions</h2>
+      <h2 className="faq-block-heading">{heading}</h2>
       <div className="faq-list">
         {items.map((item, i) => (
           <div key={i} className="faq-item">

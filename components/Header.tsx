@@ -5,6 +5,7 @@ import Link from "next/link";
 const links = [
   { href: "/fractional-caio", label: "Fractional CAIO" },
   { href: "/ai-consulting", label: "AI Consulting" },
+  { href: "/agent-teams", label: "AI Agent Teams" },
   { href: "/#results", label: "Results" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Insights" },
