@@ -1,95 +1,62 @@
-import Link from "next/link";
 import ServicePage from "@/components/ServicePage";
-import AgentTeamSection from "@/components/AgentTeamSection";
-import WeekOneSection from "@/components/WeekOneSection";
+import AgentTeamsContent from "@/components/AgentTeamsContent";
+import CtaSection from "@/components/CtaSection";
 import { serviceMetadata } from "@/lib/serviceMetadata";
 export const metadata = serviceMetadata(
-  "Custom AI Agent Teams | Automation Warrior",
-  "Custom AI agents for defined business workflows, with human review, clear ownership, and measurable results. Part of our AI implementation services.",
+  "AI Agent Teams: Starter and Scale | Automation Warrior",
+  "Five or twenty AI agents, each with one job, set up for you and supported by our team. Starter Team $497/mo, Scale Team $1,997/mo.",
   "/agent-teams",
 );
-const sections = [
-  {
-    id: "functions",
-    eyebrow: "Practical applications",
-    title: "Give repeatable work a reliable process.",
-    text: "Agent teams are one part of our AI implementation capability. Each engagement is scoped around a business workflow, its owner, and the result you need.",
-    items: [
-      {
-        title: "Intake & scheduling",
-        text: "Respond to inquiries, organize qualification information, and prepare or book appointments within agreed rules.",
-      },
-      {
-        title: "Research & drafting",
-        text: "Organize source material and prepare first drafts of briefs, proposals, and reports for your team to review.",
-      },
-      {
-        title: "Customer communication",
-        text: "Prepare follow-ups, updates, and reminders with review steps and clear escalation to your people.",
-      },
-      {
-        title: "Operations & reporting",
-        text: "Keep records current, prepare meeting summaries, and bring important information into the tools your team uses.",
-      },
-    ],
-  },
-];
 const faqs = [
   {
-    q: "How does this fit with fractional CAIO services?",
-    a: "Fractional CAIO provides ongoing leadership of your AI strategy. Agent teams are one implementation option within that strategy and can also be delivered as a scoped project.",
+    q: "Which AI models do you use?",
+    a: "We work with different model providers and agree the model selection with you based on the workflow, cost and data-handling needs. Free and open models are available. Starter Team uses cloud/free models only. Scale Team includes private/local-model setup for compatible workflows; you pay for hardware and hosting. Integrations and provider terms still matter.",
   },
   {
-    q: "What happens if an agent makes a mistake?",
-    a: "We define review steps, test outputs, log actions, and agree when work needs human approval. Your team retains ownership of the workflow, with an escalation path for exceptions.",
+    q: "Is my data used to train AI models?",
+    a: "We do not use your business data to train our own AI models. That statement does not guarantee how every third-party provider handles data. Your chosen providers’ terms and account settings govern their processing, including training and retention. We agree the data flows and settings with you before setup.",
   },
   {
-    q: "What tools can you connect?",
-    a: "We assess the systems your business uses, including CRM, email, calendars, communication tools, and document platforms. Integrations are confirmed during scoping.",
+    q: "How long does setup take?",
+    a: "It depends on the roles, tools and access involved. We discuss the scope and expected timeline on your strategy call, then confirm the setup plan before work begins.",
   },
   {
-    q: "Are there plans for smaller teams?",
-    a: "Yes. Our separate AI Operator Plans page covers fixed-scope subscriptions for solo operators and smaller teams. Consulting and managed implementations for larger businesses are scoped individually.",
+    q: "What is the minimum term, and how do I cancel?",
+    a: "Both teams have a 3-month minimum, then continue month-to-month. After the minimum term, you may cancel with 30 days’ written notice by email. Cancellation takes effect at the end of the billing month in which the 30-day notice period ends. There are no refunds for partial months or for the setup fee. The one-time setup fee is additional to the recurring service fee and equals one month of your tier: $497 for Starter Team or $1,997 for Scale Team. It is due at signing; your first monthly service charge is due 30 days after setup starts, then on the same date each month. Applicable taxes are extra.",
+  },
+  {
+    q: "Who pays for the AI models?",
+    a: "You pay your own model providers directly through your own accounts, separately from our service and setup fees. Usage may be priced in tokens or under the provider’s other billing terms. Free and open models are available, but hosting, hardware or other operating costs may still apply.",
+  },
+  {
+    q: "What is the difference between the two teams?",
+    a: "Starter Team has 5 agents and uses cloud/free models only. Scale Team has 20 agents and adds a monthly strategy session and private/local-model deployment: AI running on hardware we set up for you, with local-model setup included. You pay for hardware and hosting. We confirm the deployment scope and responsibilities before setup.",
   },
 ];
 export default function Page() {
   return (
     <ServicePage
-      name="Custom AI Agent Teams"
+      name="AI Agent Teams"
       path="/agent-teams"
       hero={{
-        eyebrow: "AI Implementation / Custom Agents",
-        title: "AI agents built around the work.",
+        eyebrow: "AI Agent Teams",
+        title: "AI Agent Teams for Your Business",
         paragraph:
-          "Support your people with agents that handle defined tasks inside your business workflows. Clear ownership, human review, and useful results guide every implementation.",
-        secondaryHref: "#functions",
-        secondaryLabel: "Explore the applications",
-        trustItems: ["Defined workflows", "Human review", "Measured results"],
+          "A team of AI agents, each with one job, working inside your tools and supported by our team. Choose a Starter Team of 5 agents at $497/mo or a Scale Team of 20 agents at $1,997/mo. We set up the agreed workflows, train your people, and provide ongoing support.",
+        trustItems: [],
+        secondaryHref: "",
       }}
-      sections={sections}
+      sections={[]}
       faqs={faqs}
+      faqHeading="Common questions"
+      cta={
+        <CtaSection
+          title="Ready to build your team?"
+          text="Start with a free conversation about the work you want off your plate, and we will help you choose the right team."
+        />
+      }
     >
-      <AgentTeamSection id="how-it-works" />
-      <WeekOneSection />
-      <section id="plans" className="approach-section">
-        <div className="padding-global">
-          <div className="inner-container">
-            <div className="content-box">
-              <div className="sub-heading">
-                Looking for a smaller starting point?
-              </div>
-              <h2 className="heading-h2">Explore AI Operator plans.</h2>
-              <p className="text-paragraph width-640">
-                Fixed-scope plans for solo operators and smaller teams have
-                their own dedicated page.
-              </p>
-              <Link className="secondary-button" href="/ai-operator-plans">
-                See AI Operator Plans
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AgentTeamsContent />
     </ServicePage>
   );
 }

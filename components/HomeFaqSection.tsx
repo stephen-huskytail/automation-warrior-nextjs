@@ -49,14 +49,16 @@ export function faqSchema(items: { q: string; a: string }[]) {
 
 export default function HomeFaqSection({
   items = homeFaqItems,
+  heading,
 }: {
   items?: { q: string; a: string }[];
+  heading?: string;
 }) {
   return (
     <section id="faq" className="approach-section" data-scroll-target="">
       <div className="padding-global">
         <div className="inner-container">
-          <FAQ items={items} />
+          <FAQ items={items} heading={heading} />
         </div>
       </div>
     </section>

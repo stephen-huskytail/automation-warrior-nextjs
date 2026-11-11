@@ -23,7 +23,7 @@ const columns: { heading: string; links: { label: string; href: string }[] }[] =
         { label: "About Stephen", href: "/about" },
         { label: "Results", href: "/#results" },
         { label: "Blog", href: "/blog" },
-        { label: "AI Operator Plans", href: "/ai-operator-plans" },
+        { label: "AI Agent Teams", href: "/agent-teams" },
       ],
     },
     {

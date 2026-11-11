@@ -3,7 +3,11 @@ import { legacyBlogRedirects } from "./lib/legacyBlogRedirects";
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return legacyBlogRedirects;
+    return [
+      ...legacyBlogRedirects,
+      // OPS-289: AI Operator Plans is replaced by the AI Agent Teams page.
+      { source: "/ai-operator-plans", destination: "/agent-teams", statusCode: 301 },
+    ];
   },
   images: {
     remotePatterns: [
