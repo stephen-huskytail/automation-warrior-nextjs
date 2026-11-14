@@ -61,6 +61,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | 2026-11-08 | Team Capability | ai-team-capability-playbook-service-businesses |
 | 2026-11-10 | Business Outcomes | ai-benefits-realization-service-business-leaders |
 | 2026-11-12 | AI Governance | ai-governance-review-cadence-service-businesses |
+| 2026-11-14 | AI Implementation | ai-implementation-playbook-service-business-teams |
 
 ### Historical Affiliate Rotation
 | Date | Slug |
@@ -182,7 +183,7 @@ The historical affiliate-tool rotation is retired with the prior site positionin
 | n8n-vs-zapier | n8n |
 
 ## Last Run
-- **Date:** 2026-11-12
-- **Category:** AI Governance
-- **Slug:** ai-governance-review-cadence-service-businesses
-- **Next category in rotation:** AI Implementation
+- **Date:** 2026-11-14
+- **Category:** AI Implementation
+- **Slug:** ai-implementation-playbook-service-business-teams
+- **Next category in rotation:** AI Leadership
