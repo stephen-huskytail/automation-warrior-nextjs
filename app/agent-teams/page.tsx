@@ -10,7 +10,7 @@ export const metadata = serviceMetadata(
 const faqs = [
   {
     q: "Which AI models do you use?",
-    a: "We work with different model providers and agree the model selection with you based on the workflow, cost and data-handling needs. Free and open models are available. Starter Team uses cloud/free models only. Scale Team includes private/local-model setup for compatible workflows; you pay for hardware and hosting. Integrations and provider terms still matter.",
+    a: "We work with different model providers and agree the model selection with you based on the workflow, cost and data-handling needs. Free and open models are available. Starter Team uses cloud/free models only. Scale Team includes private/local-model setup for compatible workflows; hardware and hosting are included. Integrations and provider terms still matter.",
   },
   {
     q: "Is my data used to train AI models?",
@@ -26,11 +26,11 @@ const faqs = [
   },
   {
     q: "Who pays for the AI models?",
-    a: "You pay your own model providers directly through your own accounts, separately from our service and setup fees. Usage may be priced in tokens or under the provider’s other billing terms. Free and open models are available, but hosting, hardware or other operating costs may still apply.",
+    a: "You pay your own model providers directly through your own accounts, separately from our service and setup fees. Usage may be priced in tokens or under the provider’s other billing terms. Free and open models are available. On the Scale Team, hardware and hosting are included in the monthly fee.",
   },
   {
     q: "What is the difference between the two teams?",
-    a: "Starter Team has 5 agents and uses cloud/free models only. Scale Team has 20 agents and adds a monthly strategy session and private/local-model deployment: AI running on hardware we set up for you, with local-model setup included. You pay for hardware and hosting. We confirm the deployment scope and responsibilities before setup.",
+    a: "Starter Team has 5 agents and uses cloud/free models only. Scale Team has 20 agents and adds a monthly strategy session and private/local-model deployment: AI running on hardware we set up for you, with local-model setup included. Hardware and hosting are included in the monthly fee. We confirm the deployment scope and responsibilities before setup.",
   },
 ];
 export default function Page() {
