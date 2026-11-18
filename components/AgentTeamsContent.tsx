@@ -25,10 +25,10 @@ const rows: Row[] = [
   { label: "Training", starter: "Included", scale: "Included" },
   { label: "Integration", starter: "Included", scale: "Included" },
   { label: "Ongoing security", starter: "Included", scale: "Included" },
-  { label: "Private services", starter: "Not included", scale: "AI running on hardware we set up for you; you pay for hardware and hosting" },
+  { label: "Private services", starter: "Not included", scale: "AI running on hardware we set up for you; hardware and hosting included" },
   { label: "Skills and best-practices training", starter: "Included", scale: "Included" },
   { label: "AI-model agnostic", starter: "Yes", scale: "Yes" },
-  { label: "Model deployment", starter: "Cloud/free models only", scale: "Private/local-model setup included; you pay for hardware and hosting" },
+  { label: "Model deployment", starter: "Cloud/free models only", scale: "Private/local-model setup, hardware and hosting included" },
   { label: "Monthly strategy session", starter: "Not included", scale: "Included" },
 ];
 
@@ -51,7 +51,7 @@ const security = [
   },
   {
     title: "Private/local-model deployment.",
-    text: "Scale Team includes setup of AI running on hardware we set up for you. You pay for the hardware and hosting. Starter Team uses cloud/free models only. Running a model locally does not by itself keep all workflow data local: connected tools, support access and activity records also need to be considered. Deployment details are agreed before setup.",
+    text: "Scale Team includes setup of AI running on hardware we set up for you. Hardware and hosting are included in the monthly fee. Starter Team uses cloud/free models only. Running a model locally does not by itself keep all workflow data local: connected tools, support access and activity records also need to be considered. Deployment details are agreed before setup.",
   },
 ];
 
@@ -175,9 +175,9 @@ export default function AgentTeamsContent() {
                   The one-time setup fee is additional to the recurring service
                   fee; it is $497 for Starter Team or $1,997 for Scale Team. You
                   pay for your own AI model usage (tokens) on your own accounts.
-                  Free and open models are available, but running them may
-                  involve hosting, hardware or other provider costs. The service
-                  fee still applies.
+                  Free and open models are available, and the service fee still
+                  applies. On the Scale Team, hardware and hosting are included
+                  in the monthly service fee.
                 </p>
                 <p className="text-paragraph">
                   <strong>Billing:</strong> The setup fee is due at signing. Your
